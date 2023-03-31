@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/flow"
 	"github.com/rs/zerolog/log"
 )
@@ -36,6 +37,7 @@ func (s *stageImpl) onError(c *flow.Ctx, err error, msg string) {
 		c.UserCtx,
 		filter,
 		map[string]interface{}{
+			"is_error": true,
 			"error":    err.Error(),
 			"error_at": ts,
 		})
@@ -52,11 +54,9 @@ func (s *stageImpl) onPaid(c *flow.Ctx) {
 		c.UserCtx,
 		filter,
 		map[string]interface{}{
-			"order_status":      "PAID",
+			"order_status":      enum.ORDER_STATUS_PAID,
 			"confirmed_paid_by": "machine",
 			"confirmed_paid_at": ts,
-			"error":             nil,
-			"error_at":          nil,
 		})
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Str("onPaid", "PAID").Msg("TRANSACTION: unable to update transaction")
@@ -73,7 +73,7 @@ func (s *stageImpl) onCancel(c *flow.Ctx) {
 		c.UserCtx,
 		filter,
 		map[string]interface{}{
-			"order_status": "CANCELLED",
+			"order_status": enum.ORDER_STATUS_CANCELLED,
 			"cancelled_by": "user",
 			"cancelled_at": ts,
 		})
