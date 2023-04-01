@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/flow"
 	"github.com/rs/zerolog/log"
 )
@@ -16,16 +17,18 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 		&entity.Transaction{
 			MerchantOrderID:     c.Data.MerchantOrderID,
 			MachineSerialNumber: c.Machine.SerialNumber,
+			Location:            c.Machine.Location,
 			RawCart:             c.Data.Raw(),
 			OrderQuantity:       c.Data.TotalQuantity(),
 			OrderPrice:          c.Data.TotalPrice(),
-			OrderStatus:         "ORDERED",
+			OrderStatus:         enum.ORDER_STATUS_ORDERED,
 			OrderedAt:           ts,
 			PaymentChannel:      "free",
 			PaymentRequestedAt:  &ts,
 			RefundPrice:         0,
 			ReceivedQuantity:    0,
 			PaidPrice:           0,
+			IsError:             false,
 		})
 	if err != nil {
 		log.Error().Err(err).Msg("unable to create transaction")

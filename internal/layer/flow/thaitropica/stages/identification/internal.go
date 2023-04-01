@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/flow"
 )
 
@@ -34,7 +35,7 @@ func (s *stageImpl) updateIdentified(c *flow.Ctx) error {
 	data := map[string]interface{}{
 		"confirmed_paid_by": "machine",
 		"confirmed_paid_at": time.Now(),
-		"order_status":      "IDENTIFIED",
+		"order_status":      enum.ORDER_STATUS_IDENTIFIED,
 	}
 
 	_, err := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
@@ -50,7 +51,7 @@ func (s *stageImpl) updateIdentified(c *flow.Ctx) error {
 func (s *stageImpl) updateCancel(c *flow.Ctx) error {
 	filter := makeMerchantOrderIDFilter(c.Data.MerchantOrderID)
 	data := map[string]interface{}{
-		"order_status": "CANCELLED",
+		"order_status": enum.ORDER_STATUS_CANCELLED,
 		"cancelled_by": "machine",
 		"cancelled_at": time.Now(),
 	}
@@ -67,6 +68,7 @@ func (s *stageImpl) updateCancel(c *flow.Ctx) error {
 func (s *stageImpl) updateError(c *flow.Ctx, err error) error {
 	filter := makeMerchantOrderIDFilter(c.Data.MerchantOrderID)
 	data := map[string]interface{}{
+		"is_error": true,
 		"error":    err.Error(),
 		"error_at": time.Now(),
 	}

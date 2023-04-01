@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/smartedc"
 	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/flow"
 	"github.com/rs/zerolog/log"
@@ -22,16 +23,18 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		&entity.Transaction{
 			MerchantOrderID:     c.Data.MerchantOrderID,
 			MachineSerialNumber: c.Machine.SerialNumber,
+			Location:            c.Machine.Location,
 			RawCart:             c.Data.Raw(),
 			OrderQuantity:       c.Data.TotalQuantity(),
 			OrderPrice:          c.Data.TotalPrice(),
-			OrderStatus:         "ORDERED",
+			OrderStatus:         enum.ORDER_STATUS_ORDERED,
 			OrderedAt:           ts,
 			PaymentChannel:      c.PaymentChannel.Channel,
 			PaymentRequestedAt:  &ts,
 			RefundPrice:         0,
 			ReceivedQuantity:    0,
 			PaidPrice:           0,
+			IsError:             false,
 		})
 	if err != nil {
 		log.Error().Err(err).Msg("unable to create transaction")
@@ -78,14 +81,12 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 			c.UserCtx,
 			filter,
 			map[string]interface{}{
-				"order_status":      "PAID",
+				"order_status":      enum.ORDER_STATUS_PAID,
 				"confirmed_paid_by": "machine",
 				"confirmed_paid_at": ts,
 				"reference1":        res.InvoiceNo,
 				"reference2":        res.CardApprovalCode,
 				"reference3":        res.CardNo,
-				"error":             nil,
-				"error_at":          nil,
 			})
 		if errx != nil {
 			log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Str("onPaid", "PAID").Msg("TRANSACTION: unable to update transaction")
