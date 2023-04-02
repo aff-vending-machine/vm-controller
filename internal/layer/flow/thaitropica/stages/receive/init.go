@@ -21,11 +21,12 @@ type stageImpl struct {
 }
 
 const (
-	WAIT = 0
-	DONE = 1
-	E0   = 0xE0
-	E1   = 0xE1
-	E2   = 0xE2
+	WAIT   = 0
+	DONE   = 1
+	CANCEL = 2
+	E0     = 0xE0
+	E1     = 0xE1
+	E2     = 0xE2
 )
 
 func New(la api.LugentPay, qh hardware.Queue, cr repository.Customer, sr repository.Slot, tr repository.Transaction, ss serial.SmartEDC, uw ws.UI) *stageImpl {

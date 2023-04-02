@@ -14,6 +14,9 @@ func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) {
 		"order_status":      enum.ORDER_STATUS_PAID,
 		"confirmed_paid_by": "machine",
 		"confirmed_paid_at": time.Now(),
+		"is_error":          false,
+		"error":             nil,
+		"error_at":          nil,
 	}
 
 	_, err := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)

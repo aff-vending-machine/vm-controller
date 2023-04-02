@@ -20,33 +20,30 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 	}
 
 	switch req.Action {
-	case "cancel":
-		c.Reset()
-		c.ChangeStage <- "order"
-		return nil
-
-	case "done":
-		c.Reset()
-		c.ChangeStage <- "idle"
-		return nil
-
-	case "new-order":
-		c.Reset()
-		c.ChangeStage <- "order"
+	case "cancel", "done", "new-order":
+		if s.polling {
+			log.Warn().Str("order_id", c.Data.MerchantOrderID).Str("action", req.Action).Str("stage", "receive").Msg("Cancel items")
+			s.status = CANCEL
+			s.queue.ClearStack(c.UserCtx)
+			s.polling = false
+		} else {
+			c.Reset()
+			c.ChangeStage <- "idle"
+		}
 		return nil
 
 	case "open-gate":
+		s.status = 0
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "OPEN_GATE")
-		s.reset()
 		return nil
 
 	case "wakeup":
-		if !s.polling {
+		if s.polling {
+			log.Warn().Str("order_id", c.Data.MerchantOrderID).Str("action", req.Action).Str("stage", "receive").Msg("Please grab item")
+			s.ui.SendGrabItem(c.UserCtx, "receive", "Please grab item")
+		} else {
 			c.Reset()
 			c.ChangeStage <- "order"
-		} else {
-			log.Warn().Str("action", req.Action).Str("stage", "receive").Msg("Please grab item")
-			s.ui.SendGrabItem(c.UserCtx, "receive", "Please grab item")
 		}
 		return nil
 
