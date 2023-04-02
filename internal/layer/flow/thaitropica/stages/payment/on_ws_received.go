@@ -32,7 +32,10 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		return nil
 
 	case "bypass":
-		s.onPaid(c)
+		s.updatePaidTransaction(c)
+
+		s.ui.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
+		c.ChangeStage <- "receive"
 		return nil
 
 	case "cancel":
@@ -41,12 +44,13 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 			s.CancelFn = nil
 		}
 
-		s.onCancel(c)
+		s.updateCancelTransaction(c)
 		c.Reset()
 		c.ChangeStage <- "order"
 		return nil
 
 	case "wakeup":
+		s.updateCancelTransactionByMachine(c)
 		c.Reset()
 		c.ChangeStage <- "order"
 		return nil

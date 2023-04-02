@@ -90,14 +90,17 @@ func (s *stageImpl) wechatpay(c *flow.Ctx) {
 			result, err := s.lugentpay.Inquiry(c.UserCtx, c.PaymentChannel, req)
 			if err != nil {
 				log.Error().Interface("request", req).Interface("response", result).Err(err).Msg("unable to check payment")
-				s.onError(c, err, "unable to check order")
+				s.updateErrorTransaction(c, err)
 				s.ui.SendError(c.UserCtx, "payment", "unable to check order")
 				c.ChangeStage <- "payment_channel"
 				return
 			}
 
 			if result.ResponseCode == "00" {
-				s.onPaid(c)
+				s.updatePaidTransaction(c)
+
+				s.ui.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
+				c.ChangeStage <- "receive"
 				return
 			}
 		}

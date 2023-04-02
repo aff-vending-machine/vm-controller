@@ -1,4 +1,4 @@
-package identification
+package payment
 
 import (
 	"fmt"

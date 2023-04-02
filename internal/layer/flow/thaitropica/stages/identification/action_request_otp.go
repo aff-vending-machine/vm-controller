@@ -19,18 +19,21 @@ func (s *stageImpl) requestOTP(c *flow.Ctx, req WSReceived) error {
 		customer = &entity.Customer{Email: email}
 		err := s.customerRepo.InsertOne(c.UserCtx, customer)
 		if err != nil {
-			s.updateError(c, err)
-			s.ui.SendEmergency(c.UserCtx, err)
+			s.updateErrorTransaction(c, err)
+			s.ui.SendError(c.UserCtx, "identification", "unable to create customer")
+			c.ChangeStage <- "order"
 			return errors.Wrap(err, "unable to create customer")
 		}
 	} else if err != nil {
-		s.updateError(c, err)
-		s.ui.SendEmergency(c.UserCtx, err)
+		s.updateErrorTransaction(c, err)
+		s.ui.SendError(c.UserCtx, "identification", "unable to register customer")
+		c.ChangeStage <- "order"
 		return errors.Wrap(err, "register failed")
 	}
 
 	if customer.IsReceived {
 		s.console_email_used(c, email)
+		s.updateEmailUsedTransaction(c, email)
 		s.ui.SendMailIsUsed(c.UserCtx, c.Data.MerchantOrderID, email)
 		return errors.Wrap(err, "this email is used")
 	}

@@ -35,8 +35,9 @@ func (s *stageImpl) sendOTP(c *flow.Ctx, req WSReceived) error {
 	})
 	if err != nil {
 		log.Error().Err(err).Msg("unable to send mail")
-		s.updateError(c, err)
-		s.ui.SendEmergency(c.UserCtx, err)
+		s.updateErrorTransaction(c, err)
+		s.ui.SendError(c.UserCtx, "identification", "unable to send email")
+		c.ChangeStage <- "order"
 		return errors.Wrap(err, "send Mail failed")
 	}
 
@@ -52,8 +53,9 @@ func (s *stageImpl) sendOTP(c *flow.Ctx, req WSReceived) error {
 	log.Info().Str("OTP", otp).Str("Reference", reference).Msg("otp generate")
 	err = s.ui.SendOTPRequest(c.UserCtx, c.Data.MerchantOrderID, email, reference, timestamp)
 	if err != nil {
-		s.updateError(c, err)
-		s.ui.SendEmergency(c.UserCtx, err)
+		s.updateErrorTransaction(c, err)
+		s.ui.SendError(c.UserCtx, "identification", "unable to send email")
+		c.ChangeStage <- "order"
 		return errors.Wrap(err, "send OPT requested to UI failed")
 	}
 

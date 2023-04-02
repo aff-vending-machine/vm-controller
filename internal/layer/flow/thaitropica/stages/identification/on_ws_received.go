@@ -37,15 +37,19 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		return s.checkOTP(c, req)
 
 	case "cancel":
-		return s.updateCancel(c)
+		s.updateCancelTransaction(c)
+		c.Reset()
+		c.ChangeStage <- "order"
+		return nil
 
 	case "wakeup":
+		s.updateCancelTransactionByMachine(c)
 		c.Reset()
 		c.ChangeStage <- "order"
 		return nil
 
 	default:
-		s.ui.SendError(c.UserCtx, "payment_channel", fmt.Sprintf("invalid action %s", req.Action))
+		s.ui.SendError(c.UserCtx, "identification", fmt.Sprintf("invalid action %s", req.Action))
 		return nil
 	}
 }
