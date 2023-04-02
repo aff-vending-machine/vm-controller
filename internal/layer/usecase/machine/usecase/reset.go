@@ -3,7 +3,7 @@ package machine_usecase
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 )
 
 func (uc *usecaseImpl) Reset(ctx context.Context) error {

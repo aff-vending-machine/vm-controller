@@ -1,13 +1,13 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/flow"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/flow/thaitropica"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/flow"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/thaitropica"
 )
 
 // Usecase layers
 type AppFlow struct {
-	ThaiTropica interface{ flow.ThaiTropica }
+	ThaiTropica interface{ flow.Jetts }
 }
 
 func NewAppFlow(adapter AppDriven) AppFlow {
@@ -21,8 +21,6 @@ func NewAppFlow(adapter AppDriven) AppFlow {
 			adapter.Repository.PaymentChannel,
 			adapter.Repository.Slot,
 			adapter.Repository.Transaction,
-			adapter.Serial.SmartEDC,
-			adapter.WebSocket.UI,
 		),
 	}
 }

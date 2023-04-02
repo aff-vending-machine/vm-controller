@@ -3,6 +3,7 @@ package flow
 import "fmt"
 
 var (
+	ErrOutOfService           = fmt.Errorf("vending machine is out of service")
 	ErrInvalidKey             = fmt.Errorf("invalid key")
 	ErrInvalidSlot            = fmt.Errorf("invalid slot")
 	ErrInvalidEvent           = fmt.Errorf("invalid event")

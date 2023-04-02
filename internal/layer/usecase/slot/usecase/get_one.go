@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/response"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
 )
 
 func (uc *usecaseImpl) GetOne(ctx context.Context, id uint) (*response.Slot, error) {

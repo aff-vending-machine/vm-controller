@@ -1,44 +1,41 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/infra/postgresql"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/infra/sqlite"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/api"
-	lugentpay_api "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/api/lugentpay"
-	mail_api "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/api/mail"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/api/smartedcv2"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/hardware"
-	queue_hardware "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/hardware/queue"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository"
-	customer_repository "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository/customer"
-	machine_repository "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository/machine"
-	payment_channel_repository "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository/payment_channel"
-	slot_repository "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository/slot"
-	transaction_repository "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository/transaction"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/serial"
-	// smartedc_serial "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/serial/smartedc"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/ws"
-	ui_ws "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/ws/ui"
-	"gorm.io/gorm"
+	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/http"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/sqlite"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
+	queue_hardware "github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware/queue"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
+	customer_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/customer"
+	machine_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/machine"
+	payment_channel_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
+	slot_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/slot"
+	transaction_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/transaction"
 )
 
 // Interface Adapter layers (driven)
 type AppDriven struct {
 	API        APIDriven
-	WebSocket  WebSocketDriven
+	Asset      AssetDriven
+	Display    DisplayDriven
 	Hardware   HardwareDriven
 	Repository RepositoryDriven
-	Serial     SerialDriven
 }
 
 type APIDriven struct {
-	LugentPay api.LugentPay
-	Mail      api.Mail
+	Ksher api.Ksher
+	EDC   api.Link2500
 }
 
-type WebSocketDriven struct {
-	UI ws.UI
+type AssetDriven struct {
+	Fonts  asset.Fonts
+	Images asset.Images
+}
+
+type DisplayDriven struct {
+	LCD display.LCD
 }
 
 type HardwareDriven struct {
@@ -53,26 +50,21 @@ type RepositoryDriven struct {
 	Transaction    repository.Transaction
 }
 
-type SerialDriven struct {
-	SmartEDC serial.SmartEDC
-}
-
 func NewAppDriven(cfg config.BootConfig) AppDriven {
-	var db *gorm.DB
-	if cfg.PostgreSQL.Enable {
-		db = postgresql.New(cfg.PostgreSQL)
-	} else {
-		db = sqlite.New(cfg.SQLite)
-	}
+	rest := http.New(cfg.HTTP)
+	db := sqlite.New(cfg.SQLite)
 
 	return AppDriven{
 		APIDriven{
-			lugentpay_api.New(),
-			mail_api.New(cfg.Mail),
-			// smartedcv2.New(),
+			ksher.New(rest),
+			link2500.New(rest),
 		},
-		WebSocketDriven{
-			ui_ws.New(),
+		AssetDriven{
+			fonts.New(cfg.App.Asset),
+			images.New(cfg.App.Asset),
+		},
+		DisplayDriven{
+			lcd_display.New(cfg.RasPi),
 		},
 		HardwareDriven{
 			queue_hardware.New(cfg.Redis),
@@ -83,10 +75,6 @@ func NewAppDriven(cfg config.BootConfig) AppDriven {
 			payment_channel_repository.New(db),
 			slot_repository.New(db),
 			transaction_repository.New(db),
-		},
-		SerialDriven{
-			// smartedc_serial.New(cfg.SmartEDC),
-			smartedcv2.New(),
 		},
 	}
 }

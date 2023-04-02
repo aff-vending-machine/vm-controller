@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/boot"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/utils/errs"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
+	"github.com/aff-vending-machine/vm-controller/pkg/utils/errs"
 	"github.com/rs/zerolog/log"
 )
 

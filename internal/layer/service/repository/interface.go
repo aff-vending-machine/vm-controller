@@ -3,17 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 )
-
-type Customer interface {
-	Count(ctx context.Context, filter []string) (int64, error)
-	FindOne(ctx context.Context, filter []string) (*entity.Customer, error)
-	FindMany(ctx context.Context, filter []string) ([]entity.Customer, error)
-	InsertOne(ctx context.Context, ent *entity.Customer) error
-	UpdateMany(ctx context.Context, filter []string, ent map[string]interface{}) (int64, error)
-	DeleteMany(ctx context.Context, filter []string) (int64, error)
-}
 
 type Machine interface {
 	Count(ctx context.Context, filter []string) (int64, error)

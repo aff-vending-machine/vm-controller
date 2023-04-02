@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 )

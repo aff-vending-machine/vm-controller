@@ -3,7 +3,7 @@ package slot_wrapper
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/rs/zerolog/log"
 )
 

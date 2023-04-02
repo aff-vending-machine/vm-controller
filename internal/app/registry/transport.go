@@ -1,10 +1,10 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/transport/http"
-	slot_http "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/transport/http/slot"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/transport/ws"
-	server_ws "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/transport/ws/server"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/http"
+	slot_http "github.com/aff-vending-machine/vm-controller/internal/layer/transport/http/slot"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/ws"
+	server_ws "github.com/aff-vending-machine/vm-controller/internal/layer/transport/ws/server"
 )
 
 // Interface Adapter layers (driver)

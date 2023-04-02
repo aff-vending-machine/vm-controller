@@ -1,7 +1,7 @@
 package slot_wrapper
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot"
 )
 
 type wrapperImpl struct {

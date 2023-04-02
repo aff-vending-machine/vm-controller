@@ -1,7 +1,7 @@
 package fiber
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/transport/http"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/http"
 	"github.com/gofiber/fiber/v2"
 )
 

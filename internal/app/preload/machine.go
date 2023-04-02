@@ -3,10 +3,10 @@ package preload
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/machine"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/machine/request"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/boot"
+	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 )
 
 func InitMachine(app config.AppConfig, uc machine.Usecase) string {
@@ -14,7 +14,7 @@ func InitMachine(app config.AppConfig, uc machine.Usecase) string {
 
 	sn, err := uc.StartUp(ctx,
 		&request.StartUp{
-			Codename:     "TTP",
+			Codename:     "JET",
 			Name:         app.Machine.Name,
 			SerialNumber: app.Machine.SerialNumber,
 			Location:     app.Machine.Location,

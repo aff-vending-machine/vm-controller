@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
 func (m *Template[T]) Count(ctx context.Context, filter []string) (int64, error) {

@@ -3,7 +3,7 @@ package fiber
 import (
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/app/registry"
+	"github.com/aff-vending-machine/vm-controller/internal/app/registry"
 	"github.com/rs/zerolog/log"
 )
 

@@ -1,6 +1,6 @@
 package flow
 
-import "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/hardware"
+import "github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 
 func (c *Ctx) AddWaitingEvent(event hardware.Event) {
 	c.Events[event.UID] = &event

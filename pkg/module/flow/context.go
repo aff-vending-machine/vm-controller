@@ -3,8 +3,8 @@ package flow
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 )
 
 type Ctx struct {
@@ -15,6 +15,7 @@ type Ctx struct {
 	Error          error
 	Events         map[string]*hardware.Event
 	ChangeStage    chan string
+	ClearWatchdog  chan bool
 	UserCtx        context.Context
 }
 
@@ -29,5 +30,6 @@ func NewContext() *Ctx {
 		Error:          nil,
 		Events:         make(map[string]*hardware.Event),
 		ChangeStage:    make(chan string, 1),
+		ClearWatchdog:  make(chan bool, 1),
 	}
 }

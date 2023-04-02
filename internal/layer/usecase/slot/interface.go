@@ -3,8 +3,8 @@ package slot
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/response"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
 )
 
 type Usecase interface {

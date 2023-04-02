@@ -3,7 +3,7 @@ package machine
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/machine/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
 )
 
 type Usecase interface {

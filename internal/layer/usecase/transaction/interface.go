@@ -3,7 +3,7 @@ package transaction
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/transaction/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/request"
 )
 
 type Usecase interface {

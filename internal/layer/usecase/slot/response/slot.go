@@ -1,6 +1,6 @@
 package response
 
-import "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
+import "github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 
 type Slot struct {
 	Code     string   `json:"code"`

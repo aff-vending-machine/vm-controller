@@ -3,7 +3,7 @@ package slot_usecase
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/response"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context, filter []string) ([]response.Slot, error) {

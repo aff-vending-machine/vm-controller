@@ -1,7 +1,7 @@
 package transaction_wrapper
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/transaction"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction"
 )
 
 type wrapperImpl struct {

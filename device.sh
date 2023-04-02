@@ -13,7 +13,7 @@
 VENDOR_ID="294a"
 PRODUCT_ID="3101"
 # Set the symlink name for your device
-SYMLINK_NAME="smartedc"
+SYMLINK_NAME="edc"
 
 # Determine the device path for the USB device
 DEVICE_PATH="$(udevadm info -q path -n /dev/ttyACM0)"

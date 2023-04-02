@@ -3,7 +3,7 @@ package request
 import (
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 )
 
 type Set struct {

@@ -1,7 +1,7 @@
 package transaction_usecase
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/service/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 )
 
 type usecaseImpl struct {

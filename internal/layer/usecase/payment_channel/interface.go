@@ -3,8 +3,8 @@ package payment_channel
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/payment_channel/request"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/payment_channel/response"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/response"
 )
 
 type Usecase interface {

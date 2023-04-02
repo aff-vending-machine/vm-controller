@@ -3,7 +3,7 @@ package payment_channel_usecase
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/payment_channel/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 )

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/utils"
+	"github.com/aff-vending-machine/vm-controller/pkg/utils"
 	"github.com/rs/zerolog/log"
 )
 

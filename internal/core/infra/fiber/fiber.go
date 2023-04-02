@@ -1,21 +1,21 @@
 package fiber
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
+	"github.com/aff-vending-machine/vm-controller/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
-func New(conf config.FiberConfig) *fiber.App {
+func New(cfg config.FiberConfig) *fiber.App {
 	app := fiber.New(fiber.Config{
 		DisableStartupMessage: true,
-		Prefork:               conf.Prefork,
-		CaseSensitive:         conf.CaseSensitive,
-		StrictRouting:         conf.StrictRouting,
-		ServerHeader:          conf.ServerHeader,
-		AppName:               conf.AppName,
+		Prefork:               cfg.Prefork,
+		CaseSensitive:         cfg.CaseSensitive,
+		StrictRouting:         cfg.StrictRouting,
+		ServerHeader:          cfg.ServerHeader,
+		AppName:               cfg.AppName,
 	})
 
 	app.Use(requestid.New())

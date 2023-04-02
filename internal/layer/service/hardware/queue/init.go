@@ -1,12 +1,12 @@
-package queue_hardware
+package queue
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/hardware"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/boot"
+	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/go-redis/redis/v8"
 )
 

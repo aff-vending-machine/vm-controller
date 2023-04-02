@@ -1,9 +1,9 @@
 package slot_http
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/fiber/rest"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
+	"github.com/aff-vending-machine/vm-controller/pkg/module/fiber/rest"
+	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/gofiber/fiber/v2"
 )
 

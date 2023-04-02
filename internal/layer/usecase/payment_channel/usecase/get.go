@@ -3,7 +3,7 @@ package payment_channel_usecase
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/payment_channel/response"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/response"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context, filter []string) (*response.PaymentChannel, error) {

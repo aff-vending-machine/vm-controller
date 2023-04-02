@@ -1,8 +1,8 @@
 package slot_usecase
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot/response"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
 )
 
 func toResponseList(slots []entity.Slot) []response.Slot {

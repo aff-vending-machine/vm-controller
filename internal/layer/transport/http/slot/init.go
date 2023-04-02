@@ -1,6 +1,6 @@
 package slot_http
 
-import "github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/slot"
+import "github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot"
 
 type restImpl struct {
 	usecase slot.Usecase

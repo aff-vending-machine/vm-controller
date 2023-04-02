@@ -1,8 +1,8 @@
 package sqlite
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/boot"
+	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"

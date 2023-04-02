@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/layer/usecase/machine/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
 	"github.com/rs/zerolog/log"
 )
 
