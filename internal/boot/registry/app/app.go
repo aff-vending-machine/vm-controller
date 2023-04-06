@@ -4,7 +4,6 @@ import (
 	"github.com/aff-vending-machine/vm-controller/config"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/preload"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/router/fiber"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/keypad"
 	"github.com/rs/zerolog/log"
 )
@@ -18,7 +17,7 @@ func Run(cfg config.BootConfig) {
 		transport = NewTransport(usecase, flow)
 	)
 
-	sn := preload.InitMachine(cfg.App, usecase.Machine)
+	machine := preload.InitMachine(cfg.App, usecase.Machine)
 
 	if cfg.App.Preload {
 		log.Debug().Msg("preload")
@@ -28,8 +27,7 @@ func Run(cfg config.BootConfig) {
 	}
 
 	keypad.New(module.Keypad).Scan(transport.Keypad)
-	fiber.New(module.Fiber).Serve(transport.HTTP)
-	flow.Jetts.ListenEvent(sn)
+	flow.Jetts.ListenEvent(machine.SerialNumber)
 
 	log.Debug().Msg("start application")
 }

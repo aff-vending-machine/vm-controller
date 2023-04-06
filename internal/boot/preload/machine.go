@@ -4,15 +4,16 @@ import (
 	"context"
 
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/response"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 )
 
-func InitMachine(app config.AppConfig, uc machine.Usecase) string {
+func InitMachine(app config.AppConfig, uc usecase.Machine) *response.Machine {
 	ctx := context.TODO()
 
-	sn, err := uc.StartUp(ctx,
+	res, err := uc.StartUp(ctx,
 		&request.StartUp{
 			Codename:     "JET",
 			Name:         app.Machine.Name,
@@ -24,5 +25,5 @@ func InitMachine(app config.AppConfig, uc machine.Usecase) string {
 		})
 	boot.TerminateWhenError(err)
 
-	return sn
+	return res
 }

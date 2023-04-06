@@ -7,7 +7,6 @@ import (
 
 func NewTransport(uc registry.Usecase, fw registry.Flow) registry.Transport {
 	return registry.Transport{
-		HTTP: registry.HTTPTransport{},
 		Keypad: registry.KeypadTransport{
 			Keypad: board.New(fw.Jetts),
 		},

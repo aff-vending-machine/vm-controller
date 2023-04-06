@@ -8,8 +8,8 @@ type server struct {
 	*fiber.Wrapper
 }
 
-func New(client *fiber.Wrapper) *server {
+func New(app *fiber.Wrapper) *server {
 	return &server{
-		client,
+		app,
 	}
 }
