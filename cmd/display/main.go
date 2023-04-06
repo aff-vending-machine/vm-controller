@@ -5,20 +5,21 @@ import (
 	"time"
 
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/model"
-	fonts_asset "github.com/aff-vending-machine/vm-controller/internal/core/service/asset/fonts"
-	images_asset "github.com/aff-vending-machine/vm-controller/internal/core/service/asset/images"
-	lcd_display "github.com/aff-vending-machine/vm-controller/internal/core/service/display/lcd"
-	"github.com/aff-vending-machine/vm-controller/internal/core/usecase/common/flow"
-	"github.com/aff-vending-machine/vm-controller/internal/core/usecase/jetts/usecase/facades"
-	"github.com/aff-vending-machine/vm-controller/internal/core/usecase/jetts/usecase/facades/displays"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/fonts"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display/lcd2k"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/screen"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/aff-vending-machine/vm-controller/pkg/log"
+	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
+	"github.com/rs/zerolog/log"
 )
 
 func init() {
-	log.New()
-	log.SetOutput(log.ColorConsole())
+	// log.New()
+	// log.SetOutput(log.ColorConsole())
 }
 
 func main() {
@@ -28,35 +29,35 @@ func main() {
 	defer boot.Serve()
 
 	// Run application
-	log.I().Msg("start")
+	log.Info().Msg("start")
 	ctx := context.TODO()
-	i := images_asset.New(conf.App.Asset)
-	f := fonts_asset.New(conf.App.Asset)
-	d := lcd_display.New(conf.RasPi)
-	g := displays.New(i, f, d)
-	log.I().Msg("inited")
+	i := images.New(conf.App.Asset)
+	f := fonts.New(conf.App.Asset)
+	d := lcd2k.New(conf.RasPi)
+	u := screen.New(i, f, d)
+	log.Info().Msg("inited")
 
 	// idleStage(g, ctx)
 	// orderStage(g, ctx)
 	// summaryStage(g, ctx)
 	// paymentStage(g, ctx)
-	receiveStage(g, ctx)
+	receiveStage(u, ctx)
 	// emergencyStage(g, ctx)
 }
 
-func idleStage(g facades.Displays, ctx context.Context) {
+func idleStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "idle")
-	log.I().Msg("stage-idle-bg")
+	log.Info().Msg("stage-idle-bg")
 }
 
-func orderStage(g facades.Displays, ctx context.Context) {
+func orderStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "order")
-	g.StageOrder(ctx, model.Item{}, &model.Data{})
-	log.I().Msg("stage-order-bg")
+	g.StageOrder(ctx, hardware.Item{}, &hardware.Data{})
+	log.Info().Msg("stage-order-bg")
 
 	g.Clear(ctx)
-	g.StageOrder(ctx, model.Item{}, &model.Data{
-		Cart: []model.Item{
+	g.StageOrder(ctx, hardware.Item{}, &hardware.Data{
+		Cart: []hardware.Item{
 			{
 				SlotCode: "999",
 				Name:     "Cola",
@@ -75,11 +76,11 @@ func orderStage(g facades.Displays, ctx context.Context) {
 	})
 
 	g.Clear(ctx)
-	g.StageOrder(ctx, model.Item{
+	g.StageOrder(ctx, hardware.Item{
 		SlotCode: "012",
 		Name:     "Test",
-	}, &model.Data{
-		Cart: []model.Item{
+	}, &hardware.Data{
+		Cart: []hardware.Item{
 			{
 				SlotCode: "999",
 				Name:     "Cola",
@@ -98,8 +99,8 @@ func orderStage(g facades.Displays, ctx context.Context) {
 	})
 
 	g.Clear(ctx)
-	g.StageOrder(ctx, model.Item{}, &model.Data{
-		Cart: []model.Item{
+	g.StageOrder(ctx, hardware.Item{}, &hardware.Data{
+		Cart: []hardware.Item{
 			{
 				SlotCode: "999",
 				Name:     "Cola",
@@ -125,9 +126,9 @@ func orderStage(g facades.Displays, ctx context.Context) {
 	})
 }
 
-func summaryStage(g facades.Displays, ctx context.Context) {
+func summaryStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "summary")
-	g.StageSummary(ctx, []model.Item{
+	g.StageSummary(ctx, []hardware.Item{
 		{
 			SlotCode: "999",
 			Name:     "Cola",
@@ -143,12 +144,12 @@ func summaryStage(g facades.Displays, ctx context.Context) {
 			Received: 0,
 		},
 	})
-	log.I().Msg("stage-summary-bg")
+	log.Info().Msg("stage-summary-bg")
 }
 
-func paymentStage(g facades.Displays, ctx context.Context) {
+func paymentStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "payment")
-	g.StagePayment(ctx)
+	g.StagePaymentChannel(ctx, []entity.PaymentChannel{})
 
 	time.Sleep(5 * time.Second)
 	g.Clear(ctx)
@@ -158,12 +159,12 @@ func paymentStage(g facades.Displays, ctx context.Context) {
 	g.Clear(ctx)
 	g.StagePaymentCreditCard(ctx, 99.2)
 
-	log.I().Msg("stage-payment-bg")
+	log.Info().Msg("stage-payment-bg")
 }
 
-func receiveStage(g facades.Displays, ctx context.Context) {
+func receiveStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "receive")
-	g.StageReceive(ctx, []model.Item{
+	g.StageReceive(ctx, []hardware.Item{
 		{
 			SlotCode: "999",
 			Name:     "Cola",
@@ -184,7 +185,7 @@ func receiveStage(g facades.Displays, ctx context.Context) {
 
 	time.Sleep(3 * time.Second)
 	g.Background(ctx, "receive")
-	g.StageReceive(ctx, []model.Item{
+	g.StageReceive(ctx, []hardware.Item{
 		{
 			SlotCode: "999",
 			Name:     "Cola",
@@ -202,10 +203,10 @@ func receiveStage(g facades.Displays, ctx context.Context) {
 	})
 	time.Sleep(3 * time.Second)
 
-	log.I().Msg("stage-receive-bg")
+	log.Info().Msg("stage-receive-bg")
 }
 
-func emergencyStage(g facades.Displays, ctx context.Context) {
+func emergencyStage(g usecase.Screen, ctx context.Context) {
 	g.Background(ctx, "emergency")
-	log.I().Msg("stage-emergency-bg")
+	log.Info().Msg("stage-emergency-bg")
 }

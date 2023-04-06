@@ -6,10 +6,10 @@ import (
 )
 
 type stageImpl struct {
-	displayUc   usecase.Display
+	displayUc   usecase.Screen
 	machineRepo repository.Machine
 }
 
-func New(du usecase.Display, mr repository.Machine) *stageImpl {
+func New(du usecase.Screen, mr repository.Machine) *stageImpl {
 	return &stageImpl{du, mr}
 }

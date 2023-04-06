@@ -5,10 +5,10 @@ import (
 )
 
 type stageImpl struct {
-	displayUc usecase.Display
+	displayUc usecase.Screen
 	reset     int
 }
 
-func New(du usecase.Display) *stageImpl {
+func New(du usecase.Screen) *stageImpl {
 	return &stageImpl{du, 0}
 }

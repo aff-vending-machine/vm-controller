@@ -1,4 +1,4 @@
-package display
+package screen
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset"

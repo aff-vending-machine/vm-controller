@@ -9,7 +9,7 @@ import (
 )
 
 type stageImpl struct {
-	displayUc   usecase.Display
+	displayUc   usecase.Screen
 	queue       hardware.Queue
 	slotRepo    repository.Slot
 	slot        *entity.Slot
@@ -17,6 +17,6 @@ type stageImpl struct {
 	pendingItem model.Item
 }
 
-func New(du usecase.Display, qh hardware.Queue, sr repository.Slot) *stageImpl {
+func New(du usecase.Screen, qh hardware.Queue, sr repository.Slot) *stageImpl {
 	return &stageImpl{du, qh, sr, nil, 0, model.Item{}}
 }

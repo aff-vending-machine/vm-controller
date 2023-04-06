@@ -2,21 +2,23 @@ package registry
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/thaitropica"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts"
 )
 
 // Usecase layers
 type AppFlow struct {
-	ThaiTropica interface{ flow.Jetts }
+	Jetts interface{ flow.Jetts }
 }
 
 func NewAppFlow(adapter AppDriven) AppFlow {
 	return AppFlow{
-		thaitropica.New(
-			adapter.API.LugentPay,
-			adapter.API.Mail,
+		jetts.New(
+			adapter.API.Ksher,
+			adapter.API.Link2500,
+			adapter.Asset.Images,
+			adapter.Asset.Fonts,
+			adapter.Display.LCD,
 			adapter.Hardware.Queue,
-			adapter.Repository.Customer,
 			adapter.Repository.Machine,
 			adapter.Repository.PaymentChannel,
 			adapter.Repository.Slot,

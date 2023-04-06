@@ -28,7 +28,7 @@ func Run(cfg config.BootConfig) {
 	}
 
 	fiber.New(cfg.Fiber).Serve(cfg.Fiber.Port, dr.HTTP)
-	fw.ThaiTropica.ListenEvent(context.Background(), sn)
+	fw.Jetts.ListenEvent(context.Background(), sn)
 
 	log.Debug().Msg("start application")
 }

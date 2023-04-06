@@ -7,12 +7,12 @@ import (
 )
 
 type stageImpl struct {
-	displayUc          usecase.Display
+	displayUc          usecase.Screen
 	paymentChannelRepo repository.PaymentChannel
 	transactionRepo    repository.Transaction
 	channels           []entity.PaymentChannel
 }
 
-func New(dg usecase.Display, pr repository.PaymentChannel, tr repository.Transaction) *stageImpl {
+func New(dg usecase.Screen, pr repository.PaymentChannel, tr repository.Transaction) *stageImpl {
 	return &stageImpl{dg, pr, tr, make([]entity.PaymentChannel, 0)}
 }

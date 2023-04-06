@@ -1,4 +1,4 @@
-package display
+package screen
 
 func ellipsis(txt string, limit int) string {
 	if len(txt) > limit-3 {

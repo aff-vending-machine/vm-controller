@@ -7,7 +7,7 @@ import (
 )
 
 type apiImpl struct {
-	client *http.Client
+	*http.Client
 }
 
 func New(cfg config.HTTPConfig) *apiImpl {
@@ -19,6 +19,6 @@ func New(cfg config.HTTPConfig) *apiImpl {
 	}
 
 	return &apiImpl{
-		client: client,
+		client,
 	}
 }

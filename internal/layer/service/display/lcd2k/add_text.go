@@ -1,4 +1,4 @@
-package lcd_display
+package lcd2k
 
 import (
 	"context"

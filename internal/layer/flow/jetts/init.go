@@ -15,6 +15,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/screen"
 	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
 )
 
@@ -37,14 +38,14 @@ func New(
 	sr repository.Slot,
 	tr repository.Transaction,
 ) *Flow {
-	du := display.New()
+	du := screen.New(ia, fa, ld)
 
 	stages := map[string]stages.Stage{
 		"idle":            idle.New(du, mr),
 		"order":           order.New(du, qh, sr),
-		"payment_channel": payment_channel.New(du, pr),
-		"payment":         payment.New(du, la, qh, tr),
-		"receive":         receive.New(du, la, qh, sr, tr),
+		"payment_channel": payment_channel.New(du, pr, tr),
+		"payment":         payment.New(du, ka, la, qh, tr),
+		"receive":         receive.New(du, ka, la, qh, sr, tr),
 		"emergency":       emergency.New(du),
 	}
 

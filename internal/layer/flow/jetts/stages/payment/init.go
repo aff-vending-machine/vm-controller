@@ -11,7 +11,7 @@ import (
 )
 
 type stageImpl struct {
-	displayUc       usecase.Display
+	displayUc       usecase.Screen
 	ksher           api.Ksher
 	link2500        api.Link2500
 	queue           hardware.Queue
@@ -22,7 +22,7 @@ type stageImpl struct {
 	CancelFn        context.CancelFunc
 }
 
-func New(du usecase.Display, ka api.Ksher, la api.Link2500, qh hardware.Queue, tr repository.Transaction) *stageImpl {
+func New(du usecase.Screen, ka api.Ksher, la api.Link2500, qh hardware.Queue, tr repository.Transaction) *stageImpl {
 	return &stageImpl{
 		du, ka, la, qh, tr,
 		10 * time.Second,

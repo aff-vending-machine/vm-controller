@@ -3,6 +3,7 @@ package jetts
 import (
 	"context"
 
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/rs/zerolog/log"
 )
 
@@ -18,5 +19,5 @@ func (uc *Flow) OnKeyPressed(ctx context.Context, k string) error {
 		return nil
 	}
 
-	return uc.stages[uc.context.Stage].OnKeyPressed(uc.context, k)
+	return uc.stages[uc.context.Stage].OnKeyPressed(uc.context, hardware.Key(k))
 }

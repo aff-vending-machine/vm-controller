@@ -1,4 +1,4 @@
-package slot_repository
+package slot
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"

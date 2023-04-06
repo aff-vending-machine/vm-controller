@@ -7,7 +7,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 )
 
-type Display interface {
+type Screen interface {
 	Error(context.Context, error)
 	Background(context.Context, string)
 	Clear(context.Context)

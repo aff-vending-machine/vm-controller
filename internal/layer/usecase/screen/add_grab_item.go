@@ -1,4 +1,4 @@
-package display
+package screen
 
 import (
 	"context"
@@ -8,11 +8,12 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/property"
 )
 
-func (g *usecaseImpl) addCart(ctx context.Context, item hardware.Item, cart []hardware.Item) {
+func (g *usecaseImpl) addGrabItem(ctx context.Context, cart []hardware.Item) {
 	screen := g.display.GetProperty(ctx)
 	text := property.InitText(g.fontAsset.Get(ctx), 200, 800, screen.Width, screen.Height)
 
 	label := ""
+	grab := 0
 	total := 0
 	price := 0.0
 
@@ -20,34 +21,22 @@ func (g *usecaseImpl) addCart(ctx context.Context, item hardware.Item, cart []ha
 		label = fmt.Sprintf("%s: %s", item.SlotCode, ellipsis(item.Name, 16))
 		g.display.AddText(ctx, text.Left(label))
 
-		label = fmt.Sprintf("%d", item.Quantity)
+		label = fmt.Sprintf("%d / %d", item.Received, item.Quantity)
 		g.display.AddText(ctx, text.Right(label))
 
+		grab += item.Received
 		total += item.Quantity
 		price += float64(item.Quantity) * item.Price
 		text = text.NextLine()
 	}
 
-	scLen := len(item.SlotCode)
-
-	if scLen > 0 {
-		label = fmt.Sprintf("%s%s: %s", item.SlotCode, "___"[:3-scLen], ellipsis(item.Name, 16))
-		g.display.AddText(ctx, text.Left(label))
-
-		if len(item.SlotCode) == 3 {
-			g.display.AddText(ctx, text.Right("_"))
-		}
-	}
+	text = text.Reset(0, 400)
+	g.display.AddText(ctx, text.Center("TOTAL"))
 
 	text = text.Reset(200, 1600)
-	g.display.AddText(ctx, text.Left("Total"))
-
-	label = fmt.Sprintf("%d", total)
-	g.display.AddText(ctx, text.Right(label))
-
 	text = text.NextLine()
-	g.display.AddText(ctx, text.Left("Payment"))
+	g.display.AddText(ctx, text.Left("Received Item"))
 
-	label = fmt.Sprintf("%0.02f", price)
+	label = fmt.Sprintf("%d / %d", grab, total)
 	g.display.AddText(ctx, text.Right(label))
 }

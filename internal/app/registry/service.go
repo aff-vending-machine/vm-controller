@@ -5,14 +5,20 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/http"
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/sqlite"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/ksher"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/link2500"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/fonts"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display/lcd2k"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
-	queue_hardware "github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware/queue"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware/queue"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
-	customer_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/customer"
-	machine_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/machine"
-	payment_channel_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
-	slot_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/slot"
-	transaction_repository "github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/transaction"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/machine"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/slot"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/transaction"
 )
 
 // Interface Adapter layers (driven)
@@ -25,8 +31,8 @@ type AppDriven struct {
 }
 
 type APIDriven struct {
-	Ksher api.Ksher
-	EDC   api.Link2500
+	Ksher    api.Ksher
+	Link2500 api.Link2500
 }
 
 type AssetDriven struct {
@@ -43,7 +49,6 @@ type HardwareDriven struct {
 }
 
 type RepositoryDriven struct {
-	Customer       repository.Customer
 	Machine        repository.Machine
 	PaymentChannel repository.PaymentChannel
 	Slot           repository.Slot
@@ -56,25 +61,24 @@ func NewAppDriven(cfg config.BootConfig) AppDriven {
 
 	return AppDriven{
 		APIDriven{
-			ksher.New(rest),
-			link2500.New(rest),
+			ksher.New(rest.Client),
+			link2500.New(rest.Client),
 		},
 		AssetDriven{
 			fonts.New(cfg.App.Asset),
 			images.New(cfg.App.Asset),
 		},
 		DisplayDriven{
-			lcd_display.New(cfg.RasPi),
+			lcd2k.New(cfg.RasPi),
 		},
 		HardwareDriven{
-			queue_hardware.New(cfg.Redis),
+			queue.New(cfg.Redis),
 		},
 		RepositoryDriven{
-			customer_repository.New(db),
-			machine_repository.New(db),
-			payment_channel_repository.New(db),
-			slot_repository.New(db),
-			transaction_repository.New(db),
+			machine.New(db),
+			payment_channel.New(db),
+			slot.New(db),
+			transaction.New(db),
 		},
 	}
 }
