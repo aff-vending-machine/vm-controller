@@ -5,8 +5,8 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils/errs"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"github.com/aff-vending-machine/vm-controller/pkg/errs"
 )
 
 func (s *stageImpl) createTransaction(c *flow.Ctx) error {

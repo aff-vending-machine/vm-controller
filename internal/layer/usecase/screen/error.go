@@ -6,7 +6,7 @@ import (
 	"image/color"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/property"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 )
 
 func (g *usecaseImpl) Error(ctx context.Context, e error) {

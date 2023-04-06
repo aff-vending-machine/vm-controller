@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/rs/zerolog/log"
 )
 

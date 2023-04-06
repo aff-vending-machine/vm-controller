@@ -1,7 +1,7 @@
 package order
 
 import (
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 )
 
 func (s *stageImpl) OnInit(c *flow.Ctx) {

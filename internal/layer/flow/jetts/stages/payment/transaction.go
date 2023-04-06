@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/rs/zerolog/log"
 )
 

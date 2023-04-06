@@ -3,6 +3,7 @@ package jetts
 import (
 	"time"
 
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/emergency"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/idle"
@@ -17,7 +18,6 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/screen"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
 )
 
 type Flow struct {

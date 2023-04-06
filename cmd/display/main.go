@@ -7,13 +7,13 @@ import (
 	"github.com/aff-vending-machine/vm-controller/config"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/fonts"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display/lcd2k"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/screen"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/flow"
 	"github.com/rs/zerolog/log"
 )
 

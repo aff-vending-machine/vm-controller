@@ -2,7 +2,7 @@ package transaction
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/pkg/module/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/core/module/repository"
 	"gorm.io/gorm"
 )
 
