@@ -1,4 +1,4 @@
-package ksher_console
+package ksher
 
 type consoleImpl struct {
 	retry int

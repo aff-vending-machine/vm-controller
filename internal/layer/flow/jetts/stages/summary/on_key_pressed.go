@@ -11,7 +11,12 @@ func (s *stageImpl) OnKeyPressed(c *flow.Ctx, key hardware.Key) error {
 		c.ChangeStage <- "order"
 
 	case hardware.SHARP:
-		s.createTransaction(c)
+		err := s.createTransaction(c)
+		if err != nil {
+			c.ChangeStage <- "emergency"
+			return s.error(c, flow.ErrOutOfService, "out of service")
+		}
+
 		c.ChangeStage <- "payment_channel"
 	}
 

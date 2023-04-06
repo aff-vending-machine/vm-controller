@@ -19,8 +19,8 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		Price: c.Data.TotalPrice(),
 	}
 	res, err := s.link2500.Sale(ctx, c.PaymentChannel, &req)
-	if c.Stage != "payment" || c.PaymentChannel.Name != "creditcard" {
-		log.Error().Msg("cancelled by user")
+	if c.Stage != "payment" || c.PaymentChannel.Channel != "creditcard" {
+		log.Error().Str("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 		return
 	}
 

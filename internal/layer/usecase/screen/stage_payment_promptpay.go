@@ -13,6 +13,11 @@ import (
 )
 
 func (g *usecaseImpl) StagePaymentPromptPay(ctx context.Context, qrcode string, price float64) {
+	if strings.HasPrefix(qrcode, "MOCKUP") {
+		log.Warn().Str("QRCode", qrcode).Float64("price", price).Msg("mockup payment")
+		return
+	}
+
 	screen := g.display.GetProperty(ctx)
 
 	logo, err := g.imgAsset.GetImage(ctx, "promptpay.png")
@@ -32,9 +37,7 @@ func (g *usecaseImpl) StagePaymentPromptPay(ctx context.Context, qrcode string, 
 	input := base64.NewDecoder(base64.StdEncoding, strings.NewReader(b64))
 	src, err := png.Decode(input)
 	if err != nil {
-		log.Error().
-			Err(err).
-			Msg("failed to handle queue polling")
+		log.Error().Err(err).Msg("failed to decode image")
 		return
 	}
 

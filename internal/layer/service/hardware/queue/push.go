@@ -13,7 +13,7 @@ func (hw *hardwareImpl) Push(ctx context.Context, key string, event hardware.Eve
 	defer span.End()
 
 	value := event.ToValueCode()
-	log.Debug().Str("key", key).Str("event", event.ToValueCode()).Msg("push event")
+	log.Debug().Str("key", key).Str("event", event.ToValueCode()).Msg("EVENT: PUSH")
 	cmd := hw.client.LPush(ctx, key, value)
 	if err := cmd.Err(); err != nil {
 		return err

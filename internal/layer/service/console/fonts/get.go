@@ -1,4 +1,4 @@
-package font_console
+package fonts
 
 import (
 	"context"

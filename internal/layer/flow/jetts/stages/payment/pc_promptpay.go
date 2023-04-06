@@ -22,8 +22,8 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		DeviceID:        c.Machine.SerialNumber,
 	}
 	res, err := s.ksher.CreateOrder(ctx, c.PaymentChannel, &req)
-	if c.Stage != "payment" || c.PaymentChannel.Name != "promptpay" {
-		log.Error().Msg("cancelled by user")
+	if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
+		log.Error().Str("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 		return
 	}
 
@@ -52,7 +52,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		return
 	}
 
-	err = s.updateReferenceTransaction(c, res.ID, res.AcquirerOrderID, res.GatewayOrderID)
+	err = s.updateReferenceTransaction(c, res.Reference, res.GatewayOrderID, res.AcquirerOrderID)
 	if err != nil {
 		c.ChangeStage <- "emergency"
 		return
@@ -69,7 +69,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 	for {
 		select {
 		case <-s.ticker.C:
-			if c.Stage != "payment" || c.PaymentChannel.Name != "promptpay" {
+			if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
 				log.Error().Msg("cancelled by user")
 				return
 			}
@@ -103,7 +103,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 			}
 
 		case <-time.After(5 * time.Minute):
-			if c.Stage != "payment" || c.PaymentChannel.Name != "promptpay" {
+			if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
 				log.Error().Msg("cancelled by user")
 				return
 			}

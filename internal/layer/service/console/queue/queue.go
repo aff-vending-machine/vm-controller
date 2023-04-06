@@ -2,7 +2,6 @@ package queue
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
@@ -16,7 +15,7 @@ func (*consoleImpl) Push(ctx context.Context, key string, data hardware.Event) e
 	_, span := trace.Start(ctx)
 	defer span.End()
 
-	fmt.Printf("Push %s: %s \n", key, data.ToValueCode())
+	log.Debug().Str("key", key).Str("event", data.ToValueCode()).Msg("EVENT: Push")
 	if mem[key] == nil {
 		mem[key] = make([]hardware.Event, 0)
 	}
@@ -30,12 +29,12 @@ func (*consoleImpl) Pop(ctx context.Context, key string) (*hardware.Event, error
 
 	event := mem[key]
 	if event == nil {
-		fmt.Printf("no %s in memory \n", key)
+		//fmt.Printf("no %s in memory \n", key)
 	} else if len(event) > 0 {
-		fmt.Printf("Pop %s: %s \n", key, event[0].ToValueCode())
+		log.Debug().Str("key", key).Str("event", event[0].ToValueCode()).Msg("EVENT: Pop")
 		mem[key] = mem[key][1:]
 	} else {
-		fmt.Printf("Pop %s: <EMPTY> \n", key)
+		log.Debug().Str("key", key).Msg("EVENT: Pop <empty>")
 	}
 
 	if len(event) == 0 {
@@ -49,7 +48,7 @@ func (*consoleImpl) Clear(ctx context.Context) error {
 	_, span := trace.Start(ctx)
 	defer span.End()
 
-	fmt.Printf("Clear Queue\n")
+	log.Debug().Msg("Clear QUEUE")
 	mem = make(map[string][]hardware.Event, 0)
 	return nil
 }
@@ -58,7 +57,7 @@ func (*consoleImpl) PushCommand(ctx context.Context, key string, val string) err
 	_, span := trace.Start(ctx)
 	defer span.End()
 
-	fmt.Printf("Push %s: %s \n", key, val)
+	log.Debug().Str("key", key).Str("command", val).Msg("EVENT: Push")
 	if mem[key] == nil {
 		mem[key] = make([]hardware.Event, 0)
 	}
@@ -70,11 +69,11 @@ func (*consoleImpl) Polling(ctx context.Context, key string, total int, handler 
 	_, span := trace.Start(ctx)
 	defer span.End()
 
-	fmt.Printf("Polling: %s\n", key)
-	for k, v := range mem["QUEUE"] {
+	log.Debug().Str("key", key).Int("total", total).Msg("EVENT: Polling")
+	for i, v := range mem["QUEUE"] { // take from QUEUE instead of RESPONSE
 		time.Sleep(5 * time.Second)
 		v.Status = "S0"
-		fmt.Printf("Process %d: %s \n", k, v.ToValueCode())
+		log.Debug().Str("key", key).Int("index", i).Str("value", v.ToValueCode()).Msg("EVENT: Process")
 		err := handler(&v)
 		if err != nil {
 			log.Error().Interface("event", v).Err(err).Msg("failed to handle queue polling")
@@ -91,6 +90,6 @@ func (*consoleImpl) ClearStack(ctx context.Context) {
 	_, span := trace.Start(ctx)
 	defer span.End()
 
-	fmt.Printf("Clear Stack\n")
+	log.Debug().Msg("Clear STACK")
 	mem = make(map[string][]hardware.Event, 0)
 }

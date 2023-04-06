@@ -4,7 +4,7 @@ type BootConfig struct {
 	App    AppConfig    `mapstructure:"APP"`
 	Fiber  FiberConfig  `mapstructure:"FIBER"`
 	HTTP   HTTPConfig   `mapstructure:"HTTP"`
-	RasPi  RasPiConfig  `mapstructure:"RASPI"`
+	Board  BoardConfig  `mapstructure:"BOARD"`
 	Redis  RedisConfig  `mapstructure:"REDIS"`
 	SQLite SQLiteConfig `mapstructure:"SQLITE"`
 }

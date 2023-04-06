@@ -34,7 +34,9 @@ func (s *stageImpl) error(c *flow.Ctx, err error, msg string) error {
 
 	go func() {
 		time.Sleep(5 * time.Second)
-		s.show(c)
+		if c.Stage == "receive" {
+			s.show(c)
+		}
 	}()
 
 	return err

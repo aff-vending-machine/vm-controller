@@ -24,7 +24,7 @@ func (h *hardwareImpl) Pop(ctx context.Context, key string) (*hardware.Event, er
 	}
 
 	event := hardware.NewEventFromString(result)
-	log.Debug().Str("key", key).Str("event", result).Msg("pop event")
+	log.Debug().Str("key", key).Str("event", result).Msg("EVENT: POP")
 	if event == nil {
 		return nil, fmt.Errorf("invalid event %s", result)
 	}

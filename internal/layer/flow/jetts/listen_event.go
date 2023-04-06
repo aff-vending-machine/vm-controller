@@ -8,8 +8,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (uc *Flow) ListenEvent(c context.Context, sn string) {
-	uc.context.UserCtx = c
+func (uc *Flow) ListenEvent(sn string) {
+	uc.context.UserCtx = context.Background()
 
 	timeout := 2 * time.Minute
 	uc.stages["idle"].OnInit(uc.context)

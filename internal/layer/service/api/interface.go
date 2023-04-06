@@ -17,5 +17,6 @@ type Ksher interface {
 type Link2500 interface {
 	Sale(context.Context, *entity.PaymentChannel, *link2500.SaleRequest) (*link2500.SaleResult, error)
 	Void(context.Context, *entity.PaymentChannel, *link2500.VoidRequest) (*link2500.VoidResult, error)
+	Refund(context.Context, *entity.PaymentChannel, *link2500.RefundRequest) (*link2500.RefundResult, error)
 	Settlement(context.Context, *entity.PaymentChannel) (*link2500.SettlementResult, error)
 }

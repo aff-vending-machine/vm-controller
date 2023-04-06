@@ -11,7 +11,7 @@ func (uc *Flow) OnKeyPressed(ctx context.Context, k string) error {
 	uc.context.UserCtx = ctx
 	uc.context.ClearWatchdog <- true
 
-	log.Debug().Str("stage", uc.context.Stage).Str("k", k).Msg("key pressed")
+	log.Debug().Str("stage", uc.context.Stage).Str("key", k).Msg("key pressed")
 
 	if uc.stages[uc.context.Stage] == nil {
 		log.Debug().Str("stage", uc.context.Stage).Msg("stage is nil")

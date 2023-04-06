@@ -19,7 +19,7 @@ type displayImpl struct {
 	bg     image.Image
 }
 
-func New(conf config.RasPiConfig) *displayImpl {
+func New(conf config.BoardConfig) *displayImpl {
 	device, err := framebuffer.Init(conf.LCDDevice)
 	boot.TerminateWhenError(err)
 	boot.AddTerminateFn(func(ctx context.Context) {

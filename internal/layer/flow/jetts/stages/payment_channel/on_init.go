@@ -6,7 +6,7 @@ import (
 )
 
 func (s *stageImpl) OnInit(c *flow.Ctx) {
-	channels, err := s.paymentChannelRepo.FindMany(c.UserCtx, []string{"active:=:true"})
+	channels, err := s.paymentChannelRepo.FindMany(c.UserCtx, []string{"active:=:true.(bool)"})
 	if err != nil {
 		log.Error().Err(err).Msg("unable to get channel")
 		s.error(c, err, "out of service")

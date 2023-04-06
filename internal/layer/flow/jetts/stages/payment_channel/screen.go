@@ -27,7 +27,9 @@ func (s *stageImpl) error(c *flow.Ctx, err error, msg string) error {
 
 	go func() {
 		time.Sleep(5 * time.Second)
-		s.show(c, s.channels)
+		if c.Stage == "payment_channel" {
+			s.show(c, s.channels)
+		}
 	}()
 
 	return err

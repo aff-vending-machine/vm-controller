@@ -1,4 +1,4 @@
-package link2500_console
+package link2500
 
 type consoleImpl struct {
 }

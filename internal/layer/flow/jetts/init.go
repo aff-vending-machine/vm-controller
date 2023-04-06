@@ -10,6 +10,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/payment"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/payment_channel"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/receive"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/summary"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
@@ -43,6 +44,7 @@ func New(
 	stages := map[string]stages.Stage{
 		"idle":            idle.New(du, mr),
 		"order":           order.New(du, qh, sr),
+		"summary":         summary.New(du, tr),
 		"payment_channel": payment_channel.New(du, pr, tr),
 		"payment":         payment.New(du, ka, la, qh, tr),
 		"receive":         receive.New(du, ka, la, qh, sr, tr),

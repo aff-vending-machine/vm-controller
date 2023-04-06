@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/app"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/app"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/aff-vending-machine/vm-controller/pkg/log"
 )

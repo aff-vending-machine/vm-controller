@@ -33,7 +33,7 @@ func main() {
 	ctx := context.TODO()
 	i := images.New(conf.App.Asset)
 	f := fonts.New(conf.App.Asset)
-	d := lcd2k.New(conf.RasPi)
+	d := lcd2k.New(conf.Board)
 	u := screen.New(i, f, d)
 	log.Info().Msg("inited")
 

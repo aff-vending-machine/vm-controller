@@ -7,20 +7,20 @@ import (
 )
 
 func (s *stageImpl) OnKeyPressed(c *flow.Ctx, key hardware.Key) error {
-	switch key.ToString() {
+	switch key.Type() {
 	case hardware.NUMBER:
 		index := key.ToNumber() - 1
 		if index >= 0 && index < len(s.channels) {
 			err := s.updateTransaction(c, s.channels[index])
 			if err != nil {
 				c.ChangeStage <- "emergency"
-				return s.error(c, flow.ErrInvalidKey, "out of service")
+				return s.error(c, flow.ErrOutOfService, "out of service")
 			}
 
 			c.PaymentChannel = &s.channels[index]
 			c.ChangeStage <- "payment"
 		} else {
-			return s.error(c, flow.ErrInvalidKey, "out of service")
+			return s.error(c, flow.ErrInvalidKey, "invalid key")
 		}
 
 	case hardware.StarKey:

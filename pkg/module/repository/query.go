@@ -51,6 +51,19 @@ func MakeQuery(db *gorm.DB, filter []string) *gorm.DB {
 
 		default:
 			where := fmt.Sprintf("%s %s ?", field, condition)
+
+			if val, ok := strings.CutSuffix(value, ".(bool)"); ok {
+				tx = tx.Where(where, strings.HasPrefix(val, "true"))
+				continue
+			}
+
+			if val, ok := strings.CutSuffix(value, ".(int)"); ok {
+				if num, err := strconv.Atoi(val); err != nil {
+					tx = tx.Where(where, num)
+					continue
+				}
+			}
+
 			tx = tx.Where(where, value)
 		}
 	}

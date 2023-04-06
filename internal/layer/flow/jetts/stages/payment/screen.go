@@ -33,7 +33,7 @@ func (s *stageImpl) showCreditCard(c *flow.Ctx) {
 
 func (s *stageImpl) showPromptPay(c *flow.Ctx, res *ksher.CreateOrderResult) {
 	s.displayUc.Clear(c.UserCtx)
-	s.displayUc.StagePaymentPromptPay(c.UserCtx, res.Reference, c.Data.TotalPrice())
+	s.displayUc.StagePaymentPromptPay(c.UserCtx, res.Reserved1, c.Data.TotalPrice())
 }
 
 func (s *stageImpl) error(c *flow.Ctx, err error, msg string) error {
@@ -43,7 +43,9 @@ func (s *stageImpl) error(c *flow.Ctx, err error, msg string) error {
 
 	go func() {
 		time.Sleep(5 * time.Second)
-		s.show(c)
+		if c.Stage == "payment" {
+			s.show(c)
+		}
 	}()
 
 	return err

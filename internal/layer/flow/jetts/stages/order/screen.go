@@ -25,8 +25,10 @@ func (s *stageImpl) error(c *flow.Ctx, err error) error {
 
 	go func() {
 		time.Sleep(5 * time.Second)
-		s.displayUc.Clear(c.UserCtx)
-		s.displayUc.StageOrder(c.UserCtx, s.pendingItem, c.Data)
+		if c.Stage == "order" {
+			s.displayUc.Clear(c.UserCtx)
+			s.displayUc.StageOrder(c.UserCtx, s.pendingItem, c.Data)
+		}
 	}()
 
 	return err
