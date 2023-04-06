@@ -16,6 +16,7 @@ type KeypadTransport struct {
 }
 
 type RPCTransport struct {
-	Machine rpc.Machine
-	Slot    rpc.Slot
+	Machine     rpc.Machine
+	Slot        rpc.Slot
+	Transaction rpc.Transaction
 }

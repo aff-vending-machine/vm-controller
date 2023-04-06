@@ -1,4 +1,4 @@
-package payment_channel_usecase
+package payment_channel
 
 import (
 	"context"

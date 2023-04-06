@@ -1,4 +1,4 @@
-package payment_channel
+package usecase
 
 import (
 	"context"
@@ -7,7 +7,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/response"
 )
 
-type Usecase interface {
+type PaymentChannel interface {
 	Create(context.Context, *request.Create) error
 	Get(context.Context, []string) (*response.PaymentChannel, error)
 }

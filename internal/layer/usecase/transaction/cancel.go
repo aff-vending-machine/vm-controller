@@ -1,4 +1,4 @@
-package transaction_usecase
+package transaction
 
 import (
 	"context"

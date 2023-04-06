@@ -5,6 +5,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/boot/preload"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/keypad"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/router/rpc"
 	"github.com/rs/zerolog/log"
 )
 
@@ -27,6 +28,7 @@ func Run(cfg config.BootConfig) {
 	}
 
 	keypad.New(module.Keypad).Scan(transport.Keypad)
+	rpc.New(module.RabbitMQ).Serve(machine.SerialNumber, transport.RPC)
 	flow.Jetts.ListenEvent(machine.SerialNumber)
 
 	log.Debug().Msg("start application")

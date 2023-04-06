@@ -1,4 +1,4 @@
-package payment_channel_usecase
+package payment_channel
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"

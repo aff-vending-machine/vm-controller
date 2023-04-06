@@ -5,5 +5,5 @@ import (
 )
 
 func (s *server) routeMachine(endpoint rpc.Machine) {
-	s.Register("machine", endpoint.Get)
+	s.Register("machine.get", endpoint.Get)
 }

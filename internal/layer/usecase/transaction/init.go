@@ -1,4 +1,4 @@
-package transaction_usecase
+package transaction
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"

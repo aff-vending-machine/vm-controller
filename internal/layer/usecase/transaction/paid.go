@@ -6,7 +6,6 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/request"
 )
 
-type Usecase interface {
-	Paid(context.Context, *request.Paid) error
-	Cancel(context.Context, *request.Cancel) error
+func (uc *usecaseImpl) Paid(ctx context.Context, req *request.Paid) error {
+	return nil
 }

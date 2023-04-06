@@ -4,13 +4,13 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/rs/zerolog/log"
 )
 
-func InitPromptPay(uc payment_channel.Usecase) {
+func InitPromptPay(uc usecase.PaymentChannel) {
 	ctx := context.TODO()
 
 	channel, err := uc.Get(ctx, []string{"channel:=:promptpay"})
@@ -40,7 +40,7 @@ func InitPromptPay(uc payment_channel.Usecase) {
 	log.Info().Msg("create promptpay (Ksher) channel")
 }
 
-func InitCreditCard(uc payment_channel.Usecase) {
+func InitCreditCard(uc usecase.PaymentChannel) {
 	ctx := context.TODO()
 
 	channel, err := uc.Get(ctx, []string{"channel:=:creditcard"})

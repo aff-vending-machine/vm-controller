@@ -8,6 +8,7 @@ import (
 func (s *server) Serve(queue string, driver registry.RPCTransport) {
 	s.routeMachine(driver.Machine)
 	s.routeSlot(driver.Slot)
+	s.routeTransaction(driver.Transaction)
 
 	go s.Listen(queue)
 

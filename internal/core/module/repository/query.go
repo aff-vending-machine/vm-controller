@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -51,6 +52,13 @@ func MakeQuery(db *gorm.DB, filter []string) *gorm.DB {
 
 		default:
 			where := fmt.Sprintf("%s %s ?", field, condition)
+
+			if val, ok := strings.CutSuffix(value, ".([]uint)"); ok {
+				uints := make([]uint, 0)
+				json.Unmarshal([]byte(val), &uints)
+				tx = tx.Where(where, uints)
+				continue
+			}
 
 			if val, ok := strings.CutSuffix(value, ".(bool)"); ok {
 				tx = tx.Where(where, strings.HasPrefix(val, "true"))
