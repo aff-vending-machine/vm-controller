@@ -8,8 +8,6 @@ import (
 
 type Transaction struct {
 	ID                  uint       `json:"id"`
-	CreatedAt           time.Time  `json:"created_at"`
-	UpdatedAt           time.Time  `json:"updated_at"`
 	MerchantOrderID     string     `json:"merchant_order_id"`     // key to find order
 	MachineSerialNumber string     `json:"machine_serial_number"` // key to find machine
 	Location            string     `json:"location"`              // ordered
@@ -41,8 +39,6 @@ type Transaction struct {
 func ToTransaction(e *entity.Transaction) *Transaction {
 	return &Transaction{
 		ID:                  e.ID,
-		CreatedAt:           e.CreatedAt,
-		UpdatedAt:           e.UpdatedAt,
 		MerchantOrderID:     e.MerchantOrderID,
 		MachineSerialNumber: e.MachineSerialNumber,
 		Location:            e.Location,

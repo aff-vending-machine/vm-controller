@@ -23,8 +23,9 @@ func (s *stageImpl) OnKeyPressed(c *flow.Ctx, key hardware.Key) error {
 			return s.error(c, flow.ErrInvalidKey, "invalid key")
 		}
 
-	case hardware.StarKey:
+	case hardware.STAR:
 		c.PaymentChannel = nil
+		s.updateCancelTransaction(c)
 		c.ChangeStage <- "summary"
 
 	default:

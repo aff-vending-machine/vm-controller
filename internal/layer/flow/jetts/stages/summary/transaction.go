@@ -7,14 +7,16 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/aff-vending-machine/vm-controller/pkg/errs"
+	"github.com/rs/zerolog/log"
 )
 
 func (s *stageImpl) createTransaction(c *flow.Ctx) error {
 	_, err := s.transactionRepo.FindOne(c.UserCtx, []string{"merchant_order_id:=:%s", c.Data.MerchantOrderID})
 	if errs.Not(err, "not found") {
+		log.Error().Err(err).Msg("unable to create transaction")
 		return err
 	}
-	if err != nil {
+	if err == nil {
 		return nil
 	}
 
