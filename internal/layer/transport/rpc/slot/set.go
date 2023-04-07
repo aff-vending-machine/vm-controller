@@ -3,13 +3,13 @@ package slot
 import (
 	"encoding/json"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq/rpc"
+	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
 	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/rs/zerolog/log"
 )
 
-func (r *rpcImpl) Set(c *rpc.Ctx) error {
+func (r *rpcImpl) Set(c *rabbitmq.Ctx) error {
 	ctx, span := trace.Start(c.UserContext)
 	defer span.End()
 
@@ -31,7 +31,7 @@ func (r *rpcImpl) Set(c *rpc.Ctx) error {
 	return c.Ok(nil)
 }
 
-func makeSetRequest(c *rpc.Ctx) (*request.Set, error) {
+func makeSetRequest(c *rabbitmq.Ctx) (*request.Set, error) {
 	var req request.Set
 	err := json.Unmarshal(c.Delivery.Body, &req)
 	if err != nil {

@@ -19,6 +19,7 @@ type Usecase struct {
 func NewUsecase(adapter Service) Usecase {
 	return Usecase{
 		Machine: machine.New(
+			adapter.API.Topic,
 			adapter.Repository.Machine,
 			adapter.Hardware.Queue,
 		),

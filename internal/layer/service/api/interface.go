@@ -6,6 +6,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/model"
 )
 
 type Ksher interface {
@@ -19,4 +20,8 @@ type Link2500 interface {
 	Void(context.Context, *entity.PaymentChannel, *link2500.VoidRequest) (*link2500.VoidResult, error)
 	Refund(context.Context, *entity.PaymentChannel, *link2500.RefundRequest) (*link2500.RefundResult, error)
 	Settlement(context.Context, *entity.PaymentChannel) (*link2500.SettlementResult, error)
+}
+
+type Topic interface {
+	RegisterMachine(context.Context, *entity.Machine, *model.Machine) error
 }

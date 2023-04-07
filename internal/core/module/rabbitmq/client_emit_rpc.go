@@ -1,4 +1,4 @@
-package rpc
+package rabbitmq
 
 import (
 	"context"
@@ -8,9 +8,10 @@ import (
 	"github.com/aff-vending-machine/vm-controller/pkg/utils"
 	"github.com/pkg/errors"
 	"github.com/rabbitmq/amqp091-go"
+	"github.com/rs/zerolog/log"
 )
 
-func (c *Client) Emit(ctx context.Context, queueTarget string, routingKey string, body []byte) ([]byte, error) {
+func (c *Client) EmitRPC(ctx context.Context, queueTarget string, routingKey string, body []byte) ([]byte, error) {
 	if c.Conn.IsClosed() {
 		return nil, fmt.Errorf("lost rabbitmq connection")
 	}
@@ -36,19 +37,21 @@ func (c *Client) Emit(ctx context.Context, queueTarget string, routingKey string
 	defer channel.QueueDelete(q.Name, false, false, false)
 
 	messages, err := channel.Consume(
-		q.Name, // queue name
-		"",     // name
-		true,   // autoAck
-		false,  // exclusive
-		false,  // noLocal
-		false,  // noWait
-		nil,    // args
+		q.Name,         // queue name
+		"rpc-receiver", // name
+		true,           // autoAck
+		false,          // exclusive
+		false,          // noLocal
+		false,          // noWait
+		nil,            // args
 	)
 	if err != nil {
 		return nil, err
 	}
 
 	corrId := utils.GenerateUUIDv4()
+
+	log.Debug().Str("correlation_id", corrId).Str("key", routingKey).Str("reply_to", q.Name).Msg("rpc: emit")
 
 	err = channel.PublishWithContext(
 		ctx,
@@ -72,6 +75,7 @@ func (c *Client) Emit(ctx context.Context, queueTarget string, routingKey string
 
 	select {
 	case msg := <-messages:
+		log.Debug().Str("correlation_id", msg.CorrelationId).Str("key", msg.RoutingKey).Msg("rpc: received")
 		if corrId == msg.CorrelationId {
 			return msg.Body, nil
 		} else {

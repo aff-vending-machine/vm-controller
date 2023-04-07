@@ -4,6 +4,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/link2500"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/topic"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/fonts"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display/lcd2k"
@@ -19,6 +20,7 @@ func NewService(module Module) registry.Service {
 		API: registry.APIService{
 			Ksher:    ksher.New(module.HTTP.Client),
 			Link2500: link2500.New(module.HTTP.Client),
+			Topic:    topic.New(module.RabbitMQ.Connection),
 		},
 		Asset: registry.AssetService{
 			Fonts:  fonts.New(module.Config.App.Asset),

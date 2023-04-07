@@ -31,7 +31,6 @@ type Slot interface {
 	InsertOne(ctx context.Context, ent *entity.Slot) error
 	UpdateMany(ctx context.Context, filter []string, ent map[string]interface{}) (int64, error)
 	DeleteMany(ctx context.Context, filter []string) (int64, error)
-	Set(context.Context, []entity.Slot) error
 }
 
 type Transaction interface {

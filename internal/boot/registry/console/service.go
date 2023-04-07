@@ -2,6 +2,7 @@ package console
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/topic"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/console/fonts"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/console/ksher"
@@ -19,6 +20,7 @@ func NewService(module Module) registry.Service {
 		API: registry.APIService{
 			Ksher:    ksher.New(),
 			Link2500: link2500.New(),
+			Topic:    topic.New(module.RabbitMQ.Connection),
 		},
 		Asset: registry.AssetService{
 			Fonts:  fonts.New(),

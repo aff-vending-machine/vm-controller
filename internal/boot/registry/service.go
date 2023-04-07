@@ -20,6 +20,7 @@ type Service struct {
 type APIService struct {
 	Ksher    api.Ksher
 	Link2500 api.Link2500
+	Topic    api.Topic
 }
 
 type AssetService struct {

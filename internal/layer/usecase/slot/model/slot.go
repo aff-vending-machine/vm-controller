@@ -12,14 +12,33 @@ type Slot struct {
 	IsEnable bool     `json:"is_enable"`
 }
 
-func (s *Slot) ToEntity() *entity.Slot {
+func (m *Slot) ToEntity() *entity.Slot {
 	return &entity.Slot{
-		Code:     s.Code,
-		Stock:    s.Stock,
-		Capacity: s.Capacity,
-		Product:  s.Product.ToEntity(),
-		IsEnable: s.IsEnable,
+		Code:     m.Code,
+		Stock:    m.Stock,
+		Capacity: m.Capacity,
+		Product:  m.Product.ToEntity(),
+		IsEnable: m.IsEnable,
 	}
+}
+
+func (m *Slot) ToJson() map[string]interface{} {
+	json := map[string]interface{}{
+		"code":      m.Code,
+		"stock":     m.Stock,
+		"capacity":  m.Capacity,
+		"is_enable": m.IsEnable,
+	}
+
+	if m.Product != nil {
+		json["product_sku"] = m.Product.SKU
+		json["product_name"] = m.Product.Name
+		json["product_type"] = m.Product.Type
+		json["product_image_url"] = m.Product.ImageURL
+		json["product_price"] = m.Product.Price
+	}
+
+	return json
 }
 
 func ToSlot(e *entity.Slot) *Slot {

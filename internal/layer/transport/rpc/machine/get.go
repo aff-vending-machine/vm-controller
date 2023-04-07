@@ -1,12 +1,12 @@
 package machine
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq/rpc"
+	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq"
 	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/rs/zerolog/log"
 )
 
-func (r *rpcImpl) Get(c *rpc.Ctx) error {
+func (r *rpcImpl) Get(c *rabbitmq.Ctx) error {
 	ctx, span := trace.Start(c.UserContext)
 	defer span.End()
 

@@ -6,7 +6,7 @@ import (
 )
 
 type Set struct {
-	Data []model.Slot
+	Data []model.Slot `json:"data"`
 }
 
 func (r *Set) ToEntities() []entity.Slot {

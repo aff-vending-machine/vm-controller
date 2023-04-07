@@ -15,6 +15,12 @@ func New(r repository.Slot) *usecaseImpl {
 	return &usecaseImpl{r}
 }
 
+func makeCodeFilter(code string) []string {
+	return []string{
+		fmt.Sprintf("code:=:%s", code),
+	}
+}
+
 func makeFilter(req *request.Filter) []string {
 	filter := []string{}
 

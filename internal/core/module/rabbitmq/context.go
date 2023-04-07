@@ -1,4 +1,4 @@
-package rpc
+package rabbitmq
 
 import (
 	"context"
