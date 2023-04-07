@@ -8,16 +8,16 @@ FROM golang:1.20 AS builder
 # * GO111MODULE=on Force the go compiler to use modules
 # * GOOS=linux to run on linuxos
 # * GOARCH=arm64 to run on arm64 architecture
-ENV CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=amd64
+ENV CGO_ENABLED=1 GO111MODULE=on GOOS=linux GOARCH=arm64
 
 # Create the user and group files that will be used in the running container to
 # run the process as an unprivileged user.
 #
 # Install the Certificate-Authority certificates for the app to be able to make
 # calls to HTTPS endpoints.
-RUN mkdir /user \
-  && echo 'nobody:x:65534:65534:nobody:/:' > /user/passwd \
-  && echo 'nobody:x:65534:' > /user/group
+# RUN mkdir /user \
+#   && echo 'nobody:x:65534:65534:nobody:/:' > /user/passwd \
+#   && echo 'nobody:x:65534:' > /user/group
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
@@ -38,9 +38,9 @@ COPY . /src/
 
 #compile the project
 RUN go build \
-  # -mod=mod \
-  # -a \
-  # -installsuffix 'static' \
+  -mod=mod \
+  -a \
+  -installsuffix 'static' \
   -o /bin/app \
   /src/cmd/app
 
@@ -51,16 +51,16 @@ FROM scratch AS final
 LABEL maintainer="Tanawat Hongthai <ztrixack.th@gmail.com>"
 
 # Import the user and group files from the first stage.
-COPY --from=builder /user/group /user/passwd /etc/
+# COPY --from=builder /user/group /user/passwd /etc/
 
 # Import the Certificate-Authority certificates for enabling HTTPS.
-COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+# COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
 # Copy our static executable.
 COPY --from=builder /bin/app /app
 
 # Perform any further action as an unprivileged user.
-USER nobody:nobody
+# USER nobody:nobody
 
 # Run the binary.
 ENTRYPOINT ["/app"]

@@ -48,7 +48,7 @@ func setItem(uc usecase.Slot, codeFrom int, codeEnd int, stock int, capacity int
 			Stock:    stock,
 			Capacity: 10,
 			Product: &model.Product{
-				SKU:      fmt.Sprintf("P%03d", i),
+				SKU:      fmt.Sprintf("P%f", price),
 				Name:     fmt.Sprintf("Slot %03d", i),
 				ImageURL: "https://image-placeholder.com/images/actual-size/75x100.png",
 				Price:    price,
