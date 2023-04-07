@@ -2,6 +2,8 @@ package keypad
 
 import (
 	"time"
+
+	"github.com/rs/zerolog/log"
 )
 
 func (app *App) Listen() {
@@ -29,6 +31,7 @@ func (app *App) Listen() {
 			}
 
 			pkey = key
+			log.Debug().Str("key", key).Bool("has handler", app.handler != nil).Msg("pressed")
 			if app.handler != nil {
 				(*app.handler)(key)
 			}

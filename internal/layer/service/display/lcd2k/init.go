@@ -15,6 +15,7 @@ type displayImpl struct {
 	m      sync.Mutex
 	fb     *framebuffer.Framebuffer
 	canvas *image.RGBA
+	dom    *image.RGBA
 	screen *property.Screen
 	bg     image.Image
 }
@@ -44,6 +45,7 @@ func New(conf config.BoardConfig) *displayImpl {
 	return &displayImpl{
 		fb:     device,
 		canvas: image.NewRGBA(rect),
+		dom:    image.NewRGBA(rect),
 		screen: property.NewScreen(rotate, width, height),
 		bg:     image.NewUniform(image.Black),
 	}

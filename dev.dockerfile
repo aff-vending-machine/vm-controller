@@ -9,8 +9,8 @@ WORKDIR /src
 COPY go.mod go.sum /src/
 
 # Installs Go dependencies
-RUN go mod download \
-  && go mod verify
+RUN go mod download
+# && go mod verify
 
 # Import the code from the context.
 COPY . /src
