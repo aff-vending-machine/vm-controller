@@ -15,8 +15,10 @@ func (s *stageImpl) OnKeyPressed(c *flow.Ctx, key hardware.Key) error {
 		c.ChangeStage <- "payment_channel"
 
 	case hardware.SHARP:
-		s.updateTestTransaction(c)
-		c.ChangeStage <- "receive"
+		if c.Machine.TestMode {
+			s.updateTestTransaction(c)
+			c.ChangeStage <- "receive"
+		}
 	}
 
 	return nil
