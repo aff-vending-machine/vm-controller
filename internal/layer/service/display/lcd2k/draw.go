@@ -3,6 +3,7 @@ package lcd2k
 import (
 	"context"
 	"image"
+	"image/color"
 	"image/draw"
 
 	"github.com/aff-vending-machine/vm-controller/pkg/trace"
@@ -15,20 +16,26 @@ func (d *displayImpl) Draw(ctx context.Context) {
 	d.m.Lock()
 	defer d.m.Unlock()
 
-	// var rgba color.RGBA
-	// var dom color.RGBA
+	if d.gonutzfb != nil {
+		draw.Draw(d.gonutzfb, d.gonutzfb.Bounds(), d.canvas, image.ZP, draw.Src)
+		return
+	}
 
-	draw.Draw(d.fb, d.fb.Bounds(), d.canvas, image.ZP, draw.Src)
-	// for i := 0; i < d.screen.Width; i++ {
-	// 	for j := 0; j < d.screen.Height; j++ {
-	// 		rgba = d.canvas.RGBAAt(i, j)
-	// 		dom = d.dom.RGBAAt(i, j)
-	// 		if rgba.R != dom.R || rgba.G != dom.G || rgba.B != dom.B {
-	// 			d.fb.WritePixel(i, j, int(rgba.R), int(rgba.G), int(rgba.B), int(rgba.A))
-	// 			d.dom.SetRGBA(i, j, color.RGBA{R: rgba.R, G: rgba.G, B: rgba.B, A: rgba.A})
-	// 		}
-	// 	}
-	// }
+	if d.kaeyfb != nil {
+		var rgba color.RGBA
+		var dom color.RGBA
+
+		for i := 0; i < d.screen.Width; i++ {
+			for j := 0; j < d.screen.Height; j++ {
+				rgba = d.canvas.RGBAAt(i, j)
+				dom = d.dom.RGBAAt(i, j)
+				if rgba.R != dom.R || rgba.G != dom.G || rgba.B != dom.B {
+					d.kaeyfb.WritePixel(i, j, int(rgba.R), int(rgba.G), int(rgba.B), int(rgba.A))
+					d.dom.SetRGBA(i, j, color.RGBA{R: rgba.R, G: rgba.G, B: rgba.B, A: rgba.A})
+				}
+			}
+		}
+	}
 }
 
 // func (d *displayImpl) drawScreen(i int, j int) {
