@@ -10,7 +10,7 @@ import (
 )
 
 func (s *stageImpl) bg(c *flow.Ctx) {
-	s.displayUc.Background(c.UserCtx, "payment_channel")
+	s.displayUc.Background(c.UserCtx, "payment")
 }
 
 func (s *stageImpl) show(c *flow.Ctx, channels []entity.PaymentChannel) {

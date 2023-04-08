@@ -11,4 +11,5 @@ func (s *stageImpl) bg(c *flow.Ctx) {
 
 func (s *stageImpl) show(c *flow.Ctx) {
 	log.Info().Str("stage", "emergency").Msg("LOCKED: press * 7 times to unlock")
+	s.displayUc.StageIdle(c.UserCtx)
 }

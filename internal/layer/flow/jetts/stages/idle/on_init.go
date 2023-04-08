@@ -9,5 +9,5 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 	c.Machine = machine
 
 	s.bg(c)
-	s.show()
+	s.show(c)
 }

@@ -21,7 +21,7 @@ func (g *usecaseImpl) StagePaymentChannel(ctx context.Context, channels []entity
 	for i, channel := range channels {
 		text = text.NextLine()
 		text.PosY = text.PosY + 20
-		msg := fmt.Sprintf("%d. %s", i+1, channel.Name)
+		msg := fmt.Sprintf("%d. %s", i+1, channel.Channel)
 		g.display.AddText(ctx, text.Left(msg))
 	}
 

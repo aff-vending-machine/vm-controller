@@ -11,6 +11,7 @@ type Screen interface {
 	Error(context.Context, error)
 	Background(context.Context, string)
 	Clear(context.Context)
+	StageIdle(context.Context)
 	StageOrder(context.Context, hardware.Item, *hardware.Data)
 	StageSummary(context.Context, []hardware.Item)
 	StagePaymentChannel(context.Context, []entity.PaymentChannel)

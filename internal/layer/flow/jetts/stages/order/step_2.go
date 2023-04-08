@@ -3,7 +3,6 @@ package order
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/pkg/errors"
 )
 
 func (s *stageImpl) onSlotInputStep(c *flow.Ctx, key hardware.Key) error {
@@ -28,7 +27,7 @@ func (s *stageImpl) step2_NumberKey(c *flow.Ctx, key hardware.Key) error {
 	slot, err := s.slotRepo.FindOne(c.UserCtx, filters)
 	if err != nil {
 		s.reset()
-		return s.error(c, errors.Wrap(err, flow.ErrInvalidKey.Error()))
+		return s.error(c, flow.ErrNoItem)
 	}
 
 	if slot.Stock == 0 {
