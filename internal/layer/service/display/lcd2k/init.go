@@ -8,12 +8,12 @@ import (
 	"github.com/aff-vending-machine/vm-controller/config"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/property"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/kaey/framebuffer"
+	"github.com/gonutz/framebuffer"
 )
 
 type displayImpl struct {
 	m      sync.Mutex
-	fb     *framebuffer.Framebuffer
+	fb     *framebuffer.Device
 	canvas *image.RGBA
 	dom    *image.RGBA
 	screen *property.Screen
@@ -21,7 +21,7 @@ type displayImpl struct {
 }
 
 func New(conf config.BoardConfig) *displayImpl {
-	device, err := framebuffer.Init(conf.LCDDevice)
+	device, err := framebuffer.Open(conf.LCDDevice)
 	boot.TerminateWhenError(err)
 	boot.AddTerminateFn(func(ctx context.Context) {
 		device.Close()
@@ -30,7 +30,9 @@ func New(conf config.BoardConfig) *displayImpl {
 	var width int
 	var height int
 
-	w, h := device.Size()
+	size := device.Bounds().Size()
+	w := size.X
+	h := size.Y
 	rotate := conf.LCDRotate % 4
 
 	if rotate%2 == 0 {

@@ -5,7 +5,7 @@ import (
 )
 
 type Product struct {
-	SKU      string  `json:"sku" gorm:"uniqueIndex"`
+	SKU      string  `json:"sku"`
 	Name     string  `json:"name"`
 	Type     string  `json:"type"`
 	ImageURL string  `json:"image_url"`

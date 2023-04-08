@@ -12,5 +12,5 @@ func (g *usecaseImpl) Background(ctx context.Context, stage string) {
 		bg = g.imgAsset.Blank(ctx)
 	}
 	g.display.SetBackground(ctx, bg)
-	g.display.Draw(ctx)
+	//g.display.Draw(ctx)
 }
