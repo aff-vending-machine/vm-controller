@@ -2,6 +2,7 @@ package receive
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
@@ -67,6 +68,12 @@ func (s *stageImpl) errorFeedback(c *flow.Ctx, event *hardware.Event) error {
 		s.error(c, err, "this slot has no item")
 		s.updateErrorTransaction(c, err)
 		s.status = E0
+
+		go func() {
+			time.Sleep(5 * time.Second)
+			c.ChangeStage <- "idle"
+		}()
+
 		return flow.ErrMachineE0
 
 	case "E1":
