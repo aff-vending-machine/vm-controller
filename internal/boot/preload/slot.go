@@ -46,9 +46,9 @@ func setItem(uc usecase.Slot, codeFrom int, codeEnd int, stock int, capacity int
 		data := &request.Create{
 			Code:     fmt.Sprintf("%03d", i),
 			Stock:    stock,
-			Capacity: 10,
+			Capacity: capacity,
 			Product: &model.Product{
-				SKU:      fmt.Sprintf("P%f", price),
+				SKU:      fmt.Sprintf("P%05.0f", price),
 				Name:     fmt.Sprintf("Slot %03d", i),
 				ImageURL: "https://image-placeholder.com/images/actual-size/75x100.png",
 				Price:    price,
@@ -56,6 +56,9 @@ func setItem(uc usecase.Slot, codeFrom int, codeEnd int, stock int, capacity int
 			IsEnable: true,
 		}
 
-		uc.Create(ctx, data)
+		err := uc.Create(ctx, data)
+		if err != nil {
+			log.Error().Err(err).Str("code", data.Code).Msg("unable to create slot")
+		}
 	}
 }
