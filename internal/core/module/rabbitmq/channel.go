@@ -1,60 +1,60 @@
 package rabbitmq
 
 import (
-	"sync/atomic"
 	"time"
 
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"
 )
 
-// Channel amqp.Channel wapper
-type Channel struct {
-	*amqp091.Channel
-	closed int32
+// Connection amqp.Connection wrapper
+type Connection struct {
+	*amqp091.Connection
 }
 
-// IsClosed indicate closed by developer
-func (ch *Channel) IsClosed() bool {
-	return (atomic.LoadInt32(&ch.closed) == 1)
-}
+// Channel wrap amqp.Connection.Channel, get a auto reconnect channel
+func (c *Connection) Channel() (*Channel, error) {
+	mutex.Lock()
+	defer mutex.Unlock()
 
-// Close ensure closed flag set
-func (ch *Channel) Close() error {
-	if ch.IsClosed() {
-		return amqp091.ErrClosed
+	ch, err := c.Connection.Channel()
+	if err != nil {
+		return nil, err
 	}
 
-	atomic.StoreInt32(&ch.closed, 1)
-
-	return ch.Channel.Close()
-}
-
-// Consume wrap amqp.Channel.Consume, the returned delivery will end only when channel closed by developer
-func (ch *Channel) Consume(queue, consumer string, autoAck, exclusive, noLocal, noWait bool, args amqp091.Table) (<-chan amqp091.Delivery, error) {
-	deliveries := make(chan amqp091.Delivery)
+	channel := &Channel{Channel: ch}
 
 	go func() {
 		for {
-			d, err := ch.Channel.Consume(queue, consumer, autoAck, exclusive, noLocal, noWait, args)
-			if err != nil {
-				log.Warn().Err(err).Msg("unable to create consume")
-				time.Sleep(delay * time.Second)
-				continue
-			}
-
-			for msg := range d {
-				deliveries <- msg
-			}
-
-			// sleep before IsClose call. closed flag may not set before sleep.
-			time.Sleep(delay * time.Second)
-
-			if ch.IsClosed() {
+			reason, ok := <-channel.Channel.NotifyClose(make(chan *amqp091.Error))
+			// exit this goroutine if closed by developer
+			if !ok || channel.IsClosed() {
+				// log.Debug().Msg("channel closed by developer")
+				channel.Close() // close again, ensure closed flag set when connection closed
 				break
+			}
+			log.Warn().Err(reason).Msg("channel closed")
+
+			// reconnect if not closed by developer
+			for {
+				// wait for connection reconnect
+				if c.Connection.IsClosed() {
+					time.Sleep(time.Second)
+					continue
+				}
+
+				ch, err := c.Connection.Channel()
+				if err == nil {
+					log.Debug().Msg("channel recreate success")
+					channel.Channel = ch
+					break
+				}
+
+				log.Error().Err(err).Msg("unable to recreate channel")
+				time.Sleep(delay * time.Second)
 			}
 		}
 	}()
 
-	return deliveries, nil
+	return channel, nil
 }

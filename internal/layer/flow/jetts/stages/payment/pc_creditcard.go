@@ -16,6 +16,7 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	s.showCreditCard(c)
 
 	req := link2500.SaleRequest{
+		MerchantID: c.PaymentChannel.MerchantID,
 		Price: c.Data.TotalPrice(),
 	}
 	res, err := s.link2500.Sale(ctx, c.PaymentChannel, &req)

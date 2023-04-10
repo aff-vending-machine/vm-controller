@@ -41,7 +41,7 @@ func Dial(url string) (*Connection, error) {
 			// reconnect if not closed by developer
 			for {
 				// wait 1s for reconnect
-				time.Sleep(delay * time.Second)
+				time.Sleep(time.Second)
 
 				conn, err := amqp091.Dial(url)
 				if err == nil {

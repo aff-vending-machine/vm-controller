@@ -26,7 +26,7 @@ func (c *apiImpl) RefundOrder(ctx context.Context, channel *entity.PaymentChanne
 	breq, _ := json.Marshal(body)
 
 	// Set HTTP request
-	url := utils.GenerateURLPath("https://"+channel.Host, CSCANB_PATH, orderID)
+	url := utils.GenerateURLPath(channel.Host, CSCANB_PATH, orderID)
 	log.Debug().Str("channel", "ksher").Str("URL", url).Str("signature", signature).Msg("PUT refund order")
 
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(breq))

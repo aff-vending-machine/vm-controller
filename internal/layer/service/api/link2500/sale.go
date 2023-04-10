@@ -25,7 +25,8 @@ func (a *apiImpl) Sale(ctx context.Context, channel *entity.PaymentChannel, body
 	breq, _ := json.Marshal(body)
 
 	// Set HTTP request
-	url := utils.GenerateURLPath("https://"+channel.Host, LINK2500_PATH, "sale")
+	url := utils.GenerateURLPath(channel.Host, LINK2500_PATH, "sale")
+	
 	log.Debug().Str("channel", "creditcard").Str("URL", url).Interface("request", body).Msg("POST sale")
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(breq))
 	if err != nil {

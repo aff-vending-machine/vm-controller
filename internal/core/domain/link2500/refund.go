@@ -1,7 +1,8 @@
 package link2500
 
 type RefundRequest struct {
-	RefundPrice float64
+	MerchantID  string  `json:"merchant_id"`
+	RefundPrice float64 `json:"refund_price"`
 }
 
 type RefundResult struct {
