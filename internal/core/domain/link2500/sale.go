@@ -1,7 +1,8 @@
 package link2500
 
 type SaleRequest struct {
-	Price          float64
+	MerchantID string  `json:"merchant_id"`
+	Price      float64 `json:"price"`
 }
 
 type SaleResult struct {

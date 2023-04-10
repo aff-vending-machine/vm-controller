@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/rs/zerolog/log"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 )
 
 type Wrapper struct {
@@ -22,9 +22,7 @@ func New(cfg config.RabbitMQConfig) *Wrapper {
 		cfg.Path,
 	)
 	conn, err := Dial(url)
-	if err != nil {
-		log.Error().Str("url", url).Err(err).Msg("unable to dial RabbitMQ")
-	}
+	boot.TerminateWhenError(err)
 
 	return &Wrapper{
 		Connection: conn,

@@ -8,7 +8,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
-func (c *consoleImpl) Settlement(ctx context.Context, channel *entity.PaymentChannel) (*link2500.SettlementResult, error) {
+func (c *consoleImpl) Settlement(ctx context.Context, channel *entity.PaymentChannel, req *link2500.SettlementRequest) (*link2500.SettlementResult, error) {
 	_, span := trace.Start(ctx)
 	defer span.End()
 

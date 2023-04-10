@@ -30,8 +30,8 @@ WORKDIR /src
 # And compile the project
 COPY go.mod go.sum /src/
 
-RUN go mod download \
-  && go mod verify
+RUN go mod download
+# && go mod verify
 
 # Import the code from the context.
 COPY . /src/

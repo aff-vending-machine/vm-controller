@@ -1,6 +1,7 @@
 package link2500
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -19,11 +20,15 @@ type SettlementResponse struct {
 	Message *string                    `json:"message,omitempty"`
 }
 
-func (a *apiImpl) Settlement(ctx context.Context, channel *entity.PaymentChannel) (*link2500.SettlementResult, error) {
+func (a *apiImpl) Settlement(ctx context.Context, channel *entity.PaymentChannel, body *link2500.SettlementRequest) (*link2500.SettlementResult, error) {
+	// body is struct, ignore error
+	breq, _ := json.Marshal(body)
+
 	// Set HTTP request
-	url := utils.GenerateURLPath("https://"+channel.Host, LINK2500_PATH, "settlement")
-	log.Debug().Str("channel", "creditcard").Str("URL", url).Msg("POST settlement")
-	req, err := http.NewRequest(http.MethodPost, url, nil)
+	url := utils.GenerateURLPath(channel.Host, LINK2500_PATH, "settlement")
+
+	log.Debug().Str("channel", "creditcard").Str("URL", url).Interface("request", body).Msg("POST settlement")
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(breq))
 	if err != nil {
 		return nil, err
 	}

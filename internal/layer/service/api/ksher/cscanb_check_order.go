@@ -21,7 +21,7 @@ func (c *apiImpl) CheckOrder(ctx context.Context, channel *entity.PaymentChannel
 	signature := generateSignature(path, pregen, channel.Token)
 	query.Signature = signature
 
-	url := utils.GenerateURLPath("https://"+channel.Host, CSCANB_PATH, orderID)
+	url := utils.GenerateURLPath(channel.Host, CSCANB_PATH, orderID)
 	log.Debug().Str("channel", "ksher").Str("URL", url).Str("signature", signature).Msg("GET check order")
 
 	// Set HTTP request

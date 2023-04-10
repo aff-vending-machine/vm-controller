@@ -33,7 +33,7 @@ func Dial(url string) (*Connection, error) {
 			reason, ok := <-stacks[url].Connection.NotifyClose(make(chan *amqp091.Error))
 			// exit this goroutine if closed by developer
 			if !ok {
-				log.Debug().Msg("connection closed by developer")
+				//log.Debug().Msg("connection closed by developer")
 				break
 			}
 			log.Warn().Err(reason).Msg("connection closed")
@@ -41,7 +41,7 @@ func Dial(url string) (*Connection, error) {
 			// reconnect if not closed by developer
 			for {
 				// wait 1s for reconnect
-				time.Sleep(delay * time.Second)
+				time.Sleep(time.Second)
 
 				conn, err := amqp091.Dial(url)
 				if err == nil {
