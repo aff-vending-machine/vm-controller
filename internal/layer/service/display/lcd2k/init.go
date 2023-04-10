@@ -38,7 +38,7 @@ func New(conf config.BoardConfig) *displayImpl {
 	var w int
 	var h int
 
-	if gonutzDevice == nil {
+	if gonutzDevice != nil {
 		boot.AddTerminateFn(func(ctx context.Context) {
 			gonutzDevice.Close()
 		})
