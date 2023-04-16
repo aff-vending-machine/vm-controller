@@ -6,6 +6,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/console"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/rpc"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/router/websocket"
 	"github.com/rs/zerolog/log"
 )
 
@@ -29,6 +30,7 @@ func Run(cfg config.BootConfig) {
 
 	console.New(module.Console).Scan(transport.Keypad)
 	rpc.New(module.RabbitMQ).Serve(machine.SerialNumber, transport.RPC)
+	websocket.New(module.WebSocket).Serve(service.WebSocket, transport.WebSocket)
 	flow.Jetts.ListenEvent(machine.SerialNumber)
 
 	log.Debug().Msg("start application")

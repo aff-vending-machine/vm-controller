@@ -108,7 +108,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 				return
 			}
 
-			err := s.updateCancelTransaction(c)
+			err := s.updateCancelTransaction(c, "machine")
 			if err != nil {
 				c.ChangeStage <- "emergency"
 				return

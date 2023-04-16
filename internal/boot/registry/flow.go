@@ -23,6 +23,7 @@ func NewFlow(adapter Service) Flow {
 			adapter.Repository.PaymentChannel,
 			adapter.Repository.Slot,
 			adapter.Repository.Transaction,
+			adapter.WebSocket.Frontend,
 		),
 	}
 }

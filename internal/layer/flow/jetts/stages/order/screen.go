@@ -7,6 +7,10 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func (s *stageImpl) console(c *flow.Ctx, action string) {
+	log.Info().Str("stage", "order").Str("action", action).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Float64("Price", c.Data.TotalPrice()).Msg("SLOG: order action")
+}
+
 func (s *stageImpl) bg(c *flow.Ctx) {
 	s.displayUc.Background(c.UserCtx, "order")
 }

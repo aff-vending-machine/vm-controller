@@ -22,3 +22,5 @@ go.work
 env/*.yaml
 db/*.sqlite
 *.yaml
+
+.DS_Store

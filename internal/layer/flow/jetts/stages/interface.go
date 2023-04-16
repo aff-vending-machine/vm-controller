@@ -9,4 +9,5 @@ type Stage interface {
 	OnInit(*flow.Ctx)
 	OnEvent(*flow.Ctx, *hardware.Event) error
 	OnKeyPressed(*flow.Ctx, hardware.Key) error
+	OnWSReceived(*flow.Ctx, []byte) error
 }

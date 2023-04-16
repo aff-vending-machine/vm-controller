@@ -66,11 +66,11 @@ func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
 	return nil
 }
 
-func (s *stageImpl) updateCancelTransaction(c *flow.Ctx) error {
+func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
 	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
 	data := map[string]interface{}{
 		"order_status": enum.ORDER_STATUS_CANCELLED,
-		"cancelled_by": "machine",
+		"cancelled_by": by,
 		"cancelled_at": time.Now(),
 	}
 

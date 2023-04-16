@@ -6,6 +6,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
+	websocket "github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
 )
 
 // Interface Adapter layers (driven)
@@ -15,6 +16,7 @@ type Service struct {
 	Display    DisplayService
 	Hardware   HardwareService
 	Repository RepositoryService
+	WebSocket  WebSocketService
 }
 
 type APIService struct {
@@ -41,4 +43,8 @@ type RepositoryService struct {
 	PaymentChannel repository.PaymentChannel
 	Slot           repository.Slot
 	Transaction    repository.Transaction
+}
+
+type WebSocketService struct {
+	Frontend websocket.Frontend
 }

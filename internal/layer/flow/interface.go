@@ -7,8 +7,9 @@ import (
 )
 
 type Jetts interface {
-	ListenEvent(sn string)
-	OnInit(ctx context.Context)
-	OnEvent(ctx context.Context, event *hardware.Event) error
-	OnKeyPressed(ctx context.Context, key string) error
+	ListenEvent(string)
+	OnInit(context.Context)
+	OnEvent(context.Context, *hardware.Event) error
+	OnKeyPressed(context.Context, string) error
+	OnWSReceived(context.Context, []byte) error
 }

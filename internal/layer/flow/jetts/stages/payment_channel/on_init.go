@@ -15,6 +15,7 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 	}
 
 	s.channels = channels
+	s.frontendWs.SendPaymentChannel(c.UserCtx, channels)
 
 	s.bg(c)
 	s.show(c, channels)

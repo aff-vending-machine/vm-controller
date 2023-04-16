@@ -13,6 +13,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/slot"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/transaction"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket/frontend"
 )
 
 func NewService(module Module) registry.Service {
@@ -37,6 +38,9 @@ func NewService(module Module) registry.Service {
 			PaymentChannel: payment_channel.New(module.SQLite.DB),
 			Slot:           slot.New(module.SQLite.DB),
 			Transaction:    transaction.New(module.SQLite.DB),
+		},
+		WebSocket: registry.WebSocketService{
+			Frontend: frontend.New(),
 		},
 	}
 }

@@ -6,11 +6,6 @@ import (
 )
 
 func (s *stageImpl) OnEvent(c *flow.Ctx, event *hardware.Event) error {
-	switch event.Status {
-	case "00":
-		return nil
-
-	default:
-		return nil
-	}
+	// unimplementation
+	return nil
 }
