@@ -1,27 +1,21 @@
 # Specifies a parent image
-FROM golang:1.20
+FROM golang:1.20-alpine
 
-ENV CGO_ENABLED=1 GO111MODULE=on GOOS=linux GOARCH=arm64
+# Set the environment variables for the go command:
+ENV CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=arm64
 
 # Set the working directory outside $GOPATH to enable the support for modules.
 WORKDIR /src
 
+# Copy go.mod and go.sum and download dependencies
 COPY go.mod go.sum /src/
-
-# Installs Go dependencies
-RUN go mod download
-# && go mod verify
+RUN go mod tidy
 
 # Import the code from the context.
-COPY . /src
+COPY . /src/
 
-# Builds your app with optional configuration
-RUN go build \
-  -mod=mod \
-  -a \
-  -installsuffix 'static' \
-  -o /bin/app \
-  /src/cmd/app
+# Build the Go application
+RUN go build -o /bin/app /src/cmd/app
 
 # Specifies the executable command that runs when the container starts
 CMD [ "/bin/app" ]
