@@ -27,13 +27,10 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 
 	switch req.Action {
 	case "confirm":
-		if req.Data.PaymentChannel == "free" {
-			c.ChangeStage <- "identification"
-			return nil
-		}
 		for _, channel := range s.channels {
 			if req.Data.PaymentChannel == channel.Channel {
 				c.PaymentChannel = &channel
+				s.createTransaction(c)
 				c.ChangeStage <- "payment"
 				return nil
 			}

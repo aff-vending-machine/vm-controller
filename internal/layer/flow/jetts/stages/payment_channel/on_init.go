@@ -10,7 +10,7 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 	if err != nil {
 		log.Error().Err(err).Msg("unable to get channel")
 		s.error(c, err, "out of service")
-		c.ChangeStage <- "summary"
+		c.ChangeStage <- "order"
 		return
 	}
 
