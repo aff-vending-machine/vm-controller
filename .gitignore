@@ -24,3 +24,5 @@ db/*.sqlite
 *.yaml
 
 .DS_Store
+.vscode
+.scannerwork
