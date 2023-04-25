@@ -5,9 +5,6 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/link2500"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/topic"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/fonts"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset/images"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display/lcd2k"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware/queue"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/machine"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
@@ -22,13 +19,6 @@ func NewService(module Module) registry.Service {
 			Ksher:    ksher.New(module.HTTP.Client),
 			Link2500: link2500.New(module.HTTP.Client),
 			Topic:    topic.New(module.RabbitMQ.Connection),
-		},
-		Asset: registry.AssetService{
-			Fonts:  fonts.New(module.Config.App.Asset),
-			Images: images.New(module.Config.App.Asset),
-		},
-		Display: registry.DisplayService{
-			LCD: lcd2k.New(module.Config.Board),
 		},
 		Hardware: registry.HardwareService{
 			Queue: queue.New(module.Redis.Client),

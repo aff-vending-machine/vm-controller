@@ -15,9 +15,6 @@ func NewFlow(adapter Service) Flow {
 		Jetts: jetts.New(
 			adapter.API.Ksher,
 			adapter.API.Link2500,
-			adapter.Asset.Images,
-			adapter.Asset.Fonts,
-			adapter.Display.LCD,
 			adapter.Hardware.Queue,
 			adapter.Repository.Machine,
 			adapter.Repository.PaymentChannel,

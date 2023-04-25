@@ -4,7 +4,6 @@ import (
 	"github.com/aff-vending-machine/vm-controller/config"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/preload"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/router/keypad"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/rpc"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/router/websocket"
 	"github.com/rs/zerolog/log"
@@ -24,11 +23,11 @@ func Run(cfg config.BootConfig) {
 	if cfg.App.Preload {
 		log.Debug().Msg("preload")
 		preload.InitMachineSlot(usecase.Slot)
+		preload.InitTestPay(usecase.PaymentChannel)
 		preload.InitPromptPay(usecase.PaymentChannel)
 		preload.InitCreditCard(usecase.PaymentChannel)
 	}
 
-	keypad.New(module.Keypad).Scan(transport.Keypad)
 	rpc.New(module.RabbitMQ).Serve(machine.SerialNumber, transport.RPC)
 	websocket.New(module.WebSocket).Serve(service.WebSocket, transport.WebSocket)
 	flow.Jetts.ListenEvent(machine.SerialNumber)

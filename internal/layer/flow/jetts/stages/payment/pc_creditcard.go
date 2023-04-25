@@ -13,8 +13,6 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	ctx, fn := context.WithCancel(c.UserCtx)
 	s.CancelFn = fn
 
-	s.showCreditCard(c)
-
 	req := link2500.SaleRequest{
 		MerchantID: c.PaymentChannel.MerchantID,
 		Price: c.Data.TotalPrice(),
@@ -26,7 +24,6 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	}
 
 	if err != nil {
-		s.error(c, err, "creditcard is out of service")
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -39,7 +36,6 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	if res.ResponseText != "APPROVED" {
 		err = fmt.Errorf("%s: %s", res.InvoiceNumber, res.ResponseText)
-		s.error(c, err, "creditcard is rejected")
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"

@@ -11,14 +11,10 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/payment"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/payment_channel"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/receive"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts/stages/summary"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/screen"
 )
 
 type Flow struct {
@@ -31,9 +27,6 @@ type Flow struct {
 func New(
 	ka api.Ksher,
 	la api.Link2500,
-	ia asset.Images,
-	fa asset.Fonts,
-	ld display.LCD,
 	qh hardware.Queue,
 	mr repository.Machine,
 	pr repository.PaymentChannel,
@@ -41,16 +34,14 @@ func New(
 	tr repository.Transaction,
 	fw websocket.Frontend,
 ) *Flow {
-	du := screen.New(ia, fa, ld)
 
 	stages := map[string]stages.Stage{
-		"idle":            idle.New(du, mr, fw),
-		"order":           order.New(du, qh, sr, fw),
-		"summary":         summary.New(du, tr, fw),
-		"payment_channel": payment_channel.New(du, pr, tr, fw),
-		"payment":         payment.New(du, ka, la, qh, tr, fw),
-		"receive":         receive.New(du, ka, la, qh, sr, tr, fw),
-		"emergency":       emergency.New(du, fw),
+		"idle":            idle.New(mr, fw),
+		"order":           order.New(qh, sr, fw),
+		"payment_channel": payment_channel.New(pr, tr, fw),
+		"payment":         payment.New(ka, la, qh, tr, fw),
+		"receive":         receive.New(ka, la, qh, sr, tr, fw),
+		"emergency":       emergency.New(fw),
 	}
 
 	return &Flow{

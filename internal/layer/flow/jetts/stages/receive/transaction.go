@@ -66,3 +66,20 @@ func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
 
 	return nil
 }
+
+func (s *stageImpl) updateCancelTransaction(c *flow.Ctx) {
+	filter := makeMerchantOrderIDFilter(c.Data.MerchantOrderID)
+	data := map[string]interface{}{
+		"order_status":      enum.ORDER_STATUS_CANCELLED,
+		"cancelled_by":      "user",
+		"cancelled_at":      time.Now(),
+		"received_item_at":  time.Now(),
+		"received_quantity": c.Data.TotalReceived(),
+		"paid_price":        c.Data.TotalPay(),
+	}
+
+	_, err := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	if err != nil {
+		log.Error().Err(err).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
+	}
+}

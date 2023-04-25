@@ -27,16 +27,7 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 
 	switch req.Action {
 	case "refresh":
-		slots, err := s.slotRepo.FindMany(c.UserCtx, []string{"code:ORDER:asc", "is_enable:=:true", "stock:>:0"})
-		if err != nil {
-			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
-			return errors.Wrap(err, "failed to find all slots")
-		}
-		s.slots = slots
-		s.frontendWs.SendSlots(c.UserCtx, slots)
-		s.console(c, req.Action)
-
+		s.OnInit(c)
 		return nil
 
 	case "add":
@@ -46,7 +37,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionAddItem(c, item)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "add item to cart failed")
 		}
 
@@ -57,7 +47,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionRemoveItem(c, item)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "remove item from cart failed")
 		}
 
@@ -68,7 +57,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionSetItem(c, item)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "set item to cart failed")
 		}
 
@@ -79,7 +67,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionClearItem(c, item)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "clear item from cart failed")
 		}
 
@@ -90,7 +77,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionSetCart(c, cart)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "set cart failed")
 		}
 
@@ -98,12 +84,17 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		err := s.actionClearCart(c)
 		if err != nil {
 			s.frontendWs.SendError(c.UserCtx, "order", err.Error())
-			s.console(c, req.Action)
 			return errors.Wrap(err, "clear cart failed")
 		}
 
 	case "done":
+		if len(c.Data.Cart) == 0 {
+			s.frontendWs.SendError(c.UserCtx, "order", "empty cart")
+			return nil
+		}
+
 		c.ChangeStage <- "payment_channel"
+		return nil
 
 	case "wakeup":
 		c.Reset()
@@ -116,7 +107,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 	}
 
 	s.frontendWs.SendCart(c.UserCtx, c.Data.Cart)
-	s.console(c, req.Action)
 
 	return nil
 }

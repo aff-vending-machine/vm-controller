@@ -28,7 +28,6 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 	}
 
 	if err != nil {
-		s.error(c, err, "promptpay is out of service")
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -41,7 +40,6 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 
 	if res.ErrorCode != ksher.SUCCESS {
 		err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
-		s.error(c, err, "promptpay is rejected")
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -57,7 +55,6 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		c.ChangeStage <- "emergency"
 		return
 	}
-	s.showPromptPay(c, res)
 
 	go s.pollingPromptpay(c, ctx, req.Timestamp)
 }
@@ -80,7 +77,6 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 			res, err := s.ksher.CheckOrder(ctx, c.PaymentChannel, c.Data.MerchantOrderID, &req)
 			if err != nil {
 				err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
-				s.error(c, err, "promptpay is rejected")
 				err = s.updateErrorTransaction(c, err)
 				if err != nil {
 					c.ChangeStage <- "emergency"

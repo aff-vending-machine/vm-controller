@@ -10,6 +10,5 @@ type Jetts interface {
 	ListenEvent(string)
 	OnInit(context.Context)
 	OnEvent(context.Context, *hardware.Event) error
-	OnKeyPressed(context.Context, string) error
 	OnWSReceived(context.Context, []byte) error
 }

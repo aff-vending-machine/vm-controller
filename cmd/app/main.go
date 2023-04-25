@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/ws"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/app"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/aff-vending-machine/vm-controller/pkg/log"
 )
@@ -21,7 +21,7 @@ func main() {
 	// initTrace(conf)
 
 	// Run main application
-	ws.Run(conf)
+	app.Run(conf)
 }
 
 func initLog(conf config.BootConfig) {

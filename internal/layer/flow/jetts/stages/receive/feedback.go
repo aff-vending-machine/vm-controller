@@ -2,7 +2,6 @@ package receive
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
@@ -20,11 +19,12 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 
 		if event.Status != "S0" {
 			log.Warn().Str("event", event.ToValueCode()).Msg("hardware error")
-			return s.errorFeedback(c, event)
+			err := s.errorFeedback(c, event)
+			return err
 		}
 
 		s.status = WAIT
-		codeFilter := []string{fmt.Sprintf("code:=:%s", event.SlotCode)}
+		codeFilter := makeCodeFilter(event.SlotCode)
 		slot, err := s.slotRepo.FindOne(c.UserCtx, codeFilter)
 		if err != nil {
 			log.Error().Strs("code filters", codeFilter).Err(err).Msg("unable to find slot")
@@ -45,12 +45,13 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 			if item.SlotCode == event.SlotCode {
 				c.Data.Cart[i].Received += 1
 				log.Info().Str("slot", item.SlotCode).Msg("update slot")
+				s.frontendWs.SendReceivedItem(c.UserCtx, c.Data.MerchantOrderID, c.Data.Cart, item)
 				break
 			}
 		}
 
 		c.ClearEvent(event.UID)
-		s.show(c)
+		log.Info().Str("stage", "receive").Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
 		return nil
 	}
 }
@@ -58,43 +59,32 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 func (s *stageImpl) errorFeedback(c *flow.Ctx, event *hardware.Event) error {
 	switch event.Status {
 	case "E0":
-		log.Warn().Str("event", event.ToValueCode()).Str("slot_code", event.SlotCode).Msg("Item is not drop, maybe this slot has no item")
 		// no item
-		s.queue.Clear(c.UserCtx)
+		s.updateErrorTransaction(c, fmt.Errorf("hardware error: item is not drop, maybe slot %s has no item (event: %s)", event.SlotCode, event.ToValueCode()))
+		s.queue.ClearStack(c.UserCtx)
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
-		s.slotRepo.UpdateMany(c.UserCtx, []string{fmt.Sprintf("code:=:%s", event.SlotCode)}, map[string]interface{}{"is_enable": false})
-
-		err := fmt.Errorf("hardware error: item is not drop, maybe slot %s has no item (event: %s)", event.SlotCode, event.ToValueCode())
-		s.error(c, err, "this slot has no item")
-		s.updateErrorTransaction(c, err)
-		s.status = E0
-
-		go func() {
-			time.Sleep(5 * time.Second)
-			c.ChangeStage <- "idle"
-		}()
-
+		log.Warn().Str("event", event.ToValueCode()).Str("slot_code", event.SlotCode).Msg("Item is not drop, maybe this slot has no item")
+		s.slotRepo.UpdateMany(c.UserCtx, makeCodeFilter(event.SlotCode), map[string]interface{}{"is_enable": false})
+		s.frontendWs.SendError(c.UserCtx, "receive", "Please Contact Center")
 		return flow.ErrMachineE0
 
 	case "E1":
 		// don't get item
-		log.Warn().Str("event", event.ToValueCode()).Msg("Customer don't grab item")
-
-		err := fmt.Errorf("hardware error: customer don't grab item (event: %s)", event.ToValueCode())
-		s.error(c, err, "please grab item")
-		s.updateErrorTransaction(c, err)
-		s.status = E1
+		s.status = 0
+		s.updateErrorTransaction(c, fmt.Errorf("hardware error: customer don't grab item (event: %s)", event.ToValueCode()))
+		log.Warn().Str("event", event.ToValueCode()).Msg("Customer don't grab item, auto open gate")
+		s.queue.PushCommand(c.UserCtx, "COMMAND", "OPEN_GATE")
 		return flow.ErrMachineE1
 
 	case "E2":
 		// unknown
 		s.updateErrorTransaction(c, fmt.Errorf("hardware error: CRITICAL ERROR (event: %s)", event.ToValueCode()))
-		s.status = E2
+		s.frontendWs.SendEmergency(c.UserCtx, flow.ErrMachineE2)
 		return flow.ErrMachineE2
 
 	default:
 		s.updateErrorTransaction(c, fmt.Errorf("hardware error: CRITICAL ERROR (event: %s)", event.ToValueCode()))
-		s.status = E2
+		s.frontendWs.SendEmergency(c.UserCtx, flow.ErrMachineE2)
 		return flow.ErrMachineE2
 	}
 }

@@ -10,13 +10,6 @@ import (
 
 type WSReceived struct {
 	Action string             `json:"action"`
-	Data   IdentificationData `json:"data"`
-}
-
-type IdentificationData struct {
-	Mail      string `json:"mail,omitempty"`
-	Reference string `json:"reference,omitempty"`
-	OTP       string `json:"otp,omitempty"`
 }
 
 func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
@@ -29,13 +22,6 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 	switch req.Action {
 	case "refresh":
 		s.OnInit(c)
-		return nil
-
-	case "bypass":
-		s.updatePaidTransaction(c)
-
-		s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
-		c.ChangeStage <- "receive"
 		return nil
 
 	case "cancel":

@@ -15,6 +15,6 @@ func (r *Clear) ToFilter() []string {
 	s, _ := json.Marshal(r.Query.IDs)
 
 	return []string{
-		fmt.Sprintf("id:IN:%s.([]uint)", s),
+		fmt.Sprintf("id:IN:%s:[]uint", s),
 	}
 }

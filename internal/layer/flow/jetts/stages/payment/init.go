@@ -8,11 +8,9 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
 )
 
 type stageImpl struct {
-	displayUc       usecase.Screen
 	ksher           api.Ksher
 	link2500        api.Link2500
 	queue           hardware.Queue
@@ -24,9 +22,9 @@ type stageImpl struct {
 	CancelFn        context.CancelFunc
 }
 
-func New(du usecase.Screen, ka api.Ksher, la api.Link2500, qh hardware.Queue, tr repository.Transaction, fw websocket.Frontend) *stageImpl {
+func New(ka api.Ksher, la api.Link2500, qh hardware.Queue, tr repository.Transaction, fw websocket.Frontend) *stageImpl {
 	return &stageImpl{
-		du, ka, la, qh, tr, fw,
+		ka, la, qh, tr, fw,
 		10 * time.Second,
 		nil,
 		nil,

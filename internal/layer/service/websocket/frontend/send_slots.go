@@ -8,7 +8,6 @@ import (
 
 type OrderInitData struct {
 	Slots     []SlotData `json:"slots"`
-	FreeSlots []SlotData `json:"free_slots"`
 }
 
 type SlotData struct {
@@ -28,7 +27,6 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 	w.mu.Lock()
 	defer w.mu.Unlock()
 	slotData := make([]SlotData, 0)
-	freeSlotData := make([]SlotData, 0)
 	for _, slot := range slots {
 		s := SlotData{
 			Code:     slot.Code,
@@ -42,16 +40,11 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 			s.Price = slot.Product.Price
 		}
 
-		if s.Price == 0 {
-			freeSlotData = append(freeSlotData, s)
-		} else {
-			slotData = append(slotData, s)
-		}
+		slotData = append(slotData, s)
 	}
 
 	data := OrderInitData{
 		Slots:     slotData,
-		FreeSlots: freeSlotData,
 	}
 
 	payload := PayloadModel{

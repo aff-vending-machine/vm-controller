@@ -9,20 +9,26 @@ import (
 )
 
 func (uc *Flow) ListenEvent(sn string) {
-	uc.context.UserCtx = context.Background()
-
+	ctx := context.Background()
 	timeout := 2 * time.Minute
+	uc.context.UserCtx = ctx
+
 	uc.stages["idle"].OnInit(uc.context)
 
-	go func() {
-		ctx := context.Background()
-		uc.watchdog = time.NewTicker(timeout)
-		defer uc.watchdog.Stop()
+	uc.watchdog = time.NewTicker(timeout)
+	defer uc.watchdog.Stop()
 
+	go func() {
 		for {
 			uc.lookup(ctx, timeout)
+			time.Sleep(100 * time.Millisecond)
+		}
+	}()
+
+	go func() {
+		for {
 			uc.event(ctx, "EVENT")
-			time.Sleep(150 * time.Millisecond)
+			time.Sleep(500 * time.Millisecond)
 		}
 	}()
 }
@@ -30,7 +36,6 @@ func (uc *Flow) ListenEvent(sn string) {
 func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 	select {
 	case <-uc.watchdog.C:
-		log.Debug().Msg("watchdog timeout")
 		uc.context.Stage = "idle"
 		uc.OnInit(ctx)
 

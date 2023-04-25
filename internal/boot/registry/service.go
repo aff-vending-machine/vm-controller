@@ -2,8 +2,6 @@ package registry
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/asset"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/display"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 	websocket "github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
@@ -12,8 +10,6 @@ import (
 // Interface Adapter layers (driven)
 type Service struct {
 	API        APIService
-	Asset      AssetService
-	Display    DisplayService
 	Hardware   HardwareService
 	Repository RepositoryService
 	WebSocket  WebSocketService
@@ -24,16 +20,6 @@ type APIService struct {
 	Link2500 api.Link2500
 	Topic    api.Topic
 }
-
-type AssetService struct {
-	Fonts  asset.Fonts
-	Images asset.Images
-}
-
-type DisplayService struct {
-	LCD display.LCD
-}
-
 type HardwareService struct {
 	Queue hardware.Queue
 }
