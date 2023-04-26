@@ -36,8 +36,10 @@ func (uc *Flow) ListenEvent(sn string) {
 func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 	select {
 	case <-uc.watchdog.C:
-		uc.context.Stage = "idle"
-		uc.OnInit(ctx)
+		if uc.context.Stage != "idle" {
+			uc.context.Stage = "idle"
+			uc.OnInit(ctx)
+		}
 
 	case <-uc.context.ClearWatchdog:
 		uc.watchdog.Reset(timeout)

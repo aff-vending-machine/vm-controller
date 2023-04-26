@@ -37,6 +37,7 @@ func (s *stageImpl) pollingTestpay(c *flow.Ctx) {
 					return
 				}
 
+				s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
 				c.ChangeStage <- "receive"
 				return
 			}
