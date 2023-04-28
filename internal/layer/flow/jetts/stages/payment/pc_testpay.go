@@ -45,6 +45,8 @@ func (s *stageImpl) pollingTestpay(c *flow.Ctx) {
 			count++
 
 		case <-time.After(3 * time.Minute):
+			s.frontendWs.SendError(c.UserCtx, "payment", "timeout")
+
 			err := s.updateCancelTransaction(c, "machine")
 			if err != nil {
 				c.ChangeStage <- "emergency"

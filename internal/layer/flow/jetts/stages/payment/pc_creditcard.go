@@ -24,26 +24,28 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	}
 
 	if err != nil {
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+		
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
 			return
 		}
 
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
 		c.ChangeStage <- "payment_channel"
 		return
 	}
 
 	if res.ResponseText != "APPROVED" {
 		err = fmt.Errorf("%s: %s", res.InvoiceNumber, res.ResponseText)
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
 			return
 		}
 
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
 		c.ChangeStage <- "payment_channel"
 		return
 	}
