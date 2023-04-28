@@ -35,7 +35,7 @@ func (s *stageImpl) checkEvent(c *flow.Ctx) {
 	}
 
 	if c.Data.TotalQuantity() != c.Data.TotalReceived() {
-		s.updateBrokenTransaction(c)
+		s.updateMachineFailedTransaction(c)
 	} else {
 		s.updateDoneTransaction(c)
 	}
