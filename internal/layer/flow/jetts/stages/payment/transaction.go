@@ -84,9 +84,10 @@ func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
 func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
 	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
 	data := map[string]interface{}{
-		"is_error": true,
-		"error":    err.Error(),
-		"error_at": time.Now(),
+		"is_error":     true,
+		"order_status": enum.ORDER_STATUS_CANCELLED,
+		"error":        err.Error(),
+		"error_at":     time.Now(),
 	}
 
 	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)

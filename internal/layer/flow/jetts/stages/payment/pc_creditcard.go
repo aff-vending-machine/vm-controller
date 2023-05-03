@@ -15,7 +15,7 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	req := link2500.SaleRequest{
 		MerchantID: c.PaymentChannel.MerchantID,
-		Price: c.Data.TotalPrice(),
+		Price:      c.Data.TotalPrice(),
 	}
 	res, err := s.link2500.Sale(ctx, c.PaymentChannel, &req)
 	if c.Stage != "payment" || c.PaymentChannel.Channel != "creditcard" {
@@ -24,6 +24,8 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	}
 
 	if err != nil {
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -36,6 +38,8 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	if res.ResponseText != "APPROVED" {
 		err = fmt.Errorf("%s: %s", res.InvoiceNumber, res.ResponseText)
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -52,5 +56,6 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		return
 	}
 
+	s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
 	c.ChangeStage <- "receive"
 }

@@ -28,6 +28,8 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 	}
 
 	if err != nil {
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -40,6 +42,8 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 
 	if res.ErrorCode != ksher.SUCCESS {
 		err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
+		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -55,6 +59,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		c.ChangeStage <- "emergency"
 		return
 	}
+	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
 
 	go s.pollingPromptpay(c, ctx, req.Timestamp)
 }
@@ -77,6 +82,8 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 			res, err := s.ksher.CheckOrder(ctx, c.PaymentChannel, c.Data.MerchantOrderID, &req)
 			if err != nil {
 				err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
+				s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+
 				err = s.updateErrorTransaction(c, err)
 				if err != nil {
 					c.ChangeStage <- "emergency"
@@ -94,6 +101,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 					return
 				}
 
+				s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
 				c.ChangeStage <- "receive"
 				return
 			}
@@ -103,6 +111,8 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 				log.Error().Msg("cancelled by user")
 				return
 			}
+
+			s.frontendWs.SendError(c.UserCtx, "payment", "timeout")
 
 			err := s.updateCancelTransaction(c, "machine")
 			if err != nil {

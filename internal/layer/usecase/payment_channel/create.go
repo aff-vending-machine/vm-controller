@@ -15,7 +15,7 @@ func (uc *usecaseImpl) Create(ctx context.Context, req *request.Create) error {
 
 	err := uc.paymentChannelRepo.InsertOne(ctx, req.ToEntity())
 	if err != nil {
-		return errors.Wrap(err, "unable to insert device")
+		return errors.Wrap(err, "unable to insert payment channel")
 	}
 
 	return nil
