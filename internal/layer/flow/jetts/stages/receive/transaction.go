@@ -13,7 +13,7 @@ func (s *stageImpl) updateMachineFailedTransaction(c *flow.Ctx) error {
 	ts := time.Now()
 	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
 	data := map[string]interface{}{
-		"order_status":      enum.ORDER_STATUS_MACHINE_FAILED,
+		"order_status":      enum.ORDER_STATUS_DONE_BROKEN,
 		"refund_at":         ts,
 		"received_item_at":  ts,
 		"received_quantity": c.Data.TotalReceived(),

@@ -25,7 +25,7 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	if err != nil {
 		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
-		
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"

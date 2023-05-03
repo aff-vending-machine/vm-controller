@@ -59,6 +59,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		c.ChangeStage <- "emergency"
 		return
 	}
+	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
 
 	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
 
