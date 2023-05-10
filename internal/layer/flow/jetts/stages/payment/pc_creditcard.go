@@ -3,6 +3,7 @@ package payment
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
@@ -36,7 +37,7 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		return
 	}
 
-	if res.ResponseText != "APPROVED" {
+	if !strings.HasPrefix(res.ResponseText, "APPROVED") {
 		err = fmt.Errorf("%s: %s", res.InvoiceNumber, res.ResponseText)
 		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
 
