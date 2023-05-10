@@ -2,6 +2,7 @@ package receive
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
@@ -65,6 +66,8 @@ func (s *stageImpl) errorFeedback(c *flow.Ctx, event *hardware.Event) error {
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
 		log.Warn().Str("event", event.ToValueCode()).Str("slot_code", event.SlotCode).Msg("Item is not drop, maybe this slot has no item")
 		s.slotRepo.UpdateMany(c.UserCtx, makeCodeFilter(event.SlotCode), map[string]interface{}{"is_enable": false})
+		time.Sleep(5 * time.Second)
+		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
 		s.frontendWs.SendError(c.UserCtx, "receive", "Please Contact Center")
 		return flow.ErrMachineE0
 
