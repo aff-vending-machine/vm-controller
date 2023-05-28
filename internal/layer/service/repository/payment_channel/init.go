@@ -1,8 +1,8 @@
-package payment_channel_repository
+package payment_channel
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/module/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/module/repository"
 	"gorm.io/gorm"
 )
 

@@ -1,11 +1,11 @@
-package queue_hardware
+package queue
 
 import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/hardware"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/rs/zerolog/log"
 )
 
@@ -24,7 +24,7 @@ func (h *hardwareImpl) Pop(ctx context.Context, key string) (*hardware.Event, er
 	}
 
 	event := hardware.NewEventFromString(result)
-	log.Debug().Str("key", key).Str("event", result).Msg("pop event")
+	log.Debug().Str("key", key).Str("event", result).Msg("EVENT: POP")
 	if event == nil {
 		return nil, fmt.Errorf("invalid event %s", result)
 	}

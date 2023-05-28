@@ -15,10 +15,14 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+vendor/
 
 # Go workspace file
 go.work
 env/*.yaml
 db/*.sqlite
 *.yaml
+
+.DS_Store
+.vscode
+.scannerwork

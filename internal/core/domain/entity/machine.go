@@ -14,6 +14,7 @@ type Machine struct {
 	Vendor       string    `json:"vendor"`
 	Center       string    `json:"center"`
 	Status       string    `json:"status"`
+	TestMode     bool      `json:"test_mode"`
 }
 
 func (e *Machine) TableName() string {

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -25,40 +26,12 @@ var patterns = []map[string]interface{}{
 	{
 		"action": "done",
 	},
-	// // Paid
-	// {
-	// 	"action": "confirm",
-	// 	"data": map[string]interface{}{
-	// 		"payment_channel": "promptpay",
-	// 	},
-	// },
 	{
 		"action": "confirm",
 		"data": map[string]interface{}{
-			"payment_channel": "creditcard",
+			"payment_channel": "testpay",
 		},
 	},
-	// // Free
-	// {
-	// 	"action": "confirm",
-	// 	"data": map[string]interface{}{
-	// 		"payment_channel": "free",
-	// 	},
-	// },
-	// {
-	// 	"action": "request-otp",
-	// 	"data": map[string]interface{}{
-	// 		"mail": "ztrixack.th@gmail.com",
-	// 	},
-	// },
-	// {
-	// 	"action": "check-otp",
-	// 	"data": map[string]interface{}{
-	// 		"mail":      "ztrixack.th@gmail.com",
-	// 		"reference": "DjHvId",
-	// 		"otp":       "628702",
-	// 	},
-	// },
 }
 
 func main() {
@@ -66,7 +39,6 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer conn.Close()
 
 	go func() {
 		for i, pattern := range patterns {
@@ -74,6 +46,10 @@ func main() {
 
 			time.Sleep(5 * time.Second)
 		}
+
+		time.Sleep(1 * time.Minute)
+		conn.Close()
+		os.Exit(0)
 	}()
 
 	for {
