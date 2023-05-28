@@ -14,7 +14,7 @@ import (
 func InitTestPay(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, &request.Get{Channel: "testpay"})
+	channel, err := uc.GetOne(ctx, &request.GetOne{Channel: "testpay"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return
@@ -28,7 +28,6 @@ func InitTestPay(uc payment_channel.Usecase) {
 		Name:    "Test",
 		Channel: "testpay",
 		Vendor:  "at44",
-		Active:  true,
 	})
 	boot.TerminateWhenError(err)
 	log.Info().Msg("create test channel")
@@ -37,7 +36,7 @@ func InitTestPay(uc payment_channel.Usecase) {
 func InitPromptPay(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, &request.Get{Channel: "promptpay"})
+	channel, err := uc.GetOne(ctx, &request.GetOne{Channel: "promptpay"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return
@@ -51,7 +50,6 @@ func InitPromptPay(uc payment_channel.Usecase) {
 		Name:    "Ksher - PromptPay",
 		Channel: "promptpay",
 		Vendor:  "Ksher",
-		Active:  true,
 	})
 	boot.TerminateWhenError(err)
 	log.Info().Msg("create promptpay (Ksher) channel")
@@ -60,7 +58,7 @@ func InitPromptPay(uc payment_channel.Usecase) {
 func InitCreditCard(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, &request.Get{Channel: "creditcard"})
+	channel, err := uc.GetOne(ctx, &request.GetOne{Channel: "creditcard"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return
@@ -74,7 +72,6 @@ func InitCreditCard(uc payment_channel.Usecase) {
 		Name:       "Link2500 - CreditCard",
 		Channel:    "creditcard",
 		Vendor:     "Kasikorn Bank",
-		Active:     true,
 		Host:       "vm-link2500",
 		MerchantID: "000001",
 	})

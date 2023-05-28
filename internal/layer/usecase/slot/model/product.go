@@ -7,7 +7,7 @@ import (
 type Product struct {
 	SKU      string  `json:"sku"`
 	Name     string  `json:"name"`
-	Type     string  `json:"type"`
+	Group    string  `json:"group"`
 	ImageURL string  `json:"image_url"`
 	Price    float64 `json:"price"`
 }
@@ -16,7 +16,7 @@ func (s *Product) ToEntity() *entity.Product {
 	return &entity.Product{
 		SKU:      s.SKU,
 		Name:     s.Name,
-		Type:     s.Type,
+		Group:    s.Group,
 		ImageURL: s.ImageURL,
 		Price:    s.Price,
 	}
@@ -30,7 +30,7 @@ func ToProduct(e *entity.Product) *Product {
 	return &Product{
 		SKU:      e.SKU,
 		Name:     e.Name,
-		Type:     e.Type,
+		Group:    e.Group,
 		ImageURL: e.ImageURL,
 		Price:    e.Price,
 	}

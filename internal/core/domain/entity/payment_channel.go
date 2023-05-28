@@ -12,7 +12,7 @@ type PaymentChannel struct {
 	Name         string    `json:"name"`
 	Channel      string    `json:"channel"`
 	Vendor       string    `json:"vendor"`
-	Active       bool      `json:"active"`
+	IsEnable     bool      `json:"is_enable"`
 	Host         string    `json:"host"`
 	MerchantID   string    `json:"merchant_id"`
 	MerchantName string    `json:"merchant_name"`

@@ -4,6 +4,7 @@ import (
 	"vm-controller/internal/boot/modules"
 	"vm-controller/internal/layer/usecase/machine"
 	"vm-controller/internal/layer/usecase/payment_channel"
+	"vm-controller/internal/layer/usecase/product"
 	"vm-controller/internal/layer/usecase/slot"
 	"vm-controller/internal/layer/usecase/transaction"
 )
@@ -17,6 +18,9 @@ func NewUsecase(adapter modules.Service) modules.Usecase {
 		),
 		PaymentChannel: payment_channel.New(
 			adapter.Repository.PaymentChannel,
+		),
+		Product: product.New(
+			adapter.Repository.Slot,
 		),
 		Slot: slot.New(
 			adapter.Repository.Slot,
