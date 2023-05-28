@@ -16,7 +16,7 @@ type Transaction struct {
 	OrderPrice          float64    `json:"order_price" gorm:"not null"`                   // ordered
 	OrderStatus         string     `json:"order_status" gorm:"not null"`                  // ordered
 	OrderedAt           time.Time  `json:"ordered_at"`                                    // ordered
-	PaymentChannel      string     `json:"payment"`                                       // ordered, key to find payment channel - MakeTransactionCreateRequest
+	PaymentChannel      string     `json:"payment_channel"`                               // ordered, key to find payment channel - MakeTransactionCreateRequest
 	PaymentRequestedAt  *time.Time `json:"payment_requested_at"`                          // ordered - MakeTransactionCreateRequest
 	Reference1          *string    `json:"reference1"`                                    // reference1 - MakeTransactionCreateResult
 	Reference2          *string    `json:"reference2"`                                    // reference2

@@ -18,6 +18,7 @@ type PaymentChannel struct {
 	MerchantName string    `json:"merchant_name"`
 	BillerCode   string    `json:"biller_code"`
 	BillerID     string    `json:"biller_id"`
+	Token        string    `json:"token"`
 	StoreID      string    `json:"store_id"`
 	TerminalID   string    `json:"terminal_id"`
 }

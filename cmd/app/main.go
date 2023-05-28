@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/config"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/app"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/boot"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/log"
+	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/app"
+	"github.com/aff-vending-machine/vm-controller/pkg/boot"
+	"github.com/aff-vending-machine/vm-controller/pkg/log"
 )
 
 func init() {
@@ -13,7 +13,7 @@ func init() {
 
 func main() {
 	// Create boot with configuration
-	conf := config.Init("env/thaitropica")
+	conf := config.Init("env/jetts")
 	boot.Init(conf)
 	defer boot.Serve()
 

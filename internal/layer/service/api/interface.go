@@ -3,18 +3,25 @@ package api
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/lugentpay"
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/internal/core/domain/mail"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/model"
 )
 
-type Mail interface {
-	Send(ctx context.Context, data *mail.Message) error
+type Ksher interface {
+	CreateOrder(context.Context, *entity.PaymentChannel, *ksher.CreateOrderBody) (*ksher.CreateOrderResult, error)
+	CheckOrder(context.Context, *entity.PaymentChannel, string, *ksher.CheckOrderQuery) (*ksher.CheckOrderResult, error)
+	RefundOrder(context.Context, *entity.PaymentChannel, string, *ksher.RefundOrderBody) (*ksher.RefundOrderResult, error)
 }
 
-type LugentPay interface {
-	AliPay(ctx context.Context, channel *entity.PaymentChannel, req *lugentpay.QRCodeGenerateRequest) (*lugentpay.QRCodeGenerateResponse, error)
-	ThaiQR(ctx context.Context, channel *entity.PaymentChannel, req *lugentpay.QRCodeGenerateRequest) (*lugentpay.QRCodeGenerateResponse, error)
-	WechatPay(ctx context.Context, channel *entity.PaymentChannel, req *lugentpay.QRCodeGenerateRequest) (*lugentpay.QRCodeGenerateResponse, error)
-	Inquiry(ctx context.Context, channel *entity.PaymentChannel, req *lugentpay.InquiryBody) (*lugentpay.InquiryResult, error)
+type Link2500 interface {
+	Sale(context.Context, *entity.PaymentChannel, *link2500.SaleRequest) (*link2500.SaleResult, error)
+	Void(context.Context, *entity.PaymentChannel, *link2500.VoidRequest) (*link2500.VoidResult, error)
+	Refund(context.Context, *entity.PaymentChannel, *link2500.RefundRequest) (*link2500.RefundResult, error)
+	Settlement(context.Context, *entity.PaymentChannel, *link2500.SettlementRequest) (*link2500.SettlementResult, error)
+}
+
+type Topic interface {
+	RegisterMachine(context.Context, *entity.Machine, *model.Machine) error
 }

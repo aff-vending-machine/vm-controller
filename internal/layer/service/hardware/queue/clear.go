@@ -1,9 +1,9 @@
-package queue_hardware
+package queue
 
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vmc-rpi-ctrl/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
 func (h *hardwareImpl) Clear(ctx context.Context) error {
