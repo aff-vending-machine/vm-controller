@@ -1,20 +1,17 @@
 package transaction
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq"
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/rabbitmq"
 	"github.com/rs/zerolog/log"
 )
 
 func (r *rpcImpl) Get(c *rabbitmq.Ctx) error {
-	ctx, span := trace.Start(c.UserContext)
-	defer span.End()
+	ctx := c.UserContext
 
 	// usecase execution
 	res, err := r.usecase.Get(ctx)
 	if err != nil {
 		log.Error().Err(err).Msg("unable to get all transactions")
-		trace.RecordError(span, err)
 		return c.InternalServer(err)
 	}
 

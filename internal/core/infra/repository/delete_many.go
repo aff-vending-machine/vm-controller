@@ -2,14 +2,9 @@ package repository
 
 import (
 	"context"
-
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
 func (r *Template[T]) DeleteMany(ctx context.Context, filter []string) (int64, error) {
-	_, span := trace.Start(ctx)
-	defer span.End()
-
 	var entity T
 	tx := MakeQuery(r.DB.Begin(), filter)
 

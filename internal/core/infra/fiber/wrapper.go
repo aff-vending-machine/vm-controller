@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/fiber/middleware"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/fiber/middleware"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/requestid"

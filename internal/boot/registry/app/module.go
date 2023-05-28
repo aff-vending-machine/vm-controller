@@ -2,12 +2,12 @@ package app
 
 import (
 	"github.com/aff-vending-machine/vm-controller/config"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/fiber"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/http"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/redis"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/sqlite"
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/websocket"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/fiber"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/http"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/rabbitmq"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/redis"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/sqlite"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/websocket"
 )
 
 // Infrastructure

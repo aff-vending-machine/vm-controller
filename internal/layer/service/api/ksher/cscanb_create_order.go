@@ -8,15 +8,11 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/aff-vending-machine/vm-controller/pkg/utils"
 	"github.com/rs/zerolog/log"
 )
 
 func (c *apiImpl) CreateOrder(ctx context.Context, channel *entity.PaymentChannel, body *ksher.CreateOrderBody) (*ksher.CreateOrderResult, error) {
-	_, span := trace.Start(ctx)
-	defer span.End()
-
 	pregen := toJson(body)
 	// delete(pregen, "provider")
 	signature := generateSignature(CSCANB_PATH, pregen, channel.Token)

@@ -1,7 +1,7 @@
 package fiber
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/fiber"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/fiber"
 )
 
 type server struct {

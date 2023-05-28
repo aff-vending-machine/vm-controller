@@ -1,7 +1,7 @@
 package websocket
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/websocket"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/websocket"
 )
 
 type serverImpl struct {

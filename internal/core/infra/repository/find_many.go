@@ -2,14 +2,9 @@ package repository
 
 import (
 	"context"
-
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
 func (r *Template[T]) FindMany(ctx context.Context, filter []string) ([]T, error) {
-	_, span := trace.Start(ctx)
-	defer span.End()
-
 	var entities []T
 	tx := MakeQuery(r.DB, filter)
 

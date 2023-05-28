@@ -2,14 +2,9 @@ package repository
 
 import (
 	"context"
-
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 )
 
 func (r *Template[T]) UpdateMany(ctx context.Context, filter []string, data map[string]interface{}) (int64, error) {
-	_, span := trace.Start(ctx)
-	defer span.End()
-
 	var ent T
 	tx := MakeQuery(r.DB.Begin(), filter)
 
