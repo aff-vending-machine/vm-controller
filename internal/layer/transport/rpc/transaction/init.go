@@ -1,13 +1,11 @@
 package transaction
 
-import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
-)
+import "github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
 
 type rpcImpl struct {
-	usecase usecase.Transaction
+	usecase transaction.Usecase
 }
 
-func New(uc usecase.Transaction) *rpcImpl {
+func New(uc transaction.Usecase) *rpcImpl {
 	return &rpcImpl{uc}
 }

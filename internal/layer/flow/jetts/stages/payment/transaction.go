@@ -1,23 +1,24 @@
 package payment
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"github.com/aff-vending-machine/vm-controller/pkg/db"
 	"github.com/rs/zerolog/log"
 )
 
-func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 string, ref3 string) error {
-	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
+func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 string, ref3 string, raw string) error {
+	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
-		"reference1": ref1,
-		"reference2": ref2,
-		"reference3": ref3,
+		"reference1":    ref1,
+		"reference2":    ref2,
+		"reference3":    ref3,
+		"raw_reference": raw,
 	}
 
-	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
 		return errx
@@ -27,7 +28,7 @@ func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 st
 }
 
 func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) error {
-	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
+	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status":      enum.ORDER_STATUS_PAID,
 		"confirmed_paid_by": "machine",
@@ -37,7 +38,7 @@ func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) error {
 		"error_at":          nil,
 	}
 
-	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
 		return errx
@@ -47,7 +48,7 @@ func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) error {
 }
 
 func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
-	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
+	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status":      enum.ORDER_STATUS_PAID,
 		"confirmed_paid_by": "test",
@@ -57,7 +58,7 @@ func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
 		"error_at":          time.Now(),
 	}
 
-	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
 		return errx
@@ -67,14 +68,14 @@ func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
 }
 
 func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
-	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
+	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status": enum.ORDER_STATUS_CANCELLED,
 		"cancelled_by": by,
 		"cancelled_at": time.Now(),
 	}
 
-	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
 	}
@@ -82,7 +83,7 @@ func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
 }
 
 func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
-	filter := []string{fmt.Sprintf("merchant_order_id:=:%s", c.Data.MerchantOrderID)}
+	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"is_error":     true,
 		"order_status": enum.ORDER_STATUS_CANCELLED,
@@ -90,7 +91,7 @@ func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
 		"error_at":     time.Now(),
 	}
 
-	_, errx := s.transactionRepo.UpdateMany(c.UserCtx, filter, data)
+	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)
 	if errx != nil {
 		log.Error().Err(errx).Str("order_id", c.Data.MerchantOrderID).Interface("data", data).Msg("TRANSACTION: unable to update transaction")
 		return errx

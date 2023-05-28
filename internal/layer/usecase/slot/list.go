@@ -5,6 +5,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
+	"github.com/aff-vending-machine/vm-controller/pkg/db"
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 )
@@ -14,7 +15,7 @@ func (uc *usecaseImpl) List(ctx context.Context, req *request.Filter) ([]respons
 		return nil, errors.Wrap(v.Errors.OneError(), "invalid request")
 	}
 
-	slots, err := uc.slotRepo.FindMany(ctx, makeFilter(req))
+	slots, err := uc.slotRepo.FindMany(ctx, db.NewQuery().PtrLimit(req.Limit).PtrOffset(req.Offset).PtrOrder(req.SortBy))
 	if err != nil {
 		return nil, errors.Wrap(err, "unable to find slots")
 	}

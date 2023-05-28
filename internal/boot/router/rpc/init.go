@@ -1,7 +1,7 @@
 package rpc
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/module/rabbitmq"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
 )
 
 type server struct {

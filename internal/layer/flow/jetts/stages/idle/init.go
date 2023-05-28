@@ -1,15 +1,15 @@
 package idle
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
 )
 
 type stageImpl struct {
-	machineRepo repository.Machine
+	machineRepo machine.Repository
 	frontendWs  websocket.Frontend
 }
 
-func New(mr repository.Machine, fw websocket.Frontend) *stageImpl {
+func New(mr machine.Repository, fw websocket.Frontend) *stageImpl {
 	return &stageImpl{mr, fw}
 }

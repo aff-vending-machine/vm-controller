@@ -1,13 +1,11 @@
 package machine
 
-import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
-)
+import "github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
 
 type rpcImpl struct {
-	usecase usecase.Machine
+	usecase machine.Usecase
 }
 
-func New(uc usecase.Machine) *rpcImpl {
+func New(uc machine.Usecase) *rpcImpl {
 	return &rpcImpl{uc}
 }

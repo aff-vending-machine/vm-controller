@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
+	"github.com/aff-vending-machine/vm-controller/pkg/db"
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
@@ -14,7 +15,7 @@ func (uc *usecaseImpl) Set(ctx context.Context, req *request.Set) error {
 		return errors.Wrap(v.Errors.OneError(), "validate failed")
 	}
 
-	slots, err := uc.slotRepo.FindMany(ctx, []string{})
+	slots, err := uc.slotRepo.FindMany(ctx, db.NewQuery())
 	if err != nil {
 		return err
 	}
@@ -37,16 +38,16 @@ func (uc *usecaseImpl) Set(ctx context.Context, req *request.Set) error {
 		case 1: // only in center, add it
 			counts[0]++
 			slot := req.Data[mapIndex[code]]
-			uc.slotRepo.InsertOne(ctx, slot.ToEntity())
+			uc.slotRepo.Create(ctx, slot.ToEntity())
 
 		case 2: // only in machine, remove it
 			counts[1]++
-			uc.slotRepo.DeleteMany(ctx, makeCodeFilter(code))
+			uc.slotRepo.Delete(ctx, db.NewQuery().AddWhere("code = ?", code))
 
 		case 3: // both, update it
 			counts[2]++
 			slot := req.Data[mapIndex[code]]
-			uc.slotRepo.UpdateMany(ctx, makeCodeFilter(code), slot.ToJson())
+			uc.slotRepo.Update(ctx, db.NewQuery().AddWhere("code = ?", code), slot.ToJson())
 
 		default:
 			counts[3]++

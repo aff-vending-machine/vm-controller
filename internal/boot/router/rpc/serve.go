@@ -1,11 +1,11 @@
 package rpc
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
 	"github.com/rs/zerolog/log"
 )
 
-func (s *server) Serve(queue string, driver registry.RPCTransport) {
+func (s *server) Serve(queue string, driver modules.RPCTransport) {
 	s.routeMachine(driver.Machine)
 	s.routeSlot(driver.Slot)
 	s.routeTransaction(driver.Transaction)

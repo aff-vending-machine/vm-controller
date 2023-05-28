@@ -1,13 +1,11 @@
 package transaction
 
-import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
-)
+import "github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
 
 type usecaseImpl struct {
-	transactionRepo repository.Transaction
+	transactionRepo transaction.Repository
 }
 
-func New(r repository.Transaction) *usecaseImpl {
+func New(r transaction.Repository) *usecaseImpl {
 	return &usecaseImpl{r}
 }

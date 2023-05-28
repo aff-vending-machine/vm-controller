@@ -1,6 +1,7 @@
 package receive
 
 import (
+	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
 	"github.com/rs/zerolog/log"
 )
@@ -15,6 +16,22 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 
 	log.Info().Str("stage", "receive").Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
 	go s.checkEvent(c)
+}
+
+func (s *stageImpl) addEvents(c *flow.Ctx) error {
+	for _, item := range c.Data.Cart {
+		for index := 0; index < item.Quantity; index++ {
+			event := hardware.NewEvent(index, item)
+			err := s.queue.Push(c.UserCtx, "QUEUE", event)
+			if err != nil {
+				return err
+			}
+
+			c.AddWaitingEvent(event)
+		}
+	}
+
+	return nil
 }
 
 func (s *stageImpl) checkEvent(c *flow.Ctx) {

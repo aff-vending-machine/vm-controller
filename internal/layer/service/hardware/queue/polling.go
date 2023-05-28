@@ -5,14 +5,10 @@ import (
 	"time"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/rs/zerolog/log"
 )
 
 func (h *hardwareImpl) Polling(ctx context.Context, key string, total int, handle hardware.QueueHandler) {
-	ctx, span := trace.Start(ctx)
-	defer span.End()
-
 	count := 0
 	for count < total {
 		if len(h.stacks) == 0 {

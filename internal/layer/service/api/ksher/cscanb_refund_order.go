@@ -8,15 +8,11 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/trace"
 	"github.com/aff-vending-machine/vm-controller/pkg/utils"
 	"github.com/rs/zerolog/log"
 )
 
 func (c *apiImpl) RefundOrder(ctx context.Context, channel *entity.PaymentChannel, orderID string, body *ksher.RefundOrderBody) (*ksher.RefundOrderResult, error) {
-	_, span := trace.Start(ctx)
-	defer span.End()
-
 	path := utils.GenerateURLPath(CSCANB_PATH, orderID) // no prefix "/" after gen
 	pregen := toJson(body)
 	signature := generateSignature(path, pregen, channel.Token)

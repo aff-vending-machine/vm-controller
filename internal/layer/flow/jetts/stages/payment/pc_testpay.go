@@ -8,7 +8,7 @@ import (
 )
 
 func (s *stageImpl) testpay(c *flow.Ctx) {
-	err := s.updateReferenceTransaction(c, "TEST01", "TEST02", "TEST03")
+	err := s.updateReferenceTransaction(c, "TEST01", "TEST02", "TEST03", "TEST04")
 	if err != nil {
 		c.ChangeStage <- "emergency"
 		return
