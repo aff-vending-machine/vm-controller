@@ -23,7 +23,7 @@ type Config struct {
 // Init creates a new config service.
 func Init(fallback string) Config {
 	filename := fallback
-	if value, ok := os.LookupEnv("APP_ENV"); ok {
+	if value, ok := os.LookupEnv("APP_ENV_PATH"); ok {
 		filename = value
 	}
 

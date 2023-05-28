@@ -20,10 +20,11 @@ type StartUp struct {
 func (r *StartUp) ToEntity() *entity.Machine {
 	if r.Name == "" {
 		r.Name = strings.ToUpper(gen.Random(6))
+		r.SerialNumber = "VM-" + strings.ToUpper(r.Codename[:3]) + "-" + r.Name
 	}
 
 	if r.SerialNumber == "" {
-		r.SerialNumber = "VM-" + strings.ToUpper(r.Codename[:3]) + "-" + r.Name
+		r.SerialNumber = "VM-" + strings.ToUpper(r.Codename[:3]) + "-" + strings.ToUpper(gen.Random(6))
 	}
 
 	if r.Center == "" {

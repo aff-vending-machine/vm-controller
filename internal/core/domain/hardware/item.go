@@ -2,6 +2,7 @@ package hardware
 
 type Item struct {
 	SlotCode string  `json:"code"`
+	SKU      string  `json:"sku"`
 	Name     string  `json:"name"`
 	ImageURL string  `json:"image_url"`
 	Price    float64 `json:"price"`
@@ -11,6 +12,7 @@ type Item struct {
 
 func (item *Item) Clear() {
 	item.SlotCode = ""
+	item.SKU = ""
 	item.Name = ""
 	item.ImageURL = ""
 	item.Quantity = 0

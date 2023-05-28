@@ -29,6 +29,7 @@ func (s *stageImpl) actionSetCart(c *flow.Ctx, data []item) error {
 				} else {
 					c.Data.Cart = append(c.Data.Cart, hardware.Item{
 						SlotCode: d.SlotCode,
+						SKU:      v.Product.SKU,
 						Name:     v.Product.Name,
 						ImageURL: v.Product.ImageURL,
 						Price:    v.Product.Price,
