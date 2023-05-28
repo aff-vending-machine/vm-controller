@@ -8,7 +8,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
 	"github.com/rs/zerolog/log"
 )
 
@@ -22,7 +22,7 @@ func (c *apiImpl) CreateOrder(ctx context.Context, channel *entity.PaymentChanne
 	breq, _ := json.Marshal(body)
 
 	// Set HTTP request
-	url := utils.GenerateURLPath(channel.Host, CSCANB_PATH)
+	url := gen.ToURLPath(channel.Host, CSCANB_PATH)
 	log.Debug().Str("channel", "ksher").Str("URL", url).Str("signature", signature).Msg("POST create order")
 
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(breq))

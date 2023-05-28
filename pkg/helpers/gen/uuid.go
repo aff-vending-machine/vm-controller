@@ -1,4 +1,4 @@
-package utils
+package gen
 
 import (
 	"math/rand"
@@ -15,7 +15,7 @@ type options struct {
 
 var src = rand.NewSource(time.Now().UnixNano())
 
-func GenerateRandom(n int) string {
+func Random(n int) string {
 	return generate(n, options{
 		letter:  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", // 62 letters
 		idxBits: 6,                                                                // 00111111 = max 63 letters
@@ -24,7 +24,7 @@ func GenerateRandom(n int) string {
 	})
 }
 
-func GenerateUUIDv4() string {
+func UUIDv4() string {
 	id := generate(32, options{
 		letter:  "0123456789abcdefghijklmnopqrstuvwxyz", // 36 letters
 		idxBits: 6,                                      // 00111111 = max 63 letters
@@ -35,7 +35,7 @@ func GenerateUUIDv4() string {
 	return id[0:8] + "-" + id[8:12] + "-" + id[12:16] + "-" + id[16:20] + "-" + id[20:]
 }
 
-func GenerateOTP() string {
+func OTP() string {
 	return generate(6, options{
 		letter:  "0123456789", // 10 letters
 		idxBits: 4,            // 00001111 = max 15 letters

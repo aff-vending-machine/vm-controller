@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
 )
 
 func (r *RepositoryImpl[T]) Update(ctx context.Context, query *db.Query, data map[string]interface{}) (int64, error) {

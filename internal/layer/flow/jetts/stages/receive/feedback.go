@@ -6,7 +6,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
 	"github.com/rs/zerolog/log"
 )
 

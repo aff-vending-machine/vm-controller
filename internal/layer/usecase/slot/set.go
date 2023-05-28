@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"

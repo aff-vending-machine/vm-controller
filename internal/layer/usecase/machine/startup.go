@@ -5,8 +5,8 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
-	"github.com/aff-vending-machine/vm-controller/pkg/errs"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
 	"github.com/rs/zerolog/log"
 )
 

@@ -1,7 +1,7 @@
 package sqlite
 
 import (
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
 
 	"gorm.io/gorm"
 )

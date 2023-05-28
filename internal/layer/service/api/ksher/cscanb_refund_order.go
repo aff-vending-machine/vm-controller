@@ -8,12 +8,12 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
 	"github.com/rs/zerolog/log"
 )
 
 func (c *apiImpl) RefundOrder(ctx context.Context, channel *entity.PaymentChannel, orderID string, body *ksher.RefundOrderBody) (*ksher.RefundOrderResult, error) {
-	path := utils.GenerateURLPath(CSCANB_PATH, orderID) // no prefix "/" after gen
+	path := gen.ToURLPath(CSCANB_PATH, orderID) // no prefix "/" after gen
 	pregen := toJson(body)
 	signature := generateSignature(path, pregen, channel.Token)
 	body.Signature = signature
@@ -22,7 +22,7 @@ func (c *apiImpl) RefundOrder(ctx context.Context, channel *entity.PaymentChanne
 	breq, _ := json.Marshal(body)
 
 	// Set HTTP request
-	url := utils.GenerateURLPath(channel.Host, CSCANB_PATH, orderID)
+	url := gen.ToURLPath(channel.Host, CSCANB_PATH, orderID)
 	log.Debug().Str("channel", "ksher").Str("URL", url).Str("signature", signature).Msg("PUT refund order")
 
 	req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(breq))

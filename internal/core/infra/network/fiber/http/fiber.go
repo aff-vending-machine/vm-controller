@@ -3,7 +3,7 @@ package http
 import (
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/errs"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pkg/errors"
 )

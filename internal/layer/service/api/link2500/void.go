@@ -9,7 +9,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
 	"github.com/rs/zerolog/log"
 )
 
@@ -25,7 +25,7 @@ func (a *apiImpl) Void(ctx context.Context, channel *entity.PaymentChannel, body
 	breq, _ := json.Marshal(body)
 
 	// Set HTTP request
-	url := utils.GenerateURLPath(channel.Host, LINK2500_PATH, "void")
+	url := gen.ToURLPath(channel.Host, LINK2500_PATH, "void")
 
 	log.Debug().Str("channel", "creditcard").Str("URL", url).Interface("request", body).Msg("POST request")
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(breq))

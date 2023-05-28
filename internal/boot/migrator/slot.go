@@ -8,7 +8,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/model"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/aff-vending-machine/vm-controller/pkg/errs"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
 	"github.com/rs/zerolog/log"
 )
 

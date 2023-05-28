@@ -7,7 +7,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/conv"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/conv"
 	"github.com/rs/zerolog/log"
 )
 

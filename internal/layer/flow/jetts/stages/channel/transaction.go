@@ -7,8 +7,8 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
-	"github.com/aff-vending-machine/vm-controller/pkg/errs"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
 	"github.com/rs/zerolog/log"
 )
 

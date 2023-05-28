@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context) ([]response.Transaction, error) {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"
 )
@@ -20,7 +20,7 @@ func (c *Client) EmitTopic(ctx context.Context, exchange string, queue string, r
 	}
 	defer channel.Close()
 
-	corrId := utils.GenerateUUIDv4()
+	corrId := gen.UUIDv4()
 
 	log.Debug().Str("correlation_id", corrId).Str("exchange", exchange).Str("Queue", queue).Str("routingKey", routingKey).Msg("topic: emit")
 
