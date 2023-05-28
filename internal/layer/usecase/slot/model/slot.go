@@ -33,7 +33,7 @@ func (m *Slot) ToJson() map[string]interface{} {
 	if m.Product != nil {
 		json["product_sku"] = m.Product.SKU
 		json["product_name"] = m.Product.Name
-		json["product_type"] = m.Product.Type
+		json["product_group"] = m.Product.Group
 		json["product_image_url"] = m.Product.ImageURL
 		json["product_price"] = m.Product.Price
 	}

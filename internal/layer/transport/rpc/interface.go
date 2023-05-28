@@ -6,6 +6,15 @@ type Machine interface {
 	Get(ctx *rabbitmq.Ctx) error
 }
 
+type PaymentChannel interface {
+	Get(ctx *rabbitmq.Ctx) error
+	Set(ctx *rabbitmq.Ctx) error
+}
+
+type Product interface {
+	Set(ctx *rabbitmq.Ctx) error
+}
+
 type Slot interface {
 	Get(ctx *rabbitmq.Ctx) error
 	Set(ctx *rabbitmq.Ctx) error

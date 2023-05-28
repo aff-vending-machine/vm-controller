@@ -12,9 +12,11 @@ type Transport struct {
 }
 
 type RPCTransport struct {
-	Machine     rpc.Machine
-	Slot        rpc.Slot
-	Transaction rpc.Transaction
+	Machine        rpc.Machine
+	PaymentChannel rpc.PaymentChannel
+	Product        rpc.Product
+	Slot           rpc.Slot
+	Transaction    rpc.Transaction
 }
 
 type WebSocketTransport struct {

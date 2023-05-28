@@ -1,5 +1,5 @@
 package request
 
-type Get struct {
+type GetOne struct {
 	Channel string `json:"channel" query:"channel" validate:"required"`
 }

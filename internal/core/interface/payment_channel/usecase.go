@@ -9,5 +9,7 @@ import (
 
 type Usecase interface {
 	Create(context.Context, *request.Create) error
-	Get(context.Context, *request.Get) (*response.PaymentChannel, error)
+	GetOne(context.Context, *request.GetOne) (*response.PaymentChannel, error)
+	Get(context.Context) ([]response.PaymentChannel, error)
+	Set(context.Context, *request.Set) error
 }

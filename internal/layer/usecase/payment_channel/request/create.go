@@ -8,7 +8,6 @@ type Create struct {
 	Name         string `json:"name"`
 	Channel      string `json:"channel"`
 	Vendor       string `json:"vendor"`
-	Active       bool   `json:"active"`
 	Host         string `json:"host"`
 	MerchantID   string `json:"merchant_id"`
 	MerchantName string `json:"merchant_name"`
@@ -23,10 +22,10 @@ func (r *Create) ToEntity() *entity.PaymentChannel {
 		Name:         r.Name,
 		Channel:      r.Channel,
 		Vendor:       r.Vendor,
-		Active:       true,
+		IsEnable:     true,
 		Host:         r.Host,
 		MerchantID:   r.MerchantID,
-		MerchantName: r.Name,
+		MerchantName: r.MerchantName,
 		BillerCode:   r.BillerCode,
 		BillerID:     r.BillerID,
 		StoreID:      r.StoreID,

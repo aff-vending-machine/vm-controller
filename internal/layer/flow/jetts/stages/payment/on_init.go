@@ -8,7 +8,7 @@ import (
 )
 
 func (s *stageImpl) OnInit(c *flow.Ctx) {
-	if !c.PaymentChannel.Active {
+	if !c.PaymentChannel.IsEnable {
 		s.frontendWs.SendError(c.UserCtx, "payment", fmt.Sprintf("%s is out of service", c.PaymentChannel.Channel))
 	}
 
