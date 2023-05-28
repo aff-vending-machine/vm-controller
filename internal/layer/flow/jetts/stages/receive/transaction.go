@@ -14,6 +14,7 @@ func (s *stageImpl) updateMachineFailedTransaction(c *flow.Ctx) error {
 	ts := time.Now()
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
+		"raw_card":          c.Data.Raw(),
 		"order_status":      enum.ORDER_STATUS_DONE_BROKEN,
 		"refund_at":         ts,
 		"received_item_at":  ts,
@@ -33,6 +34,7 @@ func (s *stageImpl) updateMachineFailedTransaction(c *flow.Ctx) error {
 func (s *stageImpl) updateDoneTransaction(c *flow.Ctx) error {
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
+		"raw_card":          c.Data.Raw(),
 		"order_status":      enum.ORDER_STATUS_DONE,
 		"received_item_at":  time.Now(),
 		"received_quantity": c.Data.TotalReceived(),
@@ -54,6 +56,7 @@ func (s *stageImpl) updateDoneTransaction(c *flow.Ctx) error {
 func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
+		"raw_card": c.Data.Raw(),
 		"is_error": true,
 		"error":    err.Error(),
 		"error_at": time.Now(),
@@ -71,6 +74,7 @@ func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
 func (s *stageImpl) updateCancelTransaction(c *flow.Ctx) {
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
+		"raw_card":          c.Data.Raw(),
 		"order_status":      enum.ORDER_STATUS_CANCELLED,
 		"cancelled_by":      "user",
 		"cancelled_at":      time.Now(),
