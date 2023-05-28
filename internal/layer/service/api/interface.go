@@ -3,10 +3,10 @@ package api
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/model"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/ksher"
+	"vm-controller/internal/core/domain/link2500"
+	"vm-controller/internal/layer/usecase/machine/model"
 )
 
 type Ksher interface {

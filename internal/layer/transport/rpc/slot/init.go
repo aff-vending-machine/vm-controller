@@ -1,6 +1,6 @@
 package slot
 
-import "github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
+import "vm-controller/internal/core/interface/slot"
 
 type rpcImpl struct {
 	usecase slot.Usecase

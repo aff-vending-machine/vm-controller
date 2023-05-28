@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
+	"vm-controller/configs"
+
 	"github.com/gorilla/websocket"
 )
 

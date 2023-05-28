@@ -4,11 +4,12 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/model"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
+	"vm-controller/internal/core/interface/slot"
+	"vm-controller/internal/layer/usecase/slot/model"
+	"vm-controller/internal/layer/usecase/slot/request"
+	"vm-controller/pkg/boot"
+	"vm-controller/pkg/helpers/errs"
+
 	"github.com/rs/zerolog/log"
 )
 

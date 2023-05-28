@@ -1,12 +1,12 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/flow"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/rpc/machine"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/rpc/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/rpc/transaction"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/websocket/frontend"
+	"vm-controller/internal/boot/modules"
+	"vm-controller/internal/layer/flow"
+	"vm-controller/internal/layer/transport/rpc/machine"
+	"vm-controller/internal/layer/transport/rpc/slot"
+	"vm-controller/internal/layer/transport/rpc/transaction"
+	"vm-controller/internal/layer/transport/websocket/frontend"
 )
 
 func NewTransport(uc modules.Usecase, fw flow.Jetts) modules.Transport {

@@ -4,7 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/pkg/helpers/db"
+
 	"gorm.io/gorm"
 )
 

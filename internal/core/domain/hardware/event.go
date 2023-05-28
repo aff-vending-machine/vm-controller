@@ -4,7 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rs/zerolog/log"
 )
 

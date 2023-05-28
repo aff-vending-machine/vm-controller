@@ -3,10 +3,11 @@ package machine
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
+	"vm-controller/internal/layer/usecase/machine/request"
+	"vm-controller/internal/layer/usecase/machine/response"
+	"vm-controller/pkg/helpers/db"
+	"vm-controller/pkg/helpers/errs"
+
 	"github.com/rs/zerolog/log"
 )
 

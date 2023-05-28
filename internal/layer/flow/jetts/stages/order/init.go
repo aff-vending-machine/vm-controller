@@ -1,10 +1,10 @@
 package order
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/interface/slot"
+	"vm-controller/internal/layer/service/hardware"
+	"vm-controller/internal/layer/service/websocket"
 )
 
 type stageImpl struct {

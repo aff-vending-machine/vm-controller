@@ -3,11 +3,11 @@ package frontend
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/entity"
 )
 
 type OrderInitData struct {
-	Slots     []SlotData `json:"slots"`
+	Slots []SlotData `json:"slots"`
 }
 
 type SlotData struct {
@@ -44,7 +44,7 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 	}
 
 	data := OrderInitData{
-		Slots:     slotData,
+		Slots: slotData,
 	}
 
 	payload := PayloadModel{

@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/errs"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/enum"
+	"vm-controller/internal/core/flow"
+	"vm-controller/pkg/helpers/db"
+	"vm-controller/pkg/helpers/errs"
+
 	"github.com/rs/zerolog/log"
 )
 

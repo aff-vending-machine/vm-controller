@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/pkg/errors"
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"

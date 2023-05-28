@@ -1,7 +1,7 @@
 package slot
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
+	"vm-controller/internal/core/interface/slot"
 )
 
 type usecaseImpl struct {

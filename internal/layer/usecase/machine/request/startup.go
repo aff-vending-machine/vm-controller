@@ -3,8 +3,8 @@ package request
 import (
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/pkg/helpers/gen"
 )
 
 type StartUp struct {

@@ -1,9 +1,10 @@
 package machine
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite/service"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/infra/storage/sqlite/service"
+	"vm-controller/internal/core/interface/machine"
+
 	"gorm.io/gorm"
 )
 

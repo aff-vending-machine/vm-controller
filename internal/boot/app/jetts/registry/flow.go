@@ -1,8 +1,8 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/flow/jetts"
+	"vm-controller/internal/boot/modules"
+	"vm-controller/internal/layer/flow/jetts"
 )
 
 func NewFlow(adapter modules.Service) *jetts.Flow {

@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/flow"
+
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 )

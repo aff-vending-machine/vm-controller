@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/conv"
+	"vm-controller/internal/core/domain/link2500"
+	"vm-controller/internal/core/flow"
+	"vm-controller/pkg/helpers/conv"
+
 	"github.com/rs/zerolog/log"
 )
 

@@ -3,7 +3,7 @@ package http
 import (
 	"net/http"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
+	"vm-controller/configs"
 )
 
 type Wrapper struct {

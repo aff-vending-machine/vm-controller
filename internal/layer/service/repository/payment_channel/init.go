@@ -1,9 +1,10 @@
 package payment_channel
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite/service"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/infra/storage/sqlite/service"
+	"vm-controller/internal/core/interface/payment_channel"
+
 	"gorm.io/gorm"
 )
 

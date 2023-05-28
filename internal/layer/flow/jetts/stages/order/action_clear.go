@@ -1,6 +1,6 @@
 package order
 
-import "github.com/aff-vending-machine/vm-controller/internal/core/flow"
+import "vm-controller/internal/core/flow"
 
 func (s *stageImpl) actionClearItem(c *flow.Ctx, data item) error {
 	for index, item := range c.Data.Cart {

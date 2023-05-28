@@ -1,6 +1,6 @@
 package rpc
 
-import "github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
+import "vm-controller/internal/core/infra/network/rabbitmq"
 
 type Machine interface {
 	Get(ctx *rabbitmq.Ctx) error

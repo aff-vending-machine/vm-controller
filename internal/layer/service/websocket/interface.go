@@ -3,8 +3,9 @@ package websocket
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/hardware"
+
 	"github.com/gorilla/websocket"
 )
 

@@ -1,8 +1,8 @@
 package response
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/model"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/layer/usecase/machine/model"
 )
 
 type Machine = model.Machine

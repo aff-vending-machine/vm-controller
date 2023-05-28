@@ -3,8 +3,8 @@ package rabbitmq
 import (
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/pkg/boot"
+	"vm-controller/configs"
+	"vm-controller/pkg/boot"
 )
 
 type Wrapper struct {

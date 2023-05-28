@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/ksher"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rs/zerolog/log"
 )
 

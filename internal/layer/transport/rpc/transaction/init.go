@@ -1,6 +1,6 @@
 package transaction
 
-import "github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
+import "vm-controller/internal/core/interface/transaction"
 
 type rpcImpl struct {
 	usecase transaction.Usecase

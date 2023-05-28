@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/flow"
+
 	"github.com/pkg/errors"
 )
 
 type WSReceived struct {
-	Action string             `json:"action"`
+	Action string `json:"action"`
 }
 
 func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {

@@ -1,8 +1,9 @@
 package idle
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/core/flow"
+	"vm-controller/pkg/helpers/db"
+
 	"github.com/rs/zerolog/log"
 )
 

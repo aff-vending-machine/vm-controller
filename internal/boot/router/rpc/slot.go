@@ -1,7 +1,7 @@
 package rpc
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/rpc"
+	"vm-controller/internal/layer/transport/rpc"
 )
 
 func (s *server) routeSlot(endpoint rpc.Slot) {

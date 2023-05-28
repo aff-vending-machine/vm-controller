@@ -1,8 +1,8 @@
 package request
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/model"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/layer/usecase/slot/model"
 )
 
 type Create struct {

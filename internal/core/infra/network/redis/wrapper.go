@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/pkg/boot"
+	"vm-controller/configs"
+	"vm-controller/pkg/boot"
+
 	"github.com/go-redis/redis/v8"
 )
 

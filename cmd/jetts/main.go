@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/app/jetts"
-	"github.com/aff-vending-machine/vm-controller/pkg/boot"
-	"github.com/aff-vending-machine/vm-controller/pkg/log"
+	"vm-controller/configs"
+	"vm-controller/internal/boot/app/jetts"
+	"vm-controller/pkg/boot"
+	"vm-controller/pkg/log"
 )
 
 func init() {

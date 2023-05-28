@@ -7,9 +7,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/link2500"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rs/zerolog/log"
 )
 

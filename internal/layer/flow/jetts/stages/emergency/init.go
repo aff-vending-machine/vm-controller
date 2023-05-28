@@ -1,7 +1,7 @@
 package emergency
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
+	"vm-controller/internal/layer/service/websocket"
 )
 
 type stageImpl struct {

@@ -3,8 +3,9 @@ package slot
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/layer/usecase/slot/request"
+	"vm-controller/pkg/helpers/db"
+
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"

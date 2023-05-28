@@ -3,9 +3,10 @@ package payment_channel
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/layer/usecase/payment_channel/request"
+	"vm-controller/internal/layer/usecase/payment_channel/response"
+	"vm-controller/pkg/helpers/db"
+
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 )

@@ -1,8 +1,8 @@
 package order
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/flow"
 )
 
 func (s *stageImpl) actionRemoveItem(c *flow.Ctx, data item) error {

@@ -1,8 +1,9 @@
 package receive
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/flow"
+
 	"github.com/rs/zerolog/log"
 )
 

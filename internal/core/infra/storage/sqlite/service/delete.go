@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/core/infra/storage/sqlite"
+	"vm-controller/pkg/helpers/db"
 )
 
 func (r *RepositoryImpl[T]) Delete(ctx context.Context, query *db.Query) (int64, error) {

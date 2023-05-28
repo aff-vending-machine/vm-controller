@@ -3,7 +3,8 @@ package slot
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
+	"vm-controller/internal/layer/usecase/slot/request"
+
 	"github.com/gookit/validate"
 	"github.com/pkg/errors"
 )

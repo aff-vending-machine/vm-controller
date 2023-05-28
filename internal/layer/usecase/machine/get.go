@@ -3,8 +3,8 @@ package machine
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/layer/usecase/machine/response"
+	"vm-controller/pkg/helpers/db"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context) (*response.Machine, error) {

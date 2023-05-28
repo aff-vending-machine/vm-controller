@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	wsc "github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
-	wss "github.com/aff-vending-machine/vm-controller/internal/layer/transport/websocket"
+	wsc "vm-controller/internal/layer/service/websocket"
+	wss "vm-controller/internal/layer/transport/websocket"
+
 	"github.com/rs/zerolog/log"
 )
 

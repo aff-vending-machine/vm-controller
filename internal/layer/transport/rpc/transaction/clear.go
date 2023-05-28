@@ -3,8 +3,9 @@ package transaction
 import (
 	"encoding/json"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/request"
+	"vm-controller/internal/core/infra/network/rabbitmq"
+	"vm-controller/internal/layer/usecase/transaction/request"
+
 	"github.com/rs/zerolog/log"
 )
 

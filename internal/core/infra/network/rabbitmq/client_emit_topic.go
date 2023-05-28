@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/gen"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"
 )

@@ -3,9 +3,10 @@ package payment
 import (
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/enum"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/helpers/db"
+	"vm-controller/internal/core/domain/enum"
+	"vm-controller/internal/core/flow"
+	"vm-controller/pkg/helpers/db"
+
 	"github.com/rs/zerolog/log"
 )
 
