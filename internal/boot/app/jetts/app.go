@@ -10,6 +10,8 @@ import (
 )
 
 func Run(cfg configs.Config) {
+	log.Debug().Msg("init application")
+
 	var (
 		infra     = registry.NewInfrastructure(cfg)
 		service   = registry.NewService(infra)
