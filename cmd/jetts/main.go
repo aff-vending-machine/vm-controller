@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/app"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/app/jetts"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/aff-vending-machine/vm-controller/pkg/log"
 )
@@ -20,7 +20,7 @@ func main() {
 	initLog(cfg)
 
 	// Run main application
-	app.Run(cfg)
+	jetts.Run(cfg)
 }
 
 func initLog(cfg configs.Config) {

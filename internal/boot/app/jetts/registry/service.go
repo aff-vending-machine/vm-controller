@@ -1,7 +1,7 @@
-package app
+package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/registry"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/link2500"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/topic"
@@ -13,23 +13,23 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket/frontend"
 )
 
-func NewService(module Module) registry.Service {
-	return registry.Service{
-		API: registry.APIService{
-			Ksher:    ksher.New(module.HTTP.Client),
-			Link2500: link2500.New(module.HTTP.Client),
-			Topic:    topic.New(module.RabbitMQ.Connection),
+func NewService(infra modules.Infrastructure) modules.Service {
+	return modules.Service{
+		API: modules.APIService{
+			Ksher:    ksher.New(infra.HTTP.Client),
+			Link2500: link2500.New(infra.HTTP.Client),
+			Topic:    topic.New(infra.RabbitMQ.Connection),
 		},
-		Hardware: registry.HardwareService{
-			Queue: queue.New(module.Redis.Client),
+		Hardware: modules.HardwareService{
+			Queue: queue.New(infra.Redis.Client),
 		},
-		Repository: registry.RepositoryService{
-			Machine:        machine.New(module.SQLite.DB),
-			PaymentChannel: payment_channel.New(module.SQLite.DB),
-			Slot:           slot.New(module.SQLite.DB),
-			Transaction:    transaction.New(module.SQLite.DB),
+		Repository: modules.RepositoryService{
+			Machine:        machine.New(infra.SQLite.DB),
+			PaymentChannel: payment_channel.New(infra.SQLite.DB),
+			Slot:           slot.New(infra.SQLite.DB),
+			Transaction:    transaction.New(infra.SQLite.DB),
 		},
-		WebSocket: registry.WebSocketService{
+		WebSocket: modules.WebSocketService{
 			Frontend: frontend.New(),
 		},
 	}

@@ -1,7 +1,8 @@
-package app
+package registry
 
 import (
 	"github.com/aff-vending-machine/vm-controller/configs"
+	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/fiber"
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/http"
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
@@ -10,19 +11,8 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite"
 )
 
-// Infrastructure
-type Module struct {
-	Config    configs.Config
-	Fiber     *fiber.Wrapper
-	HTTP      *http.Wrapper
-	RabbitMQ  *rabbitmq.Wrapper
-	Redis     *redis.Wrapper
-	SQLite    *sqlite.Client
-	WebSocket *websocket.Wrapper
-}
-
-func NewInfrastructure(cfg configs.Config) Module {
-	return Module{
+func NewInfrastructure(cfg configs.Config) modules.Infrastructure {
+	return modules.Infrastructure{
 		Config:    cfg,
 		Fiber:     fiber.New(cfg.Fiber),
 		HTTP:      http.New(cfg.HTTP),

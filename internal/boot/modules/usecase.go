@@ -1,4 +1,4 @@
-package registry
+package modules
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"

@@ -1,4 +1,4 @@
-package registry
+package modules
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
@@ -7,7 +7,7 @@ import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
-	websocket "github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
+	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
 )
 
 // Interface Adapter layers (driven)

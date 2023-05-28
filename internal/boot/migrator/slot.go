@@ -1,4 +1,4 @@
-package preload
+package migrator
 
 import (
 	"context"
