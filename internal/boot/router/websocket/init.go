@@ -1,8 +1,6 @@
 package websocket
 
-import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/websocket"
-)
+import "github.com/aff-vending-machine/vm-controller/internal/core/infra/network/websocket"
 
 type serverImpl struct {
 	*websocket.Wrapper

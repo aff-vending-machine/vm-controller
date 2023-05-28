@@ -2,16 +2,18 @@ package machine
 
 import (
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/repository"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite/service"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
 	"gorm.io/gorm"
 )
 
 type repositoryImpl struct {
-	*repository.Template[entity.Machine]
+	*service.RepositoryImpl[entity.Machine]
 }
 
-func New(db *gorm.DB) *repositoryImpl {
-	based := repository.New[entity.Machine](db)
+func New(db *gorm.DB) machine.Repository {
 	db.AutoMigrate(&entity.Machine{})
-	return &repositoryImpl{based}
+	return &repositoryImpl{
+		service.New[entity.Machine](db),
+	}
 }

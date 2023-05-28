@@ -13,7 +13,7 @@ func (uc *usecaseImpl) Create(ctx context.Context, req *request.Create) error {
 		return errors.Wrap(v.Errors.OneError(), "invalid request")
 	}
 
-	err := uc.slotRepo.InsertOne(ctx, req.ToEntity())
+	_, err := uc.slotRepo.Create(ctx, req.ToEntity())
 	if err != nil {
 		return errors.Wrap(err, "unable to insert slot")
 	}

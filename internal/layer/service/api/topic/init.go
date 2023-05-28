@@ -1,7 +1,7 @@
 package topic
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/rabbitmq"
+	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
 )
 
 type apiImpl struct {

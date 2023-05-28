@@ -4,16 +4,16 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/rs/zerolog/log"
 )
 
-func InitTestPay(uc usecase.PaymentChannel) {
+func InitTestPay(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, []string{"channel:=:testpay"})
+	channel, err := uc.Get(ctx, &request.Get{Channel: "testpay"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return
@@ -33,10 +33,10 @@ func InitTestPay(uc usecase.PaymentChannel) {
 	log.Info().Msg("create test channel")
 }
 
-func InitPromptPay(uc usecase.PaymentChannel) {
+func InitPromptPay(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, []string{"channel:=:promptpay"})
+	channel, err := uc.Get(ctx, &request.Get{Channel: "promptpay"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return
@@ -56,10 +56,10 @@ func InitPromptPay(uc usecase.PaymentChannel) {
 	log.Info().Msg("create promptpay (Ksher) channel")
 }
 
-func InitCreditCard(uc usecase.PaymentChannel) {
+func InitCreditCard(uc payment_channel.Usecase) {
 	ctx := context.TODO()
 
-	channel, err := uc.Get(ctx, []string{"channel:=:creditcard"})
+	channel, err := uc.Get(ctx, &request.Get{Channel: "creditcard"})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		boot.TerminateWhenError(err)
 		return

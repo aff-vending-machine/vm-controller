@@ -1,9 +1,12 @@
 package registry
 
 import (
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository"
 	websocket "github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
 )
 
@@ -25,10 +28,10 @@ type HardwareService struct {
 }
 
 type RepositoryService struct {
-	Machine        repository.Machine
-	PaymentChannel repository.PaymentChannel
-	Slot           repository.Slot
-	Transaction    repository.Transaction
+	Machine        machine.Repository
+	PaymentChannel payment_channel.Repository
+	Slot           slot.Repository
+	Transaction    transaction.Repository
 }
 
 type WebSocketService struct {

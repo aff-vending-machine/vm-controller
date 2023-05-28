@@ -6,6 +6,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"github.com/aff-vending-machine/vm-controller/pkg/db"
 	"github.com/rs/zerolog/log"
 )
 
@@ -25,10 +26,10 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 		}
 
 		s.status = WAIT
-		codeFilter := makeCodeFilter(event.SlotCode)
+		codeFilter := db.NewQuery().AddWhere("code = ?", event.SlotCode)
 		slot, err := s.slotRepo.FindOne(c.UserCtx, codeFilter)
 		if err != nil {
-			log.Error().Strs("code filters", codeFilter).Err(err).Msg("unable to find slot")
+			log.Error().Interface("filter", codeFilter).Err(err).Msg("unable to find slot")
 			return err
 		}
 
@@ -36,9 +37,9 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 		data := map[string]interface{}{
 			"stock": slot.Stock,
 		}
-		_, err = s.slotRepo.UpdateMany(c.UserCtx, codeFilter, data)
+		_, err = s.slotRepo.Update(c.UserCtx, codeFilter, data)
 		if err != nil {
-			log.Error().Strs("code filters", codeFilter).Interface("data", data).Err(err).Msg("unable to update slot")
+			log.Error().Interface("filter", codeFilter).Interface("data", data).Err(err).Msg("unable to update slot")
 			return err
 		}
 
@@ -65,7 +66,7 @@ func (s *stageImpl) errorFeedback(c *flow.Ctx, event *hardware.Event) error {
 		s.queue.ClearStack(c.UserCtx)
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
 		log.Warn().Str("event", event.ToValueCode()).Str("slot_code", event.SlotCode).Msg("Item is not drop, maybe this slot has no item")
-		s.slotRepo.UpdateMany(c.UserCtx, makeCodeFilter(event.SlotCode), map[string]interface{}{"is_enable": false})
+		s.slotRepo.Update(c.UserCtx, db.NewQuery().AddWhere("code = ?", event.SlotCode), map[string]interface{}{"is_enable": false})
 		time.Sleep(5 * time.Second)
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
 		s.frontendWs.SendError(c.UserCtx, "receive", "Please Contact Center")

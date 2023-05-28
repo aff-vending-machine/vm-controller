@@ -1,8 +1,6 @@
 package fiber
 
-import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/fiber"
-)
+import "github.com/aff-vending-machine/vm-controller/internal/core/infra/network/fiber"
 
 type server struct {
 	*fiber.Wrapper

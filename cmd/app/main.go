@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/aff-vending-machine/vm-controller/config"
+	"github.com/aff-vending-machine/vm-controller/configs"
 	"github.com/aff-vending-machine/vm-controller/internal/boot/registry/app"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
 	"github.com/aff-vending-machine/vm-controller/pkg/log"
@@ -13,17 +13,18 @@ func init() {
 
 func main() {
 	// Create boot with configuration
-	conf := config.Init("env/jetts")
-	boot.Init(conf)
+	cfg := configs.Init("env/jetts")
+	boot.Init(cfg)
 	defer boot.Serve()
 
-	initLog(conf)
+	initLog(cfg)
 
 	// Run main application
-	app.Run(conf)
+	app.Run(cfg)
 }
 
-func initLog(conf config.BootConfig) {
+func initLog(cfg configs.Config) {
 	log.SetOutput(log.ColorConsole())
-	log.SetLogLevel(conf.App.LogLevel)
+	log.SetLogLevel(cfg.App.LogLevel)
+	cfg.Preview()
 }

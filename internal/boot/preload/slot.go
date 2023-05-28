@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase"
+	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/model"
 	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/request"
 	"github.com/aff-vending-machine/vm-controller/pkg/boot"
@@ -12,7 +12,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func InitMachineSlot(uc usecase.Slot) {
+func InitMachineSlot(uc slot.Usecase) {
 	ctx := context.TODO()
 
 	slots, err := uc.List(ctx, &request.Filter{})
@@ -39,7 +39,7 @@ func InitMachineSlot(uc usecase.Slot) {
 	log.Info().Msg("create default slots")
 }
 
-func setItem(uc usecase.Slot, codeFrom int, codeEnd int, stock int, capacity int, price float64) {
+func setItem(uc slot.Usecase, codeFrom int, codeEnd int, stock int, capacity int, price float64) {
 	ctx := context.TODO()
 
 	for i := codeFrom; i <= codeEnd; i++ {
