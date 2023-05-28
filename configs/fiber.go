@@ -5,6 +5,6 @@ type FiberConfig struct {
 	CaseSensitive bool   `default:"false" mapstructure:"CASE_SENSITIVE"`
 	StrictRouting bool   `default:"false" mapstructure:"STRICT_ROUTING"`
 	ServerHeader  string `default:"" mapstructure:"SERVER_HEADER"`
-	AppName       string `default:"vending-machine-center" mapstructure:"APP_NAME"`
+	AppName       string `default:"vending-machine-controller" mapstructure:"APP_NAME"`
 	Port          int    `default:"3000" mapstructure:"PORT"`
 }
