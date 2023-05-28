@@ -18,6 +18,7 @@ type Transaction struct {
 	OrderedAt           time.Time  `json:"ordered_at"`                                    // ordered
 	PaymentChannel      string     `json:"payment_channel"`                               // ordered, key to find payment channel - MakeTransactionCreateRequest
 	PaymentRequestedAt  *time.Time `json:"payment_requested_at"`                          // ordered - MakeTransactionCreateRequest
+	RawReference        *string    `json:"raw_reference"`                                 // raw_reference
 	Reference1          *string    `json:"reference1"`                                    // reference1 - MakeTransactionCreateResult
 	Reference2          *string    `json:"reference2"`                                    // reference2
 	Reference3          *string    `json:"reference3"`                                    // reference3

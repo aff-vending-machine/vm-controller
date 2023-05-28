@@ -7,6 +7,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"github.com/aff-vending-machine/vm-controller/pkg/conv"
 	"github.com/rs/zerolog/log"
 )
 
@@ -19,7 +20,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		Amount:          int(c.Data.TotalPrice() * 100),
 		Timestamp:       fmt.Sprintf("%d", time.Now().Unix()),
 		Channel:         ksher.PROMPTPAY,
-		DeviceID:        c.Machine.SerialNumber,
+		DeviceID:        c.Machine.Name,
 	}
 	res, err := s.ksher.CreateOrder(ctx, c.PaymentChannel, &req)
 	if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
@@ -43,7 +44,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 	if res.ErrorCode != ksher.SUCCESS {
 		err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
 		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
-		
+
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
 			c.ChangeStage <- "emergency"
@@ -54,7 +55,12 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		return
 	}
 
-	err = s.updateReferenceTransaction(c, res.Reference, res.GatewayOrderID, res.AcquirerOrderID)
+	raw, err := conv.StructToString(res)
+	if err != nil {
+		log.Error().Err(err).Interface("response", res).Msg("unable to convert struct to string")
+	}
+
+	err = s.updateReferenceTransaction(c, res.Reference, res.GatewayOrderID, res.AcquirerOrderID, raw)
 	if err != nil {
 		c.ChangeStage <- "emergency"
 		return

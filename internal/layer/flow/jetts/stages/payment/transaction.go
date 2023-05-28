@@ -9,12 +9,13 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 string, ref3 string) error {
+func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 string, ref3 string, raw string) error {
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
-		"reference1": ref1,
-		"reference2": ref2,
-		"reference3": ref3,
+		"reference1":    ref1,
+		"reference2":    ref2,
+		"reference3":    ref3,
+		"raw_reference": raw,
 	}
 
 	_, errx := s.transactionRepo.Update(c.UserCtx, filter, data)

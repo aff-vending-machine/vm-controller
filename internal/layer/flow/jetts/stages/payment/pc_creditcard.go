@@ -7,6 +7,7 @@ import (
 
 	"github.com/aff-vending-machine/vm-controller/internal/core/domain/link2500"
 	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"github.com/aff-vending-machine/vm-controller/pkg/conv"
 	"github.com/rs/zerolog/log"
 )
 
@@ -48,6 +49,17 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		}
 
 		c.ChangeStage <- "payment_channel"
+		return
+	}
+
+	raw, err := conv.StructToString(res)
+	if err != nil {
+		log.Error().Err(err).Interface("response", res).Msg("unable to convert struct to string")
+	}
+
+	err = s.updateReferenceTransaction(c, res.BatchNumber, res.InvoiceNumber, res.CardIssuerName, raw)
+	if err != nil {
+		c.ChangeStage <- "emergency"
 		return
 	}
 
