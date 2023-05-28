@@ -1,7 +1,8 @@
 package transaction
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
+	"vm-controller/internal/core/infra/network/rabbitmq"
+
 	"github.com/rs/zerolog/log"
 )
 

@@ -1,6 +1,6 @@
 package flow
 
-import "github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+import "vm-controller/internal/core/domain/hardware"
 
 func (c *Ctx) Reset() {
 	// c.Stage = "idle"

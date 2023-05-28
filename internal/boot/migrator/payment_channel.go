@@ -4,9 +4,10 @@ import (
 	"context"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel/request"
-	"github.com/aff-vending-machine/vm-controller/pkg/boot"
+	"vm-controller/internal/core/interface/payment_channel"
+	"vm-controller/internal/layer/usecase/payment_channel/request"
+	"vm-controller/pkg/boot"
+
 	"github.com/rs/zerolog/log"
 )
 

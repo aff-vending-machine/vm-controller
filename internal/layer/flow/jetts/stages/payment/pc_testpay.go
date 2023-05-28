@@ -3,7 +3,8 @@ package payment
 import (
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/flow"
+
 	"github.com/rs/zerolog/log"
 )
 

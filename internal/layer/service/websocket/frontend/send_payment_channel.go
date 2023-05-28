@@ -3,7 +3,7 @@ package frontend
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/entity"
 )
 
 type PaymentChannelData struct {

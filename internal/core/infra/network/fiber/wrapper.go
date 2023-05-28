@@ -3,8 +3,9 @@ package fiber
 import (
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/fiber/middleware"
+	"vm-controller/configs"
+	"vm-controller/internal/core/infra/network/fiber/middleware"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/requestid"

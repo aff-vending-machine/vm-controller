@@ -1,10 +1,10 @@
-package utils
+package gen
 
 import (
 	"strings"
 )
 
-func GenerateURLPath(params ...string) string {
+func ToURLPath(params ...string) string {
 	// Clean up the parameters by trimming whitespaces and removing duplicated "/" characters
 	for i, param := range params {
 		params[i] = strings.TrimSpace(param)

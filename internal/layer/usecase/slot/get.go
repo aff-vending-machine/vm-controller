@@ -3,8 +3,8 @@ package slot
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"vm-controller/internal/layer/usecase/slot/response"
+	"vm-controller/pkg/helpers/db"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context) ([]response.Slot, error) {

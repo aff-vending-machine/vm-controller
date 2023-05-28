@@ -1,6 +1,6 @@
 package frontend
 
-import "github.com/aff-vending-machine/vm-controller/internal/layer/flow"
+import "vm-controller/internal/layer/flow"
 
 type wsImpl struct {
 	usecase flow.Jetts

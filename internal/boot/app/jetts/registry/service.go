@@ -1,16 +1,16 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/ksher"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/link2500"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api/topic"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware/queue"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/machine"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/payment_channel"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/repository/transaction"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket/frontend"
+	"vm-controller/internal/boot/modules"
+	"vm-controller/internal/layer/service/api/ksher"
+	"vm-controller/internal/layer/service/api/link2500"
+	"vm-controller/internal/layer/service/api/topic"
+	"vm-controller/internal/layer/service/hardware/queue"
+	"vm-controller/internal/layer/service/repository/machine"
+	"vm-controller/internal/layer/service/repository/payment_channel"
+	"vm-controller/internal/layer/service/repository/slot"
+	"vm-controller/internal/layer/service/repository/transaction"
+	"vm-controller/internal/layer/service/websocket/frontend"
 )
 
 func NewService(infra modules.Infrastructure) modules.Service {

@@ -1,7 +1,7 @@
 package request
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/entity"
 )
 
 type Create struct {

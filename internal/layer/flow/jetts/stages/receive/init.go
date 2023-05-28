@@ -1,11 +1,11 @@
 package receive
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
+	"vm-controller/internal/core/interface/slot"
+	"vm-controller/internal/core/interface/transaction"
+	"vm-controller/internal/layer/service/api"
+	"vm-controller/internal/layer/service/hardware"
+	"vm-controller/internal/layer/service/websocket"
 )
 
 type stageImpl struct {

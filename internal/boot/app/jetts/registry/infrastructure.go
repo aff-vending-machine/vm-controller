@@ -1,14 +1,14 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/fiber"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/http"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/rabbitmq"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/redis"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/network/websocket"
-	"github.com/aff-vending-machine/vm-controller/internal/core/infra/storage/sqlite"
+	"vm-controller/configs"
+	"vm-controller/internal/boot/modules"
+	"vm-controller/internal/core/infra/network/fiber"
+	"vm-controller/internal/core/infra/network/http"
+	"vm-controller/internal/core/infra/network/rabbitmq"
+	"vm-controller/internal/core/infra/network/redis"
+	"vm-controller/internal/core/infra/network/websocket"
+	"vm-controller/internal/core/infra/storage/sqlite"
 )
 
 func NewInfrastructure(cfg configs.Config) modules.Infrastructure {

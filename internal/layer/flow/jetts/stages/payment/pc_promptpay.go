@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
-	"github.com/aff-vending-machine/vm-controller/pkg/conv"
+	"vm-controller/internal/core/domain/ksher"
+	"vm-controller/internal/core/flow"
+	"vm-controller/pkg/helpers/conv"
+
 	"github.com/rs/zerolog/log"
 )
 

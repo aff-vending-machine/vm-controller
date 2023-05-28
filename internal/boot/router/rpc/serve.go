@@ -1,7 +1,8 @@
 package rpc
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
+	"vm-controller/internal/boot/modules"
+
 	"github.com/rs/zerolog/log"
 )
 

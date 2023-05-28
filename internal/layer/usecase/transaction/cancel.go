@@ -3,7 +3,7 @@ package transaction
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/request"
+	"vm-controller/internal/layer/usecase/transaction/request"
 )
 
 func (uc *usecaseImpl) Cancel(ctx context.Context, req *request.Cancel) error {

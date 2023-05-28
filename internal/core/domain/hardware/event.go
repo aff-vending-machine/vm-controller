@@ -4,7 +4,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rs/zerolog/log"
 )
 
@@ -19,7 +20,7 @@ type QueueHandler func(event *Event) error
 
 func NewEvent(index int, item Item) Event {
 	return Event{
-		UID:      strings.ToUpper(utils.GenerateRandom(5)),
+		UID:      strings.ToUpper(gen.Random(5)),
 		Index:    strconv.Itoa(index),
 		SlotCode: item.SlotCode,
 		Status:   "00",

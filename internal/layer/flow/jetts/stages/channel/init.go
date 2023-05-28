@@ -1,10 +1,10 @@
 package channel
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/websocket"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/interface/payment_channel"
+	"vm-controller/internal/core/interface/transaction"
+	"vm-controller/internal/layer/service/websocket"
 )
 
 type stageImpl struct {

@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/domain/hardware"
+
 	"github.com/rs/zerolog/log"
 )
 

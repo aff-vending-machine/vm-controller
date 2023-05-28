@@ -13,7 +13,7 @@ import (
 	"net/http/httptest"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
+	"vm-controller/configs"
 )
 
 func createClientWithCert(cfg configs.HTTPConfig) *http.Client {

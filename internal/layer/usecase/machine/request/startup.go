@@ -3,8 +3,8 @@ package request
 import (
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/pkg/helpers/gen"
 )
 
 type StartUp struct {
@@ -19,7 +19,7 @@ type StartUp struct {
 
 func (r *StartUp) ToEntity() *entity.Machine {
 	if r.Name == "" {
-		r.Name = strings.ToUpper(utils.GenerateRandom(6))
+		r.Name = strings.ToUpper(gen.Random(6))
 	}
 
 	if r.SerialNumber == "" {

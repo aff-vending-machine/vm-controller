@@ -1,4 +1,4 @@
-module github.com/aff-vending-machine/vm-controller
+module vm-controller
 
 go 1.20
 

@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/pkg/errors"
 	"github.com/rabbitmq/amqp091-go"
 	"github.com/rs/zerolog/log"
@@ -49,7 +50,7 @@ func (c *Client) EmitRPC(ctx context.Context, queueTarget string, routingKey str
 		return nil, err
 	}
 
-	corrId := utils.GenerateUUIDv4()
+	corrId := gen.UUIDv4()
 
 	log.Debug().Str("correlation_id", corrId).Str("key", routingKey).Str("reply_to", q.Name).Msg("rpc: emit")
 

@@ -1,8 +1,8 @@
 package modules
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/rpc"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/transport/websocket"
+	"vm-controller/internal/layer/transport/rpc"
+	"vm-controller/internal/layer/transport/websocket"
 )
 
 // Interface Adapter layers (driver)

@@ -3,8 +3,8 @@ package transaction
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/request"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/response"
+	"vm-controller/internal/layer/usecase/transaction/request"
+	"vm-controller/internal/layer/usecase/transaction/response"
 )
 
 type Usecase interface {

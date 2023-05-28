@@ -1,8 +1,8 @@
-package utils
+package gen
 
 import "testing"
 
-func TestGetURLPath(t *testing.T) {
+func TestToURLPath(t *testing.T) {
 	tests := []struct {
 		params   []string
 		expected string
@@ -18,7 +18,7 @@ func TestGetURLPath(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		path := GenerateURLPath(test.params...)
+		path := ToURLPath(test.params...)
 
 		if path != test.expected {
 			t.Errorf("Test case %d failed: expected %s, got %s", i, test.expected, path)

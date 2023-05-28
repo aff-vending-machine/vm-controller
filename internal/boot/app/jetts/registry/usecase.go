@@ -1,11 +1,11 @@
 package registry
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/boot/modules"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/payment_channel"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction"
+	"vm-controller/internal/boot/modules"
+	"vm-controller/internal/layer/usecase/machine"
+	"vm-controller/internal/layer/usecase/payment_channel"
+	"vm-controller/internal/layer/usecase/slot"
+	"vm-controller/internal/layer/usecase/transaction"
 )
 
 func NewUsecase(adapter modules.Service) modules.Usecase {

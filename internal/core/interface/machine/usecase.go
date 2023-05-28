@@ -3,8 +3,8 @@ package machine
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/request"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/machine/response"
+	"vm-controller/internal/layer/usecase/machine/request"
+	"vm-controller/internal/layer/usecase/machine/response"
 )
 
 type Usecase interface {

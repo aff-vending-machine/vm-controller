@@ -1,7 +1,8 @@
 package queue
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/domain/hardware"
+
 	"github.com/go-redis/redis/v8"
 )
 

@@ -1,10 +1,10 @@
 package modules
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/payment_channel"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/slot"
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/transaction"
+	"vm-controller/internal/core/interface/machine"
+	"vm-controller/internal/core/interface/payment_channel"
+	"vm-controller/internal/core/interface/slot"
+	"vm-controller/internal/core/interface/transaction"
 )
 
 // Usecase layers

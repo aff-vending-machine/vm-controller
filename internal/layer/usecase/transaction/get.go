@@ -3,8 +3,8 @@ package transaction
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/layer/usecase/transaction/response"
-	"github.com/aff-vending-machine/vm-controller/pkg/db"
+	"vm-controller/internal/layer/usecase/transaction/response"
+	"vm-controller/pkg/helpers/db"
 )
 
 func (uc *usecaseImpl) Get(ctx context.Context) ([]response.Transaction, error) {

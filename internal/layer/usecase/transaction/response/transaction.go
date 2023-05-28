@@ -3,7 +3,7 @@ package response
 import (
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/entity"
 )
 
 type Transaction struct {

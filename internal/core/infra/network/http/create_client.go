@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/aff-vending-machine/vm-controller/configs"
+	"vm-controller/configs"
 )
 
 func createClient(cfg configs.HTTPConfig) *http.Client {

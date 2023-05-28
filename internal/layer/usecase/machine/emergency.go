@@ -3,7 +3,7 @@ package machine
 import (
 	"context"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/domain/hardware"
 )
 
 func (uc *usecaseImpl) Emergency(ctx context.Context) error {

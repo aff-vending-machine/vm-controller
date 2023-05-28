@@ -1,11 +1,12 @@
 package jetts
 
 import (
-	"github.com/aff-vending-machine/vm-controller/configs"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/app/jetts/registry"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/migrator"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/router/rpc"
-	"github.com/aff-vending-machine/vm-controller/internal/boot/router/websocket"
+	"vm-controller/configs"
+	"vm-controller/internal/boot/app/jetts/registry"
+	"vm-controller/internal/boot/migrator"
+	"vm-controller/internal/boot/router/rpc"
+	"vm-controller/internal/boot/router/websocket"
+
 	"github.com/rs/zerolog/log"
 )
 

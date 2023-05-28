@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/flow"
+	"vm-controller/internal/core/flow"
 )
 
 func (s *stageImpl) OnInit(c *flow.Ctx) {

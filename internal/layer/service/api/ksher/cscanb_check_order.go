@@ -5,19 +5,20 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/entity"
-	"github.com/aff-vending-machine/vm-controller/internal/core/domain/ksher"
-	"github.com/aff-vending-machine/vm-controller/pkg/utils"
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/ksher"
+	"vm-controller/pkg/helpers/gen"
+
 	"github.com/rs/zerolog/log"
 )
 
 func (c *apiImpl) CheckOrder(ctx context.Context, channel *entity.PaymentChannel, orderID string, query *ksher.CheckOrderQuery) (*ksher.CheckOrderResult, error) {
-	path := "/" + utils.GenerateURLPath(CSCANB_PATH, orderID) // no prefix "/" after gen
+	path := "/" + gen.ToURLPath(CSCANB_PATH, orderID) // no prefix "/" after gen
 	pregen := toJson(query)
 	signature := generateSignature(path, pregen, channel.Token)
 	query.Signature = signature
 
-	url := utils.GenerateURLPath(channel.Host, CSCANB_PATH, orderID)
+	url := gen.ToURLPath(channel.Host, CSCANB_PATH, orderID)
 	log.Debug().Str("channel", "ksher").Str("URL", url).Str("signature", signature).Msg("GET check order")
 
 	// Set HTTP request

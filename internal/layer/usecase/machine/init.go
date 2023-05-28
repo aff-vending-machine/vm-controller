@@ -1,9 +1,9 @@
 package machine
 
 import (
-	"github.com/aff-vending-machine/vm-controller/internal/core/interface/machine"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/api"
-	"github.com/aff-vending-machine/vm-controller/internal/layer/service/hardware"
+	"vm-controller/internal/core/interface/machine"
+	"vm-controller/internal/layer/service/api"
+	"vm-controller/internal/layer/service/hardware"
 )
 
 type usecaseImpl struct {
