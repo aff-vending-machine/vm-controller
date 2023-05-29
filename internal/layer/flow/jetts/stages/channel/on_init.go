@@ -11,7 +11,7 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 	channels, err := s.paymentChannelRepo.FindMany(c.UserCtx, db.NewQuery().AddWhere("active = ?", true))
 	if err != nil {
 		log.Error().Err(err).Msg("unable to get channel")
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return
 	}
 

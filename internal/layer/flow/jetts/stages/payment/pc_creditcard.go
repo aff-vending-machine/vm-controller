@@ -21,35 +21,35 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		Price:      c.Data.TotalPrice(),
 	}
 	res, err := s.link2500.Sale(ctx, c.PaymentChannel, &req)
-	if c.Stage != "payment" || c.PaymentChannel.Channel != "creditcard" {
-		log.Error().Str("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
+	if c.Stage != flow.PAYMENT_STAGE || c.PaymentChannel.Channel != "creditcard" {
+		log.Error().Interface("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 		return
 	}
 
 	if err != nil {
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
-			c.ChangeStage <- "emergency"
+			c.ChangeStage <- flow.EMERGENCY_STAGE
 			return
 		}
 
-		c.ChangeStage <- "payment_channel"
+		c.ChangeStage <- flow.CHANNEL_STAGE
 		return
 	}
 
 	if !strings.HasPrefix(res.ResponseText, "APPROVED") {
 		err = fmt.Errorf("%s: %s", res.InvoiceNumber, res.ResponseText)
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
-			c.ChangeStage <- "emergency"
+			c.ChangeStage <- flow.EMERGENCY_STAGE
 			return
 		}
 
-		c.ChangeStage <- "payment_channel"
+		c.ChangeStage <- flow.CHANNEL_STAGE
 		return
 	}
 
@@ -60,16 +60,16 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	err = s.updateReferenceTransaction(c, res.BatchNumber, res.InvoiceNumber, res.CardIssuerName, raw)
 	if err != nil {
-		c.ChangeStage <- "emergency"
+		c.ChangeStage <- flow.EMERGENCY_STAGE
 		return
 	}
 
 	err = s.updatePaidTransaction(c)
 	if err != nil {
-		c.ChangeStage <- "emergency"
+		c.ChangeStage <- flow.EMERGENCY_STAGE
 		return
 	}
 
 	s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
-	c.ChangeStage <- "receive"
+	c.ChangeStage <- flow.RECEIVE_STAGE
 }

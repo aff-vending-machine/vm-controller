@@ -4,6 +4,7 @@ import (
 	"context"
 	"strings"
 	"time"
+	"vm-controller/internal/core/flow"
 
 	"github.com/rs/zerolog/log"
 )
@@ -45,7 +46,7 @@ func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 		uc.watchdog.Reset(timeout)
 
 	case stage := <-uc.context.ChangeStage:
-		log.Debug().Str("stage", stage).Msg("stage changed")
+		log.Debug().Interface("stage", stage).Msg("stage changed")
 		uc.context.Stage = stage
 		uc.OnInit(ctx)
 
@@ -82,10 +83,10 @@ func (uc *Flow) event(ctx context.Context, key string) {
 		// uc.machineTp.IsOpened(ctx, uc.context.Machine)
 
 	case "Z0": // reset
-		uc.context.ChangeStage <- "idle"
+		uc.context.ChangeStage <- flow.IDLE_STAGE
 
 	case "Z1": // emergency
-		uc.context.ChangeStage <- "emergency"
+		uc.context.ChangeStage <- flow.EMERGENCY_STAGE
 
 	case "Z2": // open-gate
 		uc.queueHw.PushCommand(ctx, "COMMAND", "OPEN_GATE")

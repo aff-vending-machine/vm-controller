@@ -32,28 +32,28 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 			if req.Data.PaymentChannel == channel.Channel {
 				c.PaymentChannel = &channel
 				s.createTransaction(c)
-				c.ChangeStage <- "payment"
+				c.ChangeStage <- flow.PAYMENT_STAGE
 				return nil
 			}
 		}
 
 		log.Error().Str("channel", req.Data.PaymentChannel).Msg("unable to select payment channel")
-		s.frontendWs.SendError(c.UserCtx, "payment_channel", fmt.Sprintf("unable to select payment channel %s", req.Data.PaymentChannel))
+		s.frontendWs.SendError(c.UserCtx, "channel", fmt.Sprintf("unable to select payment channel %s", req.Data.PaymentChannel))
 		return fmt.Errorf("unable to select payment channel")
 
 	case "wakeup":
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	case "cancel":
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	default:
 		log.Error().Str("action", req.Action).Msg("invalid action")
-		s.frontendWs.SendError(c.UserCtx, "payment_channel", fmt.Sprintf("invalid action %s", req.Action))
+		s.frontendWs.SendError(c.UserCtx, "channel", fmt.Sprintf("invalid action %s", req.Action))
 		return nil
 	}
 

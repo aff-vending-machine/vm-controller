@@ -11,7 +11,7 @@ import (
 func (s *stageImpl) testpay(c *flow.Ctx) {
 	err := s.updateReferenceTransaction(c, "TEST01", "TEST02", "TEST03", "TEST04")
 	if err != nil {
-		c.ChangeStage <- "emergency"
+		c.ChangeStage <- flow.EMERGENCY_STAGE
 		return
 	}
 
@@ -34,7 +34,7 @@ func (s *stageImpl) pollingTestpay(c *flow.Ctx) {
 			if count == 5 {
 				err := s.updateTestTransaction(c)
 				if err != nil {
-					c.ChangeStage <- "emergency"
+					c.ChangeStage <- flow.EMERGENCY_STAGE
 					return
 				}
 
@@ -50,11 +50,11 @@ func (s *stageImpl) pollingTestpay(c *flow.Ctx) {
 
 			err := s.updateCancelTransaction(c, "machine")
 			if err != nil {
-				c.ChangeStage <- "emergency"
+				c.ChangeStage <- flow.EMERGENCY_STAGE
 				return
 			}
 
-			c.ChangeStage <- "payment_channel"
+			c.ChangeStage <- flow.CHANNEL_STAGE
 			return
 		}
 

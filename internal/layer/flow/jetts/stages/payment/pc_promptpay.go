@@ -24,35 +24,35 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		DeviceID:        c.Machine.Name,
 	}
 	res, err := s.ksher.CreateOrder(ctx, c.PaymentChannel, &req)
-	if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
-		log.Error().Str("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
+	if c.Stage != flow.PAYMENT_STAGE || c.PaymentChannel.Channel != "promptpay" {
+		log.Error().Interface("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 		return
 	}
 
 	if err != nil {
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
-			c.ChangeStage <- "emergency"
+			c.ChangeStage <- flow.EMERGENCY_STAGE
 			return
 		}
 
-		c.ChangeStage <- "payment_channel"
+		c.ChangeStage <- flow.CHANNEL_STAGE
 		return
 	}
 
 	if res.ErrorCode != ksher.SUCCESS {
 		err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
-		s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 		err = s.updateErrorTransaction(c, err)
 		if err != nil {
-			c.ChangeStage <- "emergency"
+			c.ChangeStage <- flow.EMERGENCY_STAGE
 			return
 		}
 
-		c.ChangeStage <- "payment_channel"
+		c.ChangeStage <- flow.CHANNEL_STAGE
 		return
 	}
 
@@ -63,7 +63,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 
 	err = s.updateReferenceTransaction(c, res.Reference, res.GatewayOrderID, res.AcquirerOrderID, raw)
 	if err != nil {
-		c.ChangeStage <- "emergency"
+		c.ChangeStage <- flow.EMERGENCY_STAGE
 		return
 	}
 	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
@@ -80,7 +80,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 	for {
 		select {
 		case <-s.ticker.C:
-			if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
+			if c.Stage != flow.PAYMENT_STAGE || c.PaymentChannel.Channel != "promptpay" {
 				log.Error().Msg("cancelled by user")
 				return
 			}
@@ -91,22 +91,22 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 			res, err := s.ksher.CheckOrder(ctx, c.PaymentChannel, c.Data.MerchantOrderID, &req)
 			if err != nil {
 				err = fmt.Errorf("%s: %s", res.ErrorCode, res.ErrorMessage)
-				s.frontendWs.SendError(c.UserCtx, "payment", err.Error())
+				s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 				err = s.updateErrorTransaction(c, err)
 				if err != nil {
-					c.ChangeStage <- "emergency"
+					c.ChangeStage <- flow.EMERGENCY_STAGE
 					return
 				}
 
-				c.ChangeStage <- "payment_channel"
+				c.ChangeStage <- flow.CHANNEL_STAGE
 				return
 			}
 
 			if res.ErrorCode == ksher.SUCCESS {
 				err = s.updatePaidTransaction(c)
 				if err != nil {
-					c.ChangeStage <- "emergency"
+					c.ChangeStage <- flow.EMERGENCY_STAGE
 					return
 				}
 
@@ -116,20 +116,20 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 			}
 
 		case <-time.After(5 * time.Minute):
-			if c.Stage != "payment" || c.PaymentChannel.Channel != "promptpay" {
+			if c.Stage != flow.PAYMENT_STAGE || c.PaymentChannel.Channel != "promptpay" {
 				log.Error().Msg("cancelled by user")
 				return
 			}
 
-			s.frontendWs.SendError(c.UserCtx, "payment", "timeout")
+			s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, "timeout")
 
 			err := s.updateCancelTransaction(c, "machine")
 			if err != nil {
-				c.ChangeStage <- "emergency"
+				c.ChangeStage <- flow.EMERGENCY_STAGE
 				return
 			}
 
-			c.ChangeStage <- "payment_channel"
+			c.ChangeStage <- flow.CHANNEL_STAGE
 			return
 		}
 

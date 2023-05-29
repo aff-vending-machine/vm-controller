@@ -10,6 +10,8 @@ func (c *Ctx) Reset() {
 }
 
 func (c *Ctx) Emergency(err error) {
-	c.Error = err
-	c.ChangeStage <- "error"
+	if err != nil {
+		c.Error = err
+		c.ChangeStage <- EMERGENCY_STAGE
+	}
 }

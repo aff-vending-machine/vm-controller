@@ -21,7 +21,7 @@ import (
 )
 
 type Flow struct {
-	stages   map[string]stages.Stage
+	stages   map[flow.Stage]stages.Stage
 	queueHw  hardware.Queue
 	context  *flow.Ctx
 	watchdog *time.Ticker
@@ -38,13 +38,13 @@ func New(
 	fw websocket.Frontend,
 ) *Flow {
 
-	stages := map[string]stages.Stage{
-		"idle":      idle.New(mr, fw),
-		"order":     order.New(qh, sr, fw),
-		"channel":   channel.New(pr, tr, fw),
-		"payment":   payment.New(ka, la, qh, tr, fw),
-		"receive":   receive.New(ka, la, qh, sr, tr, fw),
-		"emergency": emergency.New(fw),
+	stages := map[flow.Stage]stages.Stage{
+		flow.IDLE_STAGE:      idle.New(mr, fw),
+		flow.ORDER_STAGE:     order.New(qh, sr, fw),
+		flow.CHANNEL_STAGE:   channel.New(pr, tr, fw),
+		flow.PAYMENT_STAGE:   payment.New(ka, la, qh, tr, fw),
+		flow.RECEIVE_STAGE:   receive.New(ka, la, qh, sr, tr, fw),
+		flow.EMERGENCY_STAGE: emergency.New(fw),
 	}
 
 	return &Flow{
