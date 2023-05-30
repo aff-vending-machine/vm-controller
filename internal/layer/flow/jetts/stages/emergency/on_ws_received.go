@@ -23,12 +23,12 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 	switch req.Action {
 	case "reset":
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	case "wakeup":
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	default:

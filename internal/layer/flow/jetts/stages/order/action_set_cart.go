@@ -3,13 +3,18 @@ package order
 import (
 	"vm-controller/internal/core/domain/hardware"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 func (s *stageImpl) actionSetCart(c *flow.Ctx, data []item) error {
 	c.Data.Cart = make([]hardware.Item, 0)
 	for _, v := range s.slots {
 		for _, d := range data {
-			if v.Code == d.SlotCode && d.Quantity > 0 {
+			if v.Code != d.SlotCode {
+				continue
+			}
+			if d.Quantity > 0 {
 				index := -1
 				reserved := 0
 				for i, item := range c.Data.Cart {
@@ -37,6 +42,8 @@ func (s *stageImpl) actionSetCart(c *flow.Ctx, data []item) error {
 						Received: 0,
 					})
 				}
+			} else {
+				log.Warn().Str("slot_code", v.Code).Int("quantity", d.Quantity).Msg("quantity is 0")
 			}
 		}
 	}

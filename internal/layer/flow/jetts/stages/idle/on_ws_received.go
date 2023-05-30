@@ -23,11 +23,11 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 	switch req.Action {
 	case "wakeup":
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	default:
-		s.frontendWs.SendError(c.UserCtx, "idle", fmt.Sprintf("invalid action %s", req.Action))
+		s.frontendWs.SendError(c.UserCtx, flow.IDLE_STAGE, fmt.Sprintf("invalid action %s", req.Action))
 		return nil
 	}
 }

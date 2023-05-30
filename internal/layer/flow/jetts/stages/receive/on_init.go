@@ -15,7 +15,7 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 		return
 	}
 
-	log.Info().Str("stage", "receive").Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
+	log.Info().Str("stage", string(c.Stage)).Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
 	go s.checkEvent(c)
 }
 
@@ -48,7 +48,7 @@ func (s *stageImpl) checkEvent(c *flow.Ctx) {
 		s.updateCancelTransaction(c)
 
 		s.queue.Clear(c.UserCtx)
-		c.ChangeStage <- "idle"
+		c.ChangeStage <- flow.IDLE_STAGE
 		return
 	}
 
@@ -64,5 +64,5 @@ func (s *stageImpl) checkEvent(c *flow.Ctx) {
 	s.status = DONE
 	s.queue.Clear(c.UserCtx)
 
-	c.ChangeStage <- "idle"
+	c.ChangeStage <- flow.IDLE_STAGE
 }

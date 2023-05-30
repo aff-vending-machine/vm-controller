@@ -1,6 +1,9 @@
 package frontend
 
-import "context"
+import (
+	"context"
+	"vm-controller/internal/core/flow"
+)
 
 func (w *wsImpl) SendToIdle(ctx context.Context) error {
 	if err := checkConnection(w.client); err != nil {
@@ -11,7 +14,7 @@ func (w *wsImpl) SendToIdle(ctx context.Context) error {
 	defer w.mu.Unlock()
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "idle",
+		Stage: flow.IDLE_STAGE,
 	}
 
 	return w.client.WriteJSON(payload)

@@ -33,17 +33,17 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 
 		s.updateCancelTransaction(c, "user")
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	case "wakeup":
 		s.updateCancelTransaction(c, "machine")
 		c.Reset()
-		c.ChangeStage <- "order"
+		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
 	default:
-		s.frontendWs.SendError(c.UserCtx, "payment", fmt.Sprintf("invalid action %s", req.Action))
+		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, fmt.Sprintf("invalid action %s", req.Action))
 		return nil
 	}
 }

@@ -30,7 +30,7 @@ func (w *wsImpl) SendPaymentChannel(ctx context.Context, channels []entity.Payme
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "payment_channel",
+		Stage: "channel",
 		Data:  data,
 	}
 

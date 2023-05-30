@@ -18,7 +18,7 @@ var patterns = []map[string]interface{}{
 		"action": "set-cart",
 		"data": []map[string]interface{}{
 			{
-				"code":     "010",
+				"code":     "017",
 				"quantity": 1,
 			},
 		},
