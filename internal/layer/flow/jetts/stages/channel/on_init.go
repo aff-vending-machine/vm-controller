@@ -8,7 +8,7 @@ import (
 )
 
 func (s *stageImpl) OnInit(c *flow.Ctx) {
-	channels, err := s.paymentChannelRepo.FindMany(c.UserCtx, db.NewQuery().AddWhere("active = ?", true))
+	channels, err := s.paymentChannelRepo.FindMany(c.UserCtx, db.NewQuery().AddWhere("is_enable = ?", true))
 	if err != nil {
 		log.Error().Err(err).Msg("unable to get channel")
 		c.ChangeStage <- flow.ORDER_STAGE
