@@ -23,7 +23,7 @@ type QueueHandler func(*hardware.Event) error
 
 func NewContext() *Ctx {
 	return &Ctx{
-		Stage:          "idle",
+		Stage:          IDLE_STAGE,
 		Data:           &hardware.Data{},
 		Machine:        &entity.Machine{},
 		PaymentChannel: &entity.PaymentChannel{},

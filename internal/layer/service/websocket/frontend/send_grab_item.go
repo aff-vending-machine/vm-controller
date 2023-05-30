@@ -1,12 +1,15 @@
 package frontend
 
-import "context"
+import (
+	"context"
+	"vm-controller/internal/core/flow"
+)
 
 type GrabItemData struct {
 	Message string `json:"message"`
 }
 
-func (w *wsImpl) SendGrabItem(ctx context.Context, stage string, message string) error {
+func (w *wsImpl) SendGrabItem(ctx context.Context, stage flow.Stage, message string) error {
 	if err := checkConnection(w.client); err != nil {
 		return err
 	}
@@ -19,7 +22,7 @@ func (w *wsImpl) SendGrabItem(ctx context.Context, stage string, message string)
 
 	payload := PayloadModel{
 		Code:  501,
-		Stage: stage,
+		Stage: string(stage),
 		Data:  data,
 	}
 

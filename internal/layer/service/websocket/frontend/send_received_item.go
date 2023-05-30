@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/flow"
 )
 
 type ReceivedItemData struct {
@@ -33,7 +34,7 @@ func (w *wsImpl) SendReceivedItem(ctx context.Context, orderID string, cart []ha
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "receive",
+		Stage: flow.RECEIVE_STAGE,
 		Data:  data,
 	}
 

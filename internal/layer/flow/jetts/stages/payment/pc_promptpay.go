@@ -25,7 +25,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 	}
 	res, err := s.ksher.CreateOrder(ctx, c.PaymentChannel, &req)
 	if c.Stage != flow.PAYMENT_STAGE || c.PaymentChannel.Channel != "promptpay" {
-		log.Error().Interface("stage", c.Stage).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
+		log.Error().Str("stage", string(c.Stage)).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 		return
 	}
 
@@ -111,7 +111,7 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 				}
 
 				s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
-				c.ChangeStage <- "receive"
+				c.ChangeStage <- flow.RECEIVE_STAGE
 				return
 			}
 

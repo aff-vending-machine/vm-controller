@@ -14,7 +14,7 @@ func (uc *Flow) ListenEvent(sn string) {
 	timeout := 2 * time.Minute
 	uc.context.UserCtx = ctx
 
-	uc.stages["idle"].OnInit(uc.context)
+	uc.stages[flow.IDLE_STAGE].OnInit(uc.context)
 
 	uc.watchdog = time.NewTicker(timeout)
 	defer uc.watchdog.Stop()
@@ -37,8 +37,8 @@ func (uc *Flow) ListenEvent(sn string) {
 func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 	select {
 	case <-uc.watchdog.C:
-		if uc.context.Stage != "idle" {
-			uc.context.Stage = "idle"
+		if uc.context.Stage != flow.IDLE_STAGE {
+			uc.context.Stage = flow.IDLE_STAGE
 			uc.OnInit(ctx)
 		}
 
@@ -46,14 +46,11 @@ func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 		uc.watchdog.Reset(timeout)
 
 	case stage := <-uc.context.ChangeStage:
-		log.Debug().Interface("stage", stage).Msg("stage changed")
+		log.Debug().Str("stage", string(stage)).Msg("stage changed")
 		uc.context.Stage = stage
 		uc.OnInit(ctx)
 
-		if stage == "done" {
-			stage = "receive"
-			uc.watchdog.Reset(timeout)
-		} else if stage == "idle" || stage == "payment" || stage == "receive" {
+		if stage == flow.IDLE_STAGE || stage == flow.PAYMENT_STAGE || stage == flow.RECEIVE_STAGE {
 			uc.watchdog.Stop()
 		} else {
 			uc.watchdog.Reset(timeout)

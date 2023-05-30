@@ -5,6 +5,7 @@ import (
 
 	"vm-controller/internal/core/domain/entity"
 	"vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/flow"
 
 	"github.com/gorilla/websocket"
 )
@@ -20,7 +21,7 @@ type Frontend interface {
 	SendDone(ctx context.Context, orderID string, cart []hardware.Item) error
 	SendToReceive(ctx context.Context, orderID string, cart []hardware.Item) error
 	SendToIdle(ctx context.Context) error
-	SendError(ctx context.Context, stage string, message string) error
-	SendGrabItem(ctx context.Context, stage string, message string) error
+	SendError(ctx context.Context, stage flow.Stage, message string) error
+	SendGrabItem(ctx context.Context, stage flow.Stage, message string) error
 	SendEmergency(ctx context.Context, err error) error
 }

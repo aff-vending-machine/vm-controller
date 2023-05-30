@@ -54,7 +54,7 @@ func (s *stageImpl) feedback(c *flow.Ctx) hardware.QueueHandler {
 		}
 
 		c.ClearEvent(event.UID)
-		log.Info().Str("stage", "receive").Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
+		log.Info().Str("stage", string(c.Stage)).Int("remaining", len(c.Events)).Str("order_id", c.Data.MerchantOrderID).Interface("events", c.Events).Interface("cart", c.Data.Cart).Int("Quantity", c.Data.TotalQuantity()).Int("Received", c.Data.TotalReceived()).Float64("Price", c.Data.TotalPrice()).Float64("Pay", c.Data.TotalPay()).Msg("SLOG: receive event")
 		return nil
 	}
 }
@@ -70,7 +70,7 @@ func (s *stageImpl) errorFeedback(c *flow.Ctx, event *hardware.Event) error {
 		s.slotRepo.Update(c.UserCtx, db.NewQuery().AddWhere("code = ?", event.SlotCode), map[string]interface{}{"is_enable": false})
 		time.Sleep(5 * time.Second)
 		s.queue.PushCommand(c.UserCtx, "COMMAND", "RESET")
-		s.frontendWs.SendError(c.UserCtx, "receive", "Please Contact Center")
+		s.frontendWs.SendError(c.UserCtx, c.Stage, "Please Contact Center")
 		return flow.ErrMachineE0
 
 	case "E1":
