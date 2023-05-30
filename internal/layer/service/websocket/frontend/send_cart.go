@@ -5,6 +5,8 @@ import (
 
 	"vm-controller/internal/core/domain/hardware"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type OrderData struct {
@@ -33,5 +35,6 @@ func (w *wsImpl) SendCart(ctx context.Context, cart []hardware.Item) error {
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending cart")
 	return w.client.WriteJSON(payload)
 }

@@ -3,6 +3,8 @@ package frontend
 import (
 	"context"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type PaidData struct {
@@ -32,5 +34,6 @@ func (w *wsImpl) SendPaid(ctx context.Context, orderID string, qty int, price fl
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending paid")
 	return w.client.WriteJSON(payload)
 }

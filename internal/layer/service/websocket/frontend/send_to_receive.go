@@ -5,6 +5,8 @@ import (
 
 	"vm-controller/internal/core/domain/hardware"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type ToReceiveData struct {
@@ -36,5 +38,6 @@ func (w *wsImpl) SendToReceive(ctx context.Context, orderID string, cart []hardw
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending to receive")
 	return w.client.WriteJSON(payload)
 }

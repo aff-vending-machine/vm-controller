@@ -5,6 +5,8 @@ import (
 
 	"vm-controller/internal/core/domain/entity"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type OrderInitData struct {
@@ -54,5 +56,6 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending slots")
 	return w.client.WriteJSON(payload)
 }

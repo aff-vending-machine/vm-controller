@@ -2,6 +2,8 @@ package frontend
 
 import (
 	"context"
+
+	"github.com/rs/zerolog/log"
 )
 
 type EmergencyData struct {
@@ -26,5 +28,6 @@ func (w *wsImpl) SendEmergency(ctx context.Context, err error) error {
 		Data:  data,
 	}
 
+	log.Info().Interface("data", payload).Msg("sending emergency")
 	return w.client.WriteJSON(payload)
 }

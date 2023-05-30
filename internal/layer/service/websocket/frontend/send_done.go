@@ -5,6 +5,8 @@ import (
 
 	"vm-controller/internal/core/domain/hardware"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type DoneData struct {
@@ -38,5 +40,6 @@ func (w *wsImpl) SendDone(ctx context.Context, orderID string, cart []hardware.I
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending done")
 	return w.client.WriteJSON(payload)
 }

@@ -3,6 +3,8 @@ package frontend
 import (
 	"context"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type ErrorData struct {
@@ -31,5 +33,6 @@ func (w *wsImpl) SendError(ctx context.Context, stage flow.Stage, message string
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending error")
 	return w.client.WriteJSON(payload)
 }

@@ -3,6 +3,8 @@ package frontend
 import (
 	"context"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type GrabItemData struct {
@@ -30,5 +32,6 @@ func (w *wsImpl) SendGrabItem(ctx context.Context, stage flow.Stage, message str
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending grab item")
 	return w.client.WriteJSON(payload)
 }

@@ -3,6 +3,8 @@ package frontend
 import (
 	"context"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 func (w *wsImpl) SendToIdle(ctx context.Context) error {
@@ -17,5 +19,6 @@ func (w *wsImpl) SendToIdle(ctx context.Context) error {
 		Stage: flow.IDLE_STAGE,
 	}
 
+	log.Info().Interface("payload", payload).Msg("sending to idle")
 	return w.client.WriteJSON(payload)
 }
