@@ -14,6 +14,11 @@ func (s *stageImpl) OnInit(c *flow.Ctx) {
 		c.ChangeStage <- flow.ORDER_STAGE
 		return
 	}
+	if len(channels) == 0 {
+		log.Error().Msg("no channel found")
+		c.ChangeStage <- flow.ORDER_STAGE
+		return
+	}
 
 	s.channels = channels
 	s.frontendWs.SendPaymentChannel(c.UserCtx, channels)
