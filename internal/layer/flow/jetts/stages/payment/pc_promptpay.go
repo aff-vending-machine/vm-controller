@@ -68,8 +68,6 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 	}
 	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
 
-	s.frontendWs.SendQRCode(c.UserCtx, c.Data.MerchantOrderID, res.Reference, c.Data.TotalQuantity(), c.Data.TotalPrice())
-
 	go s.pollingPromptpay(c, ctx, req.Timestamp)
 }
 
