@@ -29,8 +29,13 @@ var patterns = []map[string]interface{}{
 	{
 		"action": "confirm",
 		"data": map[string]interface{}{
-			"payment_channel": "testpay",
+			// "payment_channel": "testpay",
+			// "payment_channel": "promptpay",
+			"payment_channel": "creditcard",
 		},
+	},
+	{
+		"action": "bypass",
 	},
 }
 
@@ -44,7 +49,7 @@ func main() {
 		for i, pattern := range patterns {
 			write(pattern, i, conn)
 
-			time.Sleep(5 * time.Second)
+			time.Sleep(10 * time.Second)
 		}
 
 		time.Sleep(1 * time.Minute)

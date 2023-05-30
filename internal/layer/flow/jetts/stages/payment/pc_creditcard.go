@@ -26,6 +26,24 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		return
 	}
 
+	if s.bypass {
+		err = s.updateReferenceTransaction(c, "BYPASS", "", "", "BYPASS")
+		if err != nil {
+			c.ChangeStage <- flow.EMERGENCY_STAGE
+			return
+		}
+
+		err = s.updatePaidTransaction(c)
+		if err != nil {
+			c.ChangeStage <- flow.EMERGENCY_STAGE
+			return
+		}
+
+		s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
+		c.ChangeStage <- flow.RECEIVE_STAGE
+		return
+	}
+
 	if err != nil {
 		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 

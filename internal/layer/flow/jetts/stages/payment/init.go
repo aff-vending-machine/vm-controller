@@ -20,6 +20,7 @@ type stageImpl struct {
 	ticker          *time.Ticker
 	qrcode          *string
 	CancelFn        context.CancelFunc
+	bypass          bool
 }
 
 func New(ka api.Ksher, la api.Link2500, qh hardware.Queue, tr transaction.Repository, fw websocket.Frontend) *stageImpl {
@@ -29,5 +30,6 @@ func New(ka api.Ksher, la api.Link2500, qh hardware.Queue, tr transaction.Reposi
 		nil,
 		nil,
 		nil,
+		false,
 	}
 }
