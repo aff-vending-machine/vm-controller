@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"vm-controller/internal/core/domain/entity"
+
+	"github.com/rs/zerolog/log"
 )
 
 type PaymentChannelData struct {
@@ -35,5 +37,6 @@ func (w *wsImpl) SendPaymentChannel(ctx context.Context, channels []entity.Payme
 		Data: data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("send payment channel")
 	return w.client.WriteJSON(payload)
 }

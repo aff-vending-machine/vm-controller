@@ -3,6 +3,8 @@ package frontend
 import (
 	"context"
 	"vm-controller/internal/core/flow"
+
+	"github.com/rs/zerolog/log"
 )
 
 type QRCodeData struct {
@@ -32,5 +34,6 @@ func (w *wsImpl) SendQRCode(ctx context.Context, orderID string, qrcode string, 
 		Data:  data,
 	}
 
+	log.Info().Interface("payload", payload).Msg("send qrcode")
 	return w.client.WriteJSON(payload)
 }
