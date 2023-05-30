@@ -58,7 +58,7 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 		log.Error().Err(err).Interface("response", res).Msg("unable to convert struct to string")
 	}
 
-	err = s.updateReferenceTransaction(c, res.BatchNumber, res.InvoiceNumber, res.CardIssuerName, raw)
+	err = s.updateReferenceTransaction(c, res.BatchNumber+" - "+res.InvoiceNumber, res.CardIssuerName, res.PrimaryAccountNumber, raw)
 	if err != nil {
 		c.ChangeStage <- flow.EMERGENCY_STAGE
 		return
