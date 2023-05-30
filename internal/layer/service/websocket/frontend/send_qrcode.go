@@ -2,6 +2,7 @@ package frontend
 
 import (
 	"context"
+	"vm-controller/internal/core/flow"
 )
 
 type QRCodeData struct {
@@ -27,7 +28,7 @@ func (w *wsImpl) SendQRCode(ctx context.Context, orderID string, qrcode string, 
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "payment",
+		Stage: flow.PAYMENT_STAGE,
 		Data:  data,
 	}
 

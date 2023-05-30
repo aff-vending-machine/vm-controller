@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/flow"
 )
 
 type OrderData struct {
@@ -28,7 +29,7 @@ func (w *wsImpl) SendCart(ctx context.Context, cart []hardware.Item) error {
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "order",
+		Stage: flow.ORDER_STAGE,
 		Data:  data,
 	}
 

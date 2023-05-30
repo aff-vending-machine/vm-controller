@@ -9,4 +9,5 @@ const (
 	ORDER_STAGE     = "order"
 	PAYMENT_STAGE   = "payment"
 	RECEIVE_STAGE   = "receive"
+	DONE_STAGE      = "done"
 )
