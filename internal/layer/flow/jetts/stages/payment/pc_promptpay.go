@@ -56,7 +56,7 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		return
 	}
 
-	// short 
+	// short
 	res.Reserved1 = res.Reserved1[:10] + "..."
 	raw, err := conv.StructToString(res)
 	if err != nil {
@@ -134,6 +134,24 @@ func (s *stageImpl) pollingPromptpay(c *flow.Ctx, ctx context.Context, timestamp
 		}
 
 		time.Sleep(100 * time.Millisecond)
+
+		if s.bypass {
+			err := s.updateReferenceTransaction(c, "BYPASS", "", "", "BYPASS")
+			if err != nil {
+				c.ChangeStage <- flow.EMERGENCY_STAGE
+				return
+			}
+
+			err = s.updatePaidTransaction(c)
+			if err != nil {
+				c.ChangeStage <- flow.EMERGENCY_STAGE
+				return
+			}
+
+			s.frontendWs.SendPaid(c.UserCtx, c.Data.MerchantOrderID, c.Data.TotalQuantity(), c.Data.TotalPrice())
+			c.ChangeStage <- flow.RECEIVE_STAGE
+			return
+		}
 	}
 
 }

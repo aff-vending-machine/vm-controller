@@ -42,6 +42,10 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
+	case "bypass":
+		// s.bypass = true
+		return nil
+
 	default:
 		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, fmt.Sprintf("invalid action %s", req.Action))
 		return nil
