@@ -19,10 +19,14 @@ func (w *wsImpl) SendGrabItem(ctx context.Context, stage flow.Stage, message str
 	data := GrabItemData{
 		Message: message,
 	}
+	s := string(stage)
+	if stage == flow.CHANNEL_STAGE {
+		s = "payment_channel"
+	}
 
 	payload := PayloadModel{
 		Code:  501,
-		Stage: string(stage),
+		Stage: s,
 		Data:  data,
 	}
 

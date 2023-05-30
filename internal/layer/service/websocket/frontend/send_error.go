@@ -20,9 +20,14 @@ func (w *wsImpl) SendError(ctx context.Context, stage flow.Stage, message string
 		Message: message,
 	}
 
+	s := string(stage)
+	if stage == flow.CHANNEL_STAGE {
+		s = "payment_channel"
+	}
+
 	payload := PayloadModel{
 		Code:  500,
-		Stage: string(stage),
+		Stage: s,
 		Data:  data,
 	}
 

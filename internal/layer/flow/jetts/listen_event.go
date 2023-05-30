@@ -50,7 +50,10 @@ func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 		uc.context.Stage = stage
 		uc.OnInit(ctx)
 
-		if stage == flow.IDLE_STAGE || stage == flow.PAYMENT_STAGE || stage == flow.RECEIVE_STAGE {
+		if stage == flow.DONE_STAGE {
+			stage = flow.RECEIVE_STAGE
+			uc.watchdog.Reset(timeout)
+		} else if stage == flow.IDLE_STAGE || stage == flow.PAYMENT_STAGE || stage == flow.RECEIVE_STAGE {
 			uc.watchdog.Stop()
 		} else {
 			uc.watchdog.Reset(timeout)
