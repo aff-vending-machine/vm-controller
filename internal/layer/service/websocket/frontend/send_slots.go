@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/flow"
 )
 
 type OrderInitData struct {
@@ -49,7 +50,7 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "order",
+		Stage: flow.ORDER_STAGE,
 		Data:  data,
 	}
 

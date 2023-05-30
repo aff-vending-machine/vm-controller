@@ -1,6 +1,8 @@
 package frontend
 
-import "context"
+import (
+	"context"
+)
 
 type EmergencyData struct {
 	Message string `json:"message"`
@@ -18,7 +20,8 @@ func (w *wsImpl) SendEmergency(ctx context.Context, err error) error {
 	}
 
 	payload := PayloadModel{
-		Code:  500,
+		Code: 500,
+		// Stage: flow.EMERGENCY_STAGE,
 		Stage: "error",
 		Data:  data,
 	}

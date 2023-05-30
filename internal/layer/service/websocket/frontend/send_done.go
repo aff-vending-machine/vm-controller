@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"vm-controller/internal/core/domain/hardware"
+	"vm-controller/internal/core/flow"
 )
 
 type DoneData struct {
@@ -33,7 +34,7 @@ func (w *wsImpl) SendDone(ctx context.Context, orderID string, cart []hardware.I
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "done",
+		Stage: flow.DONE_STAGE,
 		Data:  data,
 	}
 

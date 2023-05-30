@@ -2,6 +2,7 @@ package frontend
 
 import (
 	"context"
+	"vm-controller/internal/core/flow"
 )
 
 type PaidData struct {
@@ -27,7 +28,7 @@ func (w *wsImpl) SendPaid(ctx context.Context, orderID string, qty int, price fl
 
 	payload := PayloadModel{
 		Code:  200,
-		Stage: "payment",
+		Stage: flow.PAYMENT_STAGE,
 		Data:  data,
 	}
 

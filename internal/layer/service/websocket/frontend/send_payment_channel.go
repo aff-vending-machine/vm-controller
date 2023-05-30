@@ -7,9 +7,9 @@ import (
 )
 
 type PaymentChannelData struct {
-	Name           string `json:"name"`
-	PaymentChannel string `json:"payment_channel"`
-	Vendor         string `json:"vendor"`
+	Name    string `json:"name"`
+	Channel string `json:"channel"`
+	Vendor  string `json:"vendor"`
 }
 
 func (w *wsImpl) SendPaymentChannel(ctx context.Context, channels []entity.PaymentChannel) error {
@@ -22,16 +22,17 @@ func (w *wsImpl) SendPaymentChannel(ctx context.Context, channels []entity.Payme
 	data := make([]PaymentChannelData, 0)
 	for _, channel := range channels {
 		data = append(data, PaymentChannelData{
-			Name:           channel.Name,
-			PaymentChannel: channel.Channel,
-			Vendor:         channel.Vendor,
+			Name:    channel.Name,
+			Channel: channel.Channel,
+			Vendor:  channel.Vendor,
 		})
 	}
 
 	payload := PayloadModel{
 		Code:  200,
 		Stage: "payment_channel", // old stage for support frontend
-		Data:  data,
+		// Stage: flow.CHANNEL_STAGE,
+		Data: data,
 	}
 
 	return w.client.WriteJSON(payload)
