@@ -40,6 +40,6 @@ func (w *wsImpl) SendDone(ctx context.Context, orderID string, cart []hardware.I
 		Data:  data,
 	}
 
-	log.Info().Interface("payload", payload).Msg("sending done")
+	log.Info().Msg("sending done")
 	return w.client.WriteJSON(payload)
 }
