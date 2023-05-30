@@ -35,6 +35,6 @@ func (w *wsImpl) SendCart(ctx context.Context, cart []hardware.Item) error {
 		Data:  data,
 	}
 
-	log.Info().Interface("payload", payload).Msg("sending cart")
+	log.Info().Msg("sending cart")
 	return w.client.WriteJSON(payload)
 }

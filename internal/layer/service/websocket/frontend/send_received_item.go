@@ -40,6 +40,6 @@ func (w *wsImpl) SendReceivedItem(ctx context.Context, orderID string, cart []ha
 		Data:  data,
 	}
 
-	log.Info().Interface("payload", payload).Msg("sending received item")
+	log.Info().Msg("sending received item")
 	return w.client.WriteJSON(payload)
 }

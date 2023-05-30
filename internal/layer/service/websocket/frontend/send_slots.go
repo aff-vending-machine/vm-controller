@@ -56,6 +56,6 @@ func (w *wsImpl) SendSlots(ctx context.Context, slots []entity.Slot) error {
 		Data:  data,
 	}
 
-	log.Info().Interface("payload", payload).Msg("sending slots")
+	log.Info().Msg("sending slots")
 	return w.client.WriteJSON(payload)
 }
