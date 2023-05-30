@@ -56,6 +56,8 @@ func (s *stageImpl) promptpay(c *flow.Ctx) {
 		return
 	}
 
+	// short 
+	res.Reserved1 = res.Reserved1[:10] + "..."
 	raw, err := conv.StructToString(res)
 	if err != nil {
 		log.Error().Err(err).Interface("response", res).Msg("unable to convert struct to string")
