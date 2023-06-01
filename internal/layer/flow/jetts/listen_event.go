@@ -38,6 +38,7 @@ func (uc *Flow) lookup(ctx context.Context, timeout time.Duration) {
 	select {
 	case <-uc.watchdog.C:
 		if uc.context.Stage != flow.IDLE_STAGE {
+			log.Debug().Str("stage", string(uc.context.Stage)).Msg("watchdog triggered")
 			uc.context.Stage = flow.IDLE_STAGE
 			uc.OnInit(ctx)
 		}

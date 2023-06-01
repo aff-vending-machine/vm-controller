@@ -44,7 +44,7 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 			s.frontendWs.SendGrabItem(c.UserCtx, c.Stage, "Please grab item")
 		} else {
 			c.Reset()
-			c.ChangeStage <- "order"
+			c.ChangeStage <- flow.ORDER_STAGE
 		}
 		return nil
 

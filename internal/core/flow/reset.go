@@ -1,10 +1,14 @@
 package flow
 
-import "vm-controller/internal/core/domain/hardware"
+import (
+	"vm-controller/internal/core/domain/entity"
+	"vm-controller/internal/core/domain/hardware"
+)
 
 func (c *Ctx) Reset() {
 	// c.Stage = "idle"
 	c.Data.MerchantOrderID = ""
+	c.PaymentChannel = &entity.PaymentChannel{}
 	c.Data.Cart = make([]hardware.Item, 0)
 	c.Events = make(map[string]*hardware.Event)
 }
