@@ -64,5 +64,8 @@ func (s *stageImpl) checkEvent(c *flow.Ctx) {
 	s.status = DONE
 	s.queue.Clear(c.UserCtx)
 
-	c.ChangeStage <- flow.IDLE_STAGE
+	if c.Stage != flow.RECEIVE_STAGE {
+		c.ChangeStage <- flow.IDLE_STAGE
+	}
+	
 }
