@@ -8,6 +8,7 @@ import (
 	"vm-controller/internal/core/domain/link2500"
 	"vm-controller/internal/core/flow"
 	"vm-controller/pkg/helpers/conv"
+	"vm-controller/pkg/helpers/errs"
 
 	"github.com/rs/zerolog/log"
 )
@@ -45,6 +46,14 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 	}
 
 	if err != nil {
+		if errs.Is(err, "cancel") {
+			if c.Stage == flow.PAYMENT_STAGE {
+				c.Reset()
+				c.ChangeStage <- flow.ORDER_STAGE
+			}
+			return
+		}
+
 		s.frontendWs.SendError(c.UserCtx, flow.PAYMENT_STAGE, err.Error())
 
 		err = s.updateErrorTransaction(c, err)
