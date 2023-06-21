@@ -26,6 +26,11 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		c.ChangeStage <- flow.ORDER_STAGE
 		return nil
 
+	case "refresh":
+		c.Reset()
+		c.ChangeStage <- flow.ORDER_STAGE
+		return nil
+
 	default:
 		s.frontendWs.SendError(c.UserCtx, flow.IDLE_STAGE, fmt.Sprintf("invalid action %s", req.Action))
 		return nil
