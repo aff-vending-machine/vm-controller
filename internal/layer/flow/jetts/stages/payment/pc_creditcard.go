@@ -47,9 +47,9 @@ func (s *stageImpl) creditcard(c *flow.Ctx) {
 
 	if err != nil {
 		if errs.Is(err, "cancel") {
+			log.Error().Str("stage", string(c.Stage)).Str("channel", c.PaymentChannel.Channel).Msg("cancelled by user")
 			if c.Stage == flow.PAYMENT_STAGE {
-				c.Reset()
-				c.ChangeStage <- flow.ORDER_STAGE
+				c.ChangeStage <- flow.CHANNEL_STAGE
 			}
 			return
 		}

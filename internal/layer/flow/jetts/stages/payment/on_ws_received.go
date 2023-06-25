@@ -26,14 +26,12 @@ func (s *stageImpl) OnWSReceived(c *flow.Ctx, b []byte) error {
 		return nil
 
 	case "cancel":
+		s.updateCancelTransaction(c, "user")
 		if s.CancelFn != nil {
 			s.CancelFn()
 			s.CancelFn = nil
 		}
-
-		s.updateCancelTransaction(c, "user")
-		c.Reset()
-		c.ChangeStage <- flow.ORDER_STAGE
+		c.ChangeStage <- flow.CHANNEL_STAGE
 		return nil
 
 	case "wakeup":
