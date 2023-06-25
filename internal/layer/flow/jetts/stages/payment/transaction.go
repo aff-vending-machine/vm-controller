@@ -11,6 +11,7 @@ import (
 )
 
 func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 string, ref3 string, raw string) error {
+	log.Debug().Msg("TRANSACTION: update reference")
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"reference1":    ref1,
@@ -29,6 +30,7 @@ func (s *stageImpl) updateReferenceTransaction(c *flow.Ctx, ref1 string, ref2 st
 }
 
 func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) error {
+	log.Debug().Msg("TRANSACTION: update paid")
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status":      enum.ORDER_STATUS_PAID,
@@ -49,6 +51,7 @@ func (s *stageImpl) updatePaidTransaction(c *flow.Ctx) error {
 }
 
 func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
+	log.Debug().Msg("TRANSACTION: update test")
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status":      enum.ORDER_STATUS_PAID,
@@ -69,6 +72,7 @@ func (s *stageImpl) updateTestTransaction(c *flow.Ctx) error {
 }
 
 func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
+	log.Debug().Msg("TRANSACTION: update cancel")
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"order_status": enum.ORDER_STATUS_CANCELLED,
@@ -84,6 +88,7 @@ func (s *stageImpl) updateCancelTransaction(c *flow.Ctx, by string) error {
 }
 
 func (s *stageImpl) updateErrorTransaction(c *flow.Ctx, err error) error {
+	log.Debug().Msg("TRANSACTION: update error")
 	filter := db.NewQuery().AddWhere("merchant_order_id = ?", c.Data.MerchantOrderID)
 	data := map[string]interface{}{
 		"is_error":     true,
